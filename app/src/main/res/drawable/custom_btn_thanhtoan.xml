@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <!-- Màu nền của nút -->
+            <solid android:color="@color/green_max" />
+            <!-- Độ rộng và màu của đường viền -->
+            <stroke
+                android:width="0.8dp"
+                android:color="#000000" />
+            <!-- Bo góc của nút -->
+            <corners android:radius="2dp" />
+        </shape>
+    </item>
+</selector>

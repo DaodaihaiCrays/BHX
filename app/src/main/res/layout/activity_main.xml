@@ -59,15 +59,17 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_ThanhToan"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="Thanh toán"
+            android:textColor="@color/white"
             android:textSize="10dp"
-            android:backgroundTint="@color/green_max"
+            android:background="@drawable/custom_btn_thanhtoan"
             android:drawableLeft="@drawable/cart_img"
+            android:paddingLeft="5dp"
             app:layout_constraintBottom_toTopOf="@+id/edtSearch"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
