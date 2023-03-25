@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/img_logo_nav" />
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/edtSearch"
             android:layout_width="310dp"
             android:layout_height="40dp"
@@ -36,6 +36,7 @@
             android:layout_marginBottom="9dp"
             android:ems="10"
             android:hint="Tìm kiếm"
+            android:maxLines="1"
             android:paddingLeft="5dp"
             android:background="@drawable/custom_edt_search"
             android:drawableRight="@drawable/custom_icon_kinh_lup"
