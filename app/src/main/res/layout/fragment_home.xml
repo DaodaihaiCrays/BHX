@@ -9,36 +9,6 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="30dp"
-        android:background="@color/green"
-        android:orientation="horizontal">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="25dp"
-            android:layout_weight="1"
-            android:background="@drawable/custom_view_radius" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Khuyến mãi"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="25dp"
-            android:layout_weight="1"
-            android:background="@drawable/custom_view_radius" />
-    </LinearLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/revProduct"
         android:layout_width="match_parent"
