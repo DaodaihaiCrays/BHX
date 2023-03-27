@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">BHX</string>
+    <string name="app_version">ver 0.102 dev (UI build)</string>
     <string name="hello_blank_fragment">working in progress</string>
     <!-- account info string -->
     <string name="default_full_name">Khách</string>
-    <string name="account_view_description">Thông tin tài khoản</string>
+    <string name="account_view_description">Trang tài khoản</string>
+    <string name="avatar_description">Avatar</string>
     <string name="authority_label">Quyền:</string>
     <string name="default_authority">GUEST</string>
     <string name="phone_label">Số Điện Thoại:</string>
@@ -11,4 +13,10 @@
     <string name="email_label">Email:</string>
     <string name="default_email">guest@bhx.com</string>
     <string name="order_btn">Đơn hàng</string>
+    <string name="acc_info_btn">Thông tin tài khoản</string>
+    <string name="version_label">Phiên bản ứng dụng</string>
+    <string name="sales_btn">Khuyến mãi</string>
+    <string name="setting_btn">Cài đặt hệ thống</string>
+    <string name="customer_support_btn">Hỗ trợ khách hàng</string>
+    <string name="term_of_services_btn">Điểu khoản dịch vụ</string>
 </resources>
