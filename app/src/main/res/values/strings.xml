@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">BHX</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">working in progress</string>
+    <!-- account info string -->
+    <string name="default_full_name">Khách</string>
+    <string name="account_view_description">Thông tin tài khoản</string>
+    <string name="authority_label">Quyền:</string>
+    <string name="default_authority">GUEST</string>
+    <string name="phone_label">Số Điện Thoại:</string>
+    <string name="default_phone_num">000&#8211;000&#8211;0000</string>
+    <string name="email_label">Email:</string>
+    <string name="default_email">guest@bhx.com</string>
+    <string name="order_btn">Đơn hàng</string>
 </resources>
