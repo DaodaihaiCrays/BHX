@@ -3,12 +3,13 @@
     <string name="app_version">ver 0.102 dev (UI build)</string>
     <string name="hello_blank_fragment">working in progress</string>
     <!-- account info string -->
+    <string name="full_name_label">Họ và Tên</string>
     <string name="default_full_name">Khách</string>
     <string name="account_view_description">Trang tài khoản</string>
     <string name="avatar_description">Avatar</string>
     <string name="authority_label">Quyền:</string>
     <string name="default_authority">GUEST</string>
-    <string name="phone_label">Số Điện Thoại:</string>
+    <string name="phone_label">Số Điện Thoại</string>
     <string name="default_phone_num">000&#8211;000&#8211;0000</string>
     <string name="email_label">Email:</string>
     <string name="default_email">guest@bhx.com</string>
@@ -19,4 +20,14 @@
     <string name="setting_btn">Cài đặt hệ thống</string>
     <string name="customer_support_btn">Hỗ trợ khách hàng</string>
     <string name="term_of_services_btn">Điểu khoản dịch vụ</string>
+    <string name="gender_label">Giới Tính</string>
+    <string name="male_gender">Nam</string>
+    <string name="female_gender">Nữ</string>
+    <string name="other_gender">Khác</string>
+    <string name="back_btn_description">Quay lại</string>
+    <string name="address_label">Địa Chỉ</string>
+    <string name="address_province_description">Tỉnh/Thành Phố</string>
+    <string name="address_district_description">Quận/Huyện</string>
+    <string name="address_ward_description">Ấp/Xã</string>
+    <string name="address_description">Số nhà</string>
 </resources>
