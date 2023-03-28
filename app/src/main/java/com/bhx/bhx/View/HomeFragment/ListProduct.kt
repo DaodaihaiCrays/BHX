@@ -35,15 +35,12 @@ class ListProduct(private val listProduct: List<Product>, private val context: C
     }
 
     override fun onBindViewHolder(holder: ListProductViewHolder, position: Int) {
-//        Log.i("test", ":  " + listProduct[position].name)
         holder.tvName.text = listProduct[position].name
         holder.tvPrice.text = listProduct[position].price.toString()
         Glide.with(context).load(listProduct[position].img).error(R.drawable.xoai).into(holder.imageView)
     }
 
     override fun getItemCount(): Int {
-        for(i in listProduct)
-            Log.i("test", "getItemCount() ---> : " + i.name)
         return listProduct.size
     }
 
