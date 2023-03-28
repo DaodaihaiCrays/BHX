@@ -1,6 +1,7 @@
 package com.bhx.bhx.View.HomeFragment
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.R
+import java.util.*
 
 class ProductAdapter(private val categories: List<ReviewCategory>, private val context: Context) :
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
@@ -27,8 +29,8 @@ class ProductAdapter(private val categories: List<ReviewCategory>, private val c
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         holder.tvCateName.text = categories[position].name
-        holder.btnSeeMore.text = "Xem thêm " + (categories[position].quantity-6)
-
+        holder.btnSeeMore.text = "Xem thêm " + (categories[position].countProducts-6) + " sản phẩm"
+        Log.i("test",categories[position].name)
         var adapter = ListProduct(categories[position].products, context)
         holder.revListProduct.adapter = adapter
         holder.revListProduct.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
