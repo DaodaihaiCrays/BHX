@@ -1,16 +1,12 @@
 package com.bhx.bhx.View.HomeFragment
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bhx.bhx.Model.Category
 import com.bhx.bhx.Model.Product
 import com.bhx.bhx.R
 import com.bumptech.glide.Glide
@@ -36,8 +32,8 @@ class ListProduct(private val listProduct: List<Product>, private val context: C
 
     override fun onBindViewHolder(holder: ListProductViewHolder, position: Int) {
         holder.tvName.text = listProduct[position].name
-        holder.tvPrice.text = listProduct[position].price.toString()
-        Glide.with(context).load(listProduct[position].img).error(R.drawable.xoai).into(holder.imageView)
+        holder.tvPrice.text = listProduct[position].unit_price.toString()
+        Glide.with(context).load(listProduct[position].banner).error(R.drawable.xoai).into(holder.imageView)
     }
 
     override fun getItemCount(): Int {

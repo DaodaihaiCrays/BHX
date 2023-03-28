@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Orientation
-import com.bhx.bhx.Model.Category
+import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.Model.Product
 import com.bhx.bhx.R
+import java.time.ZonedDateTime
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,7 +36,7 @@ class HomeFragment : Fragment() {
     }
 
     private lateinit var revProducts: RecyclerView
-    private lateinit var categories: MutableList<Category>
+    private lateinit var categories: MutableList<ReviewCategory>
     private lateinit var adapter: ProductAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,29 +54,29 @@ class HomeFragment : Fragment() {
 
     private fun initDateCategories() {
         categories = mutableListOf()
-        categories.add(Category("1", "Thịt, cá, trứng1", 300, listOf(
-            Product("1", "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg", "Thit cá1", 20, 10000.0, "ngon"),
-            Product("1", "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg", "Thit cá2", 20, 10000.0, "ngon"),
-            Product("1", "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg", "Thit cá3", 20, 10000.0, "ngon"),
-            Product("1", "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg", "Thit cá4", 20, 10000.0, "ngon"),
-            Product("1", "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg", "Thit cá5", 20, 10000.0, "ngon"),
-            Product("1", "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg", "Thit cá6", 20, 10000.0, "ngon"),
+        categories.add(ReviewCategory("1", "Thịt, cá, trứng1", 300, listOf(
+            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
+            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
+            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
+            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
+            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
+            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
         )))
-        categories.add(Category("1", "Thịt, cá, trứng2", 300, listOf(
-            Product("1", "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg", "Thit cá7", 20, 10000.0, "ngon"),
-            Product("1", "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg", "Thit cá8", 20, 10000.0, "ngon"),
-            Product("1", "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg", "Thit cá9", 20, 10000.0, "ngon"),
-            Product("1", "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg", "Thit cá10", 20, 10000.0, "ngon"),
-            Product("1", "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg", "Thit cá11", 20, 10000.0, "ngon"),
-            Product("1", "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg", "Thit cá12", 20, 10000.0, "ngon"),
+        categories.add(ReviewCategory("1", "Thịt, cá, trứng1", 300, listOf(
+            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
+            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
+            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
+            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
+            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
+            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
         )))
-        categories.add(Category("1", "Thịt, cá, trứng3", 300, listOf(
-            Product("1", "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg", "Thit cá13", 20, 10000.0, "ngon"),
-            Product("1", "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg", "Thit cá14", 20, 10000.0, "ngon"),
-            Product("1", "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg", "Thit cá15", 20, 10000.0, "ngon"),
-            Product("1", "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg", "Thit cá16", 20, 10000.0, "ngon"),
-            Product("1", "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg", "Thit cá17", 20, 10000.0, "ngon"),
-            Product("1", "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg", "Thit cá18", 20, 10000.0, "ngon"),
+        categories.add(ReviewCategory("1", "Thịt, cá, trứng1", 300, listOf(
+            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
+            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
+            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
+            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
+            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
+            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
         )))
 
     }

@@ -1,25 +1,17 @@
 package com.bhx.bhx.View.HomeFragment
 
 import android.content.Context
-import android.opengl.Visibility
-import android.util.Log
-import android.view.ActionProvider.VisibilityListener
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bhx.bhx.Model.Category
-import com.bhx.bhx.Model.Product
+import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.R
-import org.w3c.dom.Text
 
-class ProductAdapter(private val categories: List<Category>, private val context: Context) :
+class ProductAdapter(private val categories: List<ReviewCategory>, private val context: Context) :
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
