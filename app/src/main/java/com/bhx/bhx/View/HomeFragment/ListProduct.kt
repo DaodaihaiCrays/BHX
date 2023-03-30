@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bhx.bhx.Controller.CategoryController
 import com.bhx.bhx.Model.Product
 import com.bhx.bhx.R
 import com.bumptech.glide.Glide
@@ -14,6 +15,8 @@ import com.bumptech.glide.Glide
 class ListProduct(private val listProduct: List<Product>, private val context: Context):
     RecyclerView.Adapter<ListProduct.ListProductViewHolder>()
 {
+
+
     class ListProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val tvName: TextView = itemView.findViewById(R.id.tvName)

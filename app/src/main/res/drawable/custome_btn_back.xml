@@ -2,9 +2,10 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/color_btn_menu"/> <!-- Màu nền của EditText -->
+            <stroke
+                android:width="0.8dp"
+                android:color="#000000" />
             <corners android:radius="0dp"/> <!-- Bán kính bo góc của EditText -->
-
         </shape>
     </item>
 </selector>
