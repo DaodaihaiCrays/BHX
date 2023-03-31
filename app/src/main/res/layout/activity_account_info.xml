@@ -41,18 +41,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/acc_full_name"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
                 android:background="@color/white"
                 android:hint="@string/full_name_label"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.842"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                >
+                app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -65,14 +64,12 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:hint="@string/phone_label"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.842"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/acc_full_name"
-                >
+                app:layout_constraintTop_toBottomOf="@id/acc_full_name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -88,6 +85,7 @@
                 android:layout_marginTop="5dp"
                 android:text="@string/gender_label"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/acc_phone_num" />
 
@@ -95,11 +93,10 @@
                 android:id="@+id/acc_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
                 android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:paddingHorizontal="4dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.842"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/gender_label">
 
@@ -141,38 +138,66 @@
                 android:layout_marginTop="5dp"
                 android:text="@string/address_label"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/acc_gender" />
 
+            <TextView
+                android:id="@+id/province_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/address_province_description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/address_label" />
+
             <Spinner
                 android:id="@+id/acc_province"
-                style="@android:style/Widget.Material.Light.Spinner.Underlined"
+                style="@style/custom_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-
+                android:layout_height="wrap_content"
                 android:contentDescription="@string/address_province_description"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/address_label" />
+                app:layout_constraintTop_toBottomOf="@+id/province_label" />
 
+            <TextView
+                android:id="@+id/district_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/address_district_description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/acc_province" />
             <Spinner
                 android:id="@+id/acc_district"
-                style="@style/Widget.AppCompat.Spinner.Underlined"
+                style="@style/custom_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
                 android:contentDescription="@string/address_district_description"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/acc_province" />
+                app:layout_constraintTop_toBottomOf="@id/district_label"
+                tools:layout_editor_absoluteY="278dp" />
+
+            <TextView
+                android:id="@+id/ward_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/address_ward_description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/acc_district" />
 
             <Spinner
                 android:id="@+id/acc_ward"
-                style="@style/Widget.AppCompat.Spinner.Underlined"
+                style="@style/custom_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
                 android:contentDescription="@string/address_ward_description"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/acc_district" />
+                app:layout_constraintTop_toBottomOf="@id/ward_label"
+                tools:layout_editor_absoluteY="311dp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/acc_address"
@@ -180,6 +205,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="10dp"
                 android:background="@color/white"
                 android:hint="@string/address_description"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -193,6 +219,8 @@
                     android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
