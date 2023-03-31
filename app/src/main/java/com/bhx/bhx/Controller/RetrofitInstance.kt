@@ -1,5 +1,6 @@
 package com.bhx.bhx.Controller
 
+import android.util.Log
 import com.bhx.bhx.Constant.URL
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
@@ -10,6 +11,8 @@ class RetrofitInstance {
         fun getInstance(): Retrofit {
             var gson = GsonBuilder()
                 .setDateFormat("YYYY-MM-dd HH:mm:ss").create()
+
+            Log.i("test",URL.DOMAIN_URL)
 
             return Retrofit.Builder()
                 .baseUrl(URL.DOMAIN_URL)
