@@ -11,8 +11,7 @@
         android:layout_height="wrap_content"
         android:text="Loại Sữa"
         android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="25dp"/>
+        android:textSize="15dp"/>
     <TextView
         android:id="@+id/tvPropertyValue"
         android:layout_width="0dp"
@@ -21,5 +20,5 @@
         android:text="Sữa tươi tiệt trùng"
         android:textColor="@color/black"
         android:background="@color/white"
-        android:textSize="25dp"/>
+        android:textSize="15dp"/>
 </LinearLayout>

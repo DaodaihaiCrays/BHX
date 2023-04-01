@@ -17,6 +17,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnBack"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/baseline_arrow_back_24"
+                    android:backgroundTint="@color/green_min"/>
+
                 <ImageView
                     android:id="@+id/imgProduct"
                     android:layout_width="match_parent"
@@ -67,7 +74,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_margin="10dp"
-                    android:background="#4C65E1"
+                    android:background="@color/gray_min"
                     android:id="@+id/revProperties"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">

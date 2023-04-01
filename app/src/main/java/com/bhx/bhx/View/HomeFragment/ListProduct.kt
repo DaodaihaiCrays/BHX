@@ -40,6 +40,22 @@ class ListProduct(private val listProduct: List<Product>, private val context: C
         holder.tvPrice.text = listProduct[position].unit_price.toString()
         Glide.with(context).load(listProduct[position].banner).error(R.drawable.xoai).into(holder.imageView)
 
+        holder.tvName.setOnClickListener {
+            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+            fragmentManager.beginTransaction().replace(
+                R.id.container,
+                DetailProductFragment(listProduct[position])
+            ).commit()
+        }
+
+        holder.tvPrice.setOnClickListener {
+            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+            fragmentManager.beginTransaction().replace(
+                R.id.container,
+                DetailProductFragment(listProduct[position])
+            ).commit()
+        }
+
         holder.imageView.setOnClickListener{
             val fragmentManager = (context as AppCompatActivity).supportFragmentManager
             fragmentManager.beginTransaction().replace(
