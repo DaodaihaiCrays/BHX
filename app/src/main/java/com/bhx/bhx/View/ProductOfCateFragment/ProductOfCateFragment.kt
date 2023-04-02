@@ -1,6 +1,5 @@
 package com.bhx.bhx.View.ProductOfCateFragment
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,7 +11,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Controller.CategoryController
 import com.bhx.bhx.Controller.RetrofitInstance
@@ -20,12 +18,10 @@ import com.bhx.bhx.Model.Product
 import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.R
 import com.bhx.bhx.View.HomeFragment.HomeFragment
-import com.bhx.bhx.View.HomeFragment.ListProduct
-import com.bhx.bhx.View.HomeFragment.ProductAdapter
+import com.bhx.bhx.View.HomeFragment.ListProductAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.Locale.Category
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,7 +49,7 @@ class ProductOfCateFragment(private val category: ReviewCategory) : Fragment() {
     var btnBack: Button?=null
     var tvCate: TextView?=null
     var revProductOfCate: RecyclerView?=null
-    private lateinit var adapter:ListProduct
+    private lateinit var adapter:ListProductAdapter
     lateinit var apiCategoryInstance: CategoryController
 
     override fun onCreateView(
@@ -94,7 +90,7 @@ class ProductOfCateFragment(private val category: ReviewCategory) : Fragment() {
                 if (response.isSuccessful) {
                     val data = response.body()
 
-                    adapter = ListProduct(data as List<Product>, container!!.context);
+                    adapter = ListProductAdapter(data as List<Product>, container!!.context);
                     revProductOfCate!!.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
                     revProductOfCate!!.adapter= adapter
                 }else{

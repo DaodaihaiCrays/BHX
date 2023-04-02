@@ -21,7 +21,7 @@ class PropertiesAdapter (private val attribute_label: List<String>?, private val
     }
 
     override fun getItemCount(): Int {
-        return attribute_label!!.size
+        return if (attribute_label==null) 0 else attribute_label!!.size
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {

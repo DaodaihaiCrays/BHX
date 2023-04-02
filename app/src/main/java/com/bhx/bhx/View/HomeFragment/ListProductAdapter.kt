@@ -8,14 +8,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.bhx.bhx.Controller.CategoryController
 import com.bhx.bhx.Model.Product
 import com.bhx.bhx.R
 import com.bhx.bhx.View.DetailProduct.DetailProductFragment
 import com.bumptech.glide.Glide
 
-class ListProduct(private val listProduct: List<Product>, private val context: Context):
-    RecyclerView.Adapter<ListProduct.ListProductViewHolder>()
+class ListProductAdapter(private val listProduct: List<Product>, private val context: Context):
+    RecyclerView.Adapter<ListProductAdapter.ListProductViewHolder>()
 {
 
 

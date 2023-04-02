@@ -91,9 +91,10 @@
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/revRelatedProduct"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:minHeight="500dp"/>
+                    android:minHeight="200dp"/>
 
 
             </LinearLayout>
