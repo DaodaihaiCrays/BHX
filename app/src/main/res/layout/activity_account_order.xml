@@ -20,10 +20,16 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/btn_arrow_left"
-            android:contentDescription="back"
+            android:contentDescription="@string/back_btn_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/order_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"/>
 </RelativeLayout>
