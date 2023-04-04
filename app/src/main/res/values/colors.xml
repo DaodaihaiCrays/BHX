@@ -11,4 +11,5 @@
     <color name="color_btn_menu">#e9f5f0</color>
     <color name="green_max">#026830</color>
     <color name="green_min">#B7F1D1</color>
+    <color name="gray_silver">#C0C0C0</color>
 </resources>
