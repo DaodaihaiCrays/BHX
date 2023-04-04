@@ -12,4 +12,5 @@
     <color name="green_max">#026830</color>
     <color name="green_min">#B7F1D1</color>
     <color name="gray_silver">#C0C0C0</color>
+    <color name="gray_min">#C4C7C6</color>
 </resources>

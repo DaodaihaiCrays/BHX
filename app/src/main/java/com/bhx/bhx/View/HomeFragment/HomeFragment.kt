@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@ import com.bhx.bhx.Controller.RetrofitInstance
 import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.Model.Product
 import com.bhx.bhx.R
+import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -48,6 +50,8 @@ class HomeFragment : Fragment() {
     private lateinit var adapter: ProductAdapter
     lateinit var apiCategoryInstance: CategoryController
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,21 +61,21 @@ class HomeFragment : Fragment() {
         revProducts = view.findViewById(R.id.revProduct)
 
         apiCategoryInstance = RetrofitInstance.getInstance().create(CategoryController::class.java)
-        Log.i("test","1")
+
         apiCategoryInstance.getCategoryProduct().enqueue(object : Callback<List<ReviewCategory>> {
             override fun onResponse(
                 call: Call<List<ReviewCategory>>,
                 response: Response<List<ReviewCategory>>
             ) {
+
                 if (response.isSuccessful) {
-                    Toast.makeText(container!!.context,"ok",Toast.LENGTH_SHORT).show()
                     val data = response.body()
 
                     adapter = ProductAdapter(data as List<ReviewCategory>, container!!.context);
                     revProducts.layoutManager = LinearLayoutManager(container!!.context, RecyclerView.VERTICAL, false)
                     revProducts.adapter= adapter
                 }else{
-                    Toast.makeText(container!!.context, "fail",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(container!!.context, "Fail",Toast.LENGTH_SHORT).show()
                 }
             }
             override fun onFailure(call: Call<List<ReviewCategory>>, t: Throwable) {
@@ -80,41 +84,9 @@ class HomeFragment : Fragment() {
             }
         })
 
-//        adapter = ProductAdapter(categories, container!!.context)
-//        revProducts.adapter= adapter
-//        revProducts.layoutManager = LinearLayoutManager(container!!.context, RecyclerView.VERTICAL, false)
-
         return view
     }
-//
-//    private fun initDateCategories() {
-//        categories = mutableListOf()
-//        categories.add(ReviewCategory(1, "Thịt, cá, trứng1", 300, listOf(
-//            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
-//            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
-//            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
-//            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
-//            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
-//            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
-//        )))
-//        categories.add(ReviewCategory(1, "Thịt, cá, trứng1", 300, listOf(
-//            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
-//            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
-//            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
-//            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
-//            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
-//            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
-//        )))
-//        categories.add(ReviewCategory(1, "Thịt, cá, trứng1", 300, listOf(
-//            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
-//            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
-//            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
-//            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
-//            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
-//            Product(1, "Thịt", 10.0, 100, 1,"Ngon",null,null, null, null, ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"),ZonedDateTime.parse("2023-03-28T01:27:15.078775Z"), "https://chamchut.com/wp-content/uploads/2018/03/huong-dan-chon-mua-va-cach-bao-quan-thit-ca-trong-tu-lanh2.jpg"),
-//        )))
-//
-//    }
+
 
     companion object {
         /**

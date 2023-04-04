@@ -6,14 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Model.Product
 import com.bhx.bhx.R
+import com.bhx.bhx.View.DetailProduct.DetailProductFragment
 import com.bumptech.glide.Glide
 
-class ListProduct(private val listProduct: List<Product>, private val context: Context):
-    RecyclerView.Adapter<ListProduct.ListProductViewHolder>()
+class ListProductAdapter(private val listProduct: List<Product>, private val context: Context):
+    RecyclerView.Adapter<ListProductAdapter.ListProductViewHolder>()
 {
+
+
     class ListProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val tvName: TextView = itemView.findViewById(R.id.tvName)
@@ -34,6 +38,30 @@ class ListProduct(private val listProduct: List<Product>, private val context: C
         holder.tvName.text = listProduct[position].name
         holder.tvPrice.text = listProduct[position].unit_price.toString()
         Glide.with(context).load(listProduct[position].banner).error(R.drawable.xoai).into(holder.imageView)
+
+        holder.tvName.setOnClickListener {
+            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+            fragmentManager.beginTransaction().replace(
+                R.id.container,
+                DetailProductFragment(listProduct[position])
+            ).commit()
+        }
+
+        holder.tvPrice.setOnClickListener {
+            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+            fragmentManager.beginTransaction().replace(
+                R.id.container,
+                DetailProductFragment(listProduct[position])
+            ).commit()
+        }
+
+        holder.imageView.setOnClickListener{
+            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+            fragmentManager.beginTransaction().replace(
+                R.id.container,
+                DetailProductFragment(listProduct[position])
+            ).commit()
+        }
     }
 
     override fun getItemCount(): Int {

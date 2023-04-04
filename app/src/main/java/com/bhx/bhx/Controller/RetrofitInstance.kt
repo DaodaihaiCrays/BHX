@@ -12,8 +12,6 @@ class RetrofitInstance {
             var gson = GsonBuilder()
                 .setDateFormat("YYYY-MM-dd HH:mm:ss").create()
 
-            Log.i("test",URL.DOMAIN_URL)
-
             return Retrofit.Builder()
                 .baseUrl(URL.DOMAIN_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))

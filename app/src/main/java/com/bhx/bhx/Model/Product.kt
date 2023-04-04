@@ -67,7 +67,11 @@ data class Product(
 
     @SerializedName("banner")
     @Expose()
-    val banner: String
+    val banner: String,
+
+    @SerializedName("related")
+    @Expose()
+    val related: List<Product>
 )
 
 @Serializer(forClass = ZonedDateTime::class)

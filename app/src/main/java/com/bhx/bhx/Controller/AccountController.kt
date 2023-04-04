@@ -6,6 +6,8 @@ import retrofit2.http.GET
 
 interface AccountController {
 
-    @GET("/accounts")
+    @GET("accounts")
     fun getAccounts(): Call<List<Account>>
+
+
 }
