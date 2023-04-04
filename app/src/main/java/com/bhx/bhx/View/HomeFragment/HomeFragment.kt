@@ -67,13 +67,15 @@ class HomeFragment : Fragment() {
                 call: Call<List<ReviewCategory>>,
                 response: Response<List<ReviewCategory>>
             ) {
+
                 if (response.isSuccessful) {
                     val data = response.body()
+
                     adapter = ProductAdapter(data as List<ReviewCategory>, container!!.context);
                     revProducts.layoutManager = LinearLayoutManager(container!!.context, RecyclerView.VERTICAL, false)
                     revProducts.adapter= adapter
                 }else{
-                    Toast.makeText(container!!.context, "fail",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(container!!.context, "Fail",Toast.LENGTH_SHORT).show()
                 }
             }
             override fun onFailure(call: Call<List<ReviewCategory>>, t: Throwable) {

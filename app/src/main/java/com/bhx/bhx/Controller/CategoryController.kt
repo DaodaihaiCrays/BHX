@@ -9,8 +9,6 @@ import retrofit2.http.Query
 
 
 interface CategoryController {
-//    @GET("categories/preview-products")
-//    fun getCategoryProduct(): Call<List<ReviewCategory>>
 
     @GET("categories/preview-products")
     fun getCategoryProduct(): Call<List<ReviewCategory>>
