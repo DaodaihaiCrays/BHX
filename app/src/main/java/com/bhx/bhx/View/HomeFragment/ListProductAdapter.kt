@@ -13,18 +13,20 @@ import com.bhx.bhx.R
 import com.bhx.bhx.View.DetailProduct.DetailProductFragment
 import com.bumptech.glide.Glide
 
-class ListProductAdapter(private val listProduct: List<Product>, private val context: Context):
+class ListProductAdapter(private var listProduct: List<Product>, private val context: Context):
     RecyclerView.Adapter<ListProductAdapter.ListProductViewHolder>()
 {
 
+    fun setList(list: List<Product>) {
+        this.listProduct = list
+        notifyDataSetChanged()
+    }
 
     class ListProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val tvName: TextView = itemView.findViewById(R.id.tvName)
         val imageView: ImageView = itemView.findViewById(R.id.imageView)
         val tvPrice: TextView = itemView.findViewById(R.id.tvPrice)
-        val tvBuy: TextView = itemView.findViewById(R.id.tvBuy)
-//        val ln0: LinearLayout = itemView.findViewById(R.id.ln)
     }
     override fun onCreateViewHolder(
         parent: ViewGroup,

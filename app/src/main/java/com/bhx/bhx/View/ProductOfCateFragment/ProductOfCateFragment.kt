@@ -72,9 +72,6 @@ class ProductOfCateFragment(private val category: ReviewCategory) : Fragment() {
             ).commit()
         }
 
-        //Log.i("test",category.id.toString())
-
-        //Toast.makeText(container!!.context, category.id.toString(),Toast.LENGTH_SHORT).show()
         apiCategoryInstance = RetrofitInstance.getInstance().create(CategoryController::class.java)
 
         val categoryId: Int = category.id
