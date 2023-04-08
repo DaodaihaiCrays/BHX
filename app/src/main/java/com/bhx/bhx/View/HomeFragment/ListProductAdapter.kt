@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.bhx.bhx.Global.ShoppingCart
 import com.bhx.bhx.Model.Product
 import com.bhx.bhx.R
 import com.bhx.bhx.View.DetailProduct.DetailProductFragment
@@ -61,6 +63,11 @@ class ListProductAdapter(private val listProduct: List<Product>, private val con
                 R.id.container,
                 DetailProductFragment(listProduct[position])
             ).commit()
+        }
+
+        holder.tvBuy.setOnClickListener {
+            ShoppingCart.getInstance().addItem(listProduct[position]);
+//            Toast.makeText(holder.itemView.context, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
         }
     }
 

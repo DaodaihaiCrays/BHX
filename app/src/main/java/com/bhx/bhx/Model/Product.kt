@@ -27,7 +27,7 @@ data class Product(
 
     @SerializedName("unit_price")
     @Expose()
-    val unit_price: Double,
+    val unit_price: Int,
 
     @SerializedName("stock")
     @Expose()
