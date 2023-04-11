@@ -1,11 +1,13 @@
 package com.bhx.bhx.View.ProductOfCateFragment
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -75,8 +77,19 @@ class ProductOfCateFragment(private val category: ReviewCategory) : Fragment() {
         apiCategoryInstance = RetrofitInstance.getInstance().create(CategoryController::class.java)
 
         val categoryId: Int = category.id
-        Log.i("test",id.toString())
         val api = apiCategoryInstance.getAllProductsOfCate(categoryId)
+
+        val dialog = ProgressDialog(context)
+        dialog.create()
+        dialog.setContentView(R.layout.custom_progress_dialog)
+        dialog.setCancelable(false) //outside touch doesn't dismiss you
+        dialog.show()
+        val displayMetrics = context?.resources?.displayMetrics
+        val screenWidth = displayMetrics?.widthPixels
+        val width = (screenWidth?.times(0.5))?.toInt()
+        if (width != null) {
+            dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
+        }
 
         api.enqueue(object : Callback<List<Product>> {
             override fun onResponse(
@@ -86,7 +99,7 @@ class ProductOfCateFragment(private val category: ReviewCategory) : Fragment() {
 
                 if (response.isSuccessful) {
                     val data = response.body()
-
+                    dialog.dismiss()
                     adapter = ListProductAdapter(data as List<Product>, container!!.context);
                     revProductOfCate!!.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
                     revProductOfCate!!.adapter= adapter
@@ -102,28 +115,4 @@ class ProductOfCateFragment(private val category: ReviewCategory) : Fragment() {
 
         return view
     }
-
-//    companion object {
-//        /**
-//         * Use this factory method to create a new instance of
-//         * this fragment using the provided parameters.
-//         *
-//         * @param param1 Parameter 1.
-//         * @param param2 Parameter 2.
-//         * @return A new instance of fragment ProductOfCateFragment.
-//         */
-//        // TODO: Rename and change types and number of parameters
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            ProductOfCateFragment().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
-//    }
-
-
-
-
 }
