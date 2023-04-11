@@ -12,4 +12,5 @@ interface ProductController {
 
     @GET("products")
     fun getAllProductsOfSearch(@Query("keyword") keyword: String): Call<List<Product>>
+
 }
