@@ -28,6 +28,7 @@
                     android:id="@+id/imgProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
                     android:adjustViewBounds="true"
                     android:maxHeight="200dp"
                     android:src="@drawable/kinh_lup"/>
@@ -36,7 +37,7 @@
                     android:id="@+id/tvNameProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="19dp"
                     android:textStyle="bold" />
@@ -51,7 +52,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="20dp"
                         android:textStyle="bold" />
@@ -70,7 +71,7 @@
                     android:id="@+id/tvInfor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextViewfdvrtbtrgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" />
+                    android:text="" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_margin="10dp"
@@ -94,7 +95,8 @@
                     android:id="@+id/revRelatedProduct"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:minHeight="200dp"/>
+                    android:minHeight="200dp"
+                    android:layout_marginBottom="10dp"/>
 
 
             </LinearLayout>

@@ -34,8 +34,6 @@ class ProductAdapter(private val categories: List<ReviewCategory>, private val c
 
         holder.btnSeeMore.setOnClickListener {
 
-            //Log.i("test",categories[position].id.toString())
-
             val fragmentManager = (context as AppCompatActivity).supportFragmentManager
             fragmentManager.beginTransaction().replace(
                 R.id.container,

@@ -15,4 +15,6 @@ interface CategoryController {
 
     @GET("products")
     fun getAllProductsOfCate(@Query("categoryId") categoryId: Int): Call<List<Product>>
+
+
 }

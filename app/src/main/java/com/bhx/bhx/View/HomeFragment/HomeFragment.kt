@@ -1,11 +1,15 @@
 package com.bhx.bhx.View.HomeFragment
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
+import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,6 +52,7 @@ class HomeFragment : Fragment() {
     private lateinit var revProducts: RecyclerView
     private lateinit var categories: MutableList<ReviewCategory>
     private lateinit var adapter: ProductAdapter
+
     lateinit var apiCategoryInstance: CategoryController
 
 
@@ -60,6 +65,18 @@ class HomeFragment : Fragment() {
         //initDateCategories()
         revProducts = view.findViewById(R.id.revProduct)
 
+        val dialog = ProgressDialog(context)
+        dialog.create()
+        dialog.setContentView(R.layout.custom_progress_dialog)
+        dialog.setCancelable(false) //outside touch doesn't dismiss you
+        dialog.show()
+        val displayMetrics = context?.resources?.displayMetrics
+        val screenWidth = displayMetrics?.widthPixels
+        val width = (screenWidth?.times(0.5))?.toInt()
+        if (width != null) {
+            dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
+        }
+
         apiCategoryInstance = RetrofitInstance.getInstance().create(CategoryController::class.java)
 
         apiCategoryInstance.getCategoryProduct().enqueue(object : Callback<List<ReviewCategory>> {
@@ -70,6 +87,8 @@ class HomeFragment : Fragment() {
 
                 if (response.isSuccessful) {
                     val data = response.body()
+
+                    dialog.dismiss()
 
                     adapter = ProductAdapter(data as List<ReviewCategory>, container!!.context);
                     revProducts.layoutManager = LinearLayoutManager(container!!.context, RecyclerView.VERTICAL, false)
@@ -83,6 +102,8 @@ class HomeFragment : Fragment() {
                 println(t.message)
             }
         })
+
+
 
         return view
     }
