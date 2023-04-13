@@ -70,7 +70,7 @@ class ListProductAdapter(private var listProduct: List<Product>, private val con
 
         holder.tvBuy.setOnClickListener {
             ShoppingCart.getInstance().addItem(listProduct[position]);
-            Toast.makeText(holder.itemView.context, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(holder.itemView.context, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
         }
     }
 
