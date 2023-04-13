@@ -90,6 +90,8 @@ class HomeFragment : Fragment() {
 
                     dialog.dismiss()
 
+                    Log.i("test","fdbgftb")
+
                     adapter = ProductAdapter(data as List<ReviewCategory>, container!!.context);
                     revProducts.layoutManager = LinearLayoutManager(container!!.context, RecyclerView.VERTICAL, false)
                     revProducts.adapter= adapter

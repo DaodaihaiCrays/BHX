@@ -25,6 +25,7 @@ import com.bhx.bhx.View.DetailProduct.DetailProductFragment
 import com.bhx.bhx.View.DetailProduct.PropertiesAdapter
 import com.bhx.bhx.View.HomeFragment.HomeFragment
 import com.bhx.bhx.View.HomeFragment.ListProductAdapter
+import com.bhx.bhx.View.HomeFragment.ProductAdapter
 import com.bhx.bhx.View.NotificationFragment.NotificationFragment
 import com.bhx.bhx.View.ProductOfSearchFragment.ProductOfSearchFragment
 import com.bhx.bhx.View.SaleFragment.SaleFragment
@@ -94,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                     })
                 }
                 else {
-
+                    Log.i("test","vap roi nha")
                     supportFragmentManager.beginTransaction().replace(
                         R.id.container,
                         HomeFragment()
