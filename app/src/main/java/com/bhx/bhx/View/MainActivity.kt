@@ -40,7 +40,7 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
 
     lateinit var chipNavigationBar: ChipNavigationBar
-    private lateinit var edtSearch: AutoCompleteTextView
+    lateinit var edtSearch: AutoCompleteTextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,13 +62,15 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent);
         }
 
+        if(edtSearch.text.toString().length!=0) {
+            edtSearch.setText("")
+        }
+
         edtSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
                 val strSearch = s.toString()
-
-                println(strSearch)
 
                 if(strSearch.length!=0) {
                     RetrofitInstance.getInstance().create(ProductController::class.java).getAllProductsOfSearch(strSearch).enqueue(object : Callback<List<Product>> {
@@ -94,14 +96,6 @@ class MainActivity : AppCompatActivity() {
 
                     })
                 }
-                else {
-                    Log.i("test","vap roi nha")
-                    supportFragmentManager.beginTransaction().replace(
-                        R.id.container,
-                        HomeFragment()
-                    ).commit()
-                }
-
             }
         })
     }

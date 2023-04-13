@@ -5,12 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Model.Product
 import com.bhx.bhx.R
 import com.bhx.bhx.View.DetailProduct.PropertiesAdapter
+import com.bhx.bhx.View.HomeFragment.HomeFragment
 import com.bhx.bhx.View.HomeFragment.ListProductAdapter
 
 // TODO: Rename parameter arguments, choose names that match
@@ -38,6 +41,7 @@ class ProductOfSearchFragment(private val listProduct: List<Product>) : Fragment
 
     lateinit var revListProduct: RecyclerView;
     lateinit var adapter: ListProductAdapter
+    lateinit var btnBack: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +52,15 @@ class ProductOfSearchFragment(private val listProduct: List<Product>) : Fragment
         var view: View = inflater.inflate(R.layout.fragment_product_of_search, container, false)
 
         revListProduct = view.findViewById(R.id.revListProduct)
+        btnBack = view.findViewById(R.id.btnBack)
+
+        btnBack!!.setOnClickListener {
+            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+            fragmentManager.beginTransaction().replace(
+                R.id.container,
+                HomeFragment()
+            ).commit()
+        }
 
         adapter = ListProductAdapter(listProduct,container!!.context)
 
