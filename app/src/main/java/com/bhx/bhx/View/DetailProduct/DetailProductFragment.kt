@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,7 @@ import com.bhx.bhx.Model.Product
 import com.bhx.bhx.R
 import com.bhx.bhx.View.HomeFragment.HomeFragment
 import com.bhx.bhx.View.HomeFragment.ListProductAdapter
+import com.bumptech.glide.Glide
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,6 +39,7 @@ class DetailProductFragment(private val product: Product) : Fragment() {
     lateinit var tvNameProduct: TextView
     lateinit var tvPriceProduct: TextView
     lateinit var tvInfor: TextView
+    lateinit var imgProduct:ImageView
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -50,6 +53,9 @@ class DetailProductFragment(private val product: Product) : Fragment() {
         tvNameProduct = view.findViewById(R.id.tvNameProduct)
         tvPriceProduct = view.findViewById(R.id.tvPrice)
         tvInfor = view.findViewById(R.id.tvInfor)
+        imgProduct = view.findViewById(R.id.imgProduct)
+
+        Glide.with(container!!.context).load(product.banner).error(R.drawable.xoai).into(imgProduct)
 
         //adapter = PropertiesAdapter(product?.attribute_label, product?.attribute_value)
         //call api
