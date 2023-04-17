@@ -22,7 +22,7 @@ import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CartItemAdapter(private val items: ArrayList<CartItem>, private val context: Context) :
+class CartItemAdapter(private val items: ArrayList<CartItem>, private val context: Context, private val cartPrice: TextView) :
     RecyclerView.Adapter<CartItemAdapter.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val itemName: TextView;
@@ -84,11 +84,13 @@ class CartItemAdapter(private val items: ArrayList<CartItem>, private val contex
         holder.itemIncreaseBtn.setOnClickListener {
             ShoppingCart.getInstance().addItem(items[holder.adapterPosition].product);
             notifyItemChanged(position);
+            cartPrice.text = formatter.format(ShoppingCart.getInstance().sumPrice());
         }
 
         holder.itemDescreaseBtn.setOnClickListener {
             ShoppingCart.getInstance().reduceItem(items[holder.adapterPosition]);
             notifyItemChanged(position);
+            cartPrice.text = formatter.format(ShoppingCart.getInstance().sumPrice());
         }
     }
 

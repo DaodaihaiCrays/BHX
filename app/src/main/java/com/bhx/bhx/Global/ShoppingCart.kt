@@ -75,4 +75,8 @@ class ShoppingCart private constructor() {
     fun removeItem(item: CartItem) {
         instance?.items!!.remove(item);
     }
+
+    fun sumPrice(): Int {
+        return items.fold(0) { acc, cartItem -> acc + cartItem.product.unit_price * cartItem.quantity }
+    }
 }
