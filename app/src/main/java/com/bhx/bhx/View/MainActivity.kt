@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Controller.CategoryController
 import com.bhx.bhx.Controller.ProductController
 import com.bhx.bhx.Controller.RetrofitInstance
+import com.bhx.bhx.Global.Search
 import com.bhx.bhx.Model.Product
 import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.R
@@ -25,6 +26,8 @@ import com.bhx.bhx.View.DetailProduct.DetailProductFragment
 import com.bhx.bhx.View.DetailProduct.PropertiesAdapter
 import com.bhx.bhx.View.HomeFragment.HomeFragment
 import com.bhx.bhx.View.HomeFragment.ListProductAdapter
+import com.bhx.bhx.View.HomeFragment.ProductAdapter
+import com.bhx.bhx.View.Menu.MenuFragment
 import com.bhx.bhx.View.NotificationFragment.NotificationFragment
 import com.bhx.bhx.View.ProductOfSearchFragment.ProductOfSearchFragment
 import com.bhx.bhx.View.SaleFragment.SaleFragment
@@ -39,7 +42,10 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
 
     lateinit var chipNavigationBar: ChipNavigationBar
-    private lateinit var edtSearch: AutoCompleteTextView
+    //public lateinit var edtSearch: AutoCompleteTextView
+    lateinit var btnMenu: Button
+    private lateinit var adapter: ProductAdapter
+    private lateinit var revProducts: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +53,8 @@ class MainActivity : AppCompatActivity() {
         val actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
 
-        edtSearch = findViewById(R.id.edtSearch)
+        Search.edtSearch = findViewById(R.id.edtSearch)
+        btnMenu = findViewById(R.id.btnMenu)
 
         chipNavigationBar = findViewById(R.id.bottomNav);
         chipNavigationBar.setItemSelected(R.id.home, true);
@@ -61,13 +68,22 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent);
         }
 
-        edtSearch.addTextChangedListener(object : TextWatcher {
+        if(Search.edtSearch.text.toString().length!=0) {
+            Search.edtSearch.setText("")
+        }
+
+        btnMenu.setOnClickListener {
+            supportFragmentManager.beginTransaction().replace(
+                R.id.container,
+                MenuFragment()
+            ).commit()
+        }
+
+        Search.edtSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
                 val strSearch = s.toString()
-
-                println(strSearch)
 
                 if(strSearch.length!=0) {
                     RetrofitInstance.getInstance().create(ProductController::class.java).getAllProductsOfSearch(strSearch).enqueue(object : Callback<List<Product>> {
@@ -81,26 +97,14 @@ class MainActivity : AppCompatActivity() {
                                 ).commit()
 
                             }else {
-                                Log.i("test","fail1")
-                                //Toast.makeText(context, "Fail",Toast.LENGTH_SHORT).show()
                             }
                         }
-
                         override fun onFailure(call: Call<List<Product>>, t: Throwable) {
-                            TODO("Not yet implemented")
                             Log.i("test","fail2")
                         }
 
                     })
                 }
-                else {
-
-                    supportFragmentManager.beginTransaction().replace(
-                        R.id.container,
-                        HomeFragment()
-                    ).commit()
-                }
-
             }
         })
     }
