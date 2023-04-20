@@ -30,9 +30,9 @@ class LoginActivity : AppCompatActivity() {
             val password: String = edtUsername.text.toString().trim()
             val account: AccountLogin = AccountLogin(username, password)
             if (account!=null){
-                val intent: Intent = Intent(this@LoginActivity, MainActivity::class.java)
+                val intent: Intent = Intent(this@LoginActivity, AdminActivity::class.java)
                 startActivity(intent)
-            }else {
+            } else {
                 Toast.makeText(this@LoginActivity, "Invalid account", Toast.LENGTH_SHORT).show()
             }
         })

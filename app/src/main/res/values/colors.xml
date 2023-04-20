@@ -13,4 +13,9 @@
     <color name="green_min">#B7F1D1</color>
     <color name="gray_silver">#C0C0C0</color>
     <color name="gray_min">#C4C7C6</color>
+
+    <color name="table_row_odd">#FFFFFF</color>
+    <color name="table_row_even">#f3f3f3</color>
+    <color name="admin_table_border_color">#CCCCCC</color>
+
 </resources>
