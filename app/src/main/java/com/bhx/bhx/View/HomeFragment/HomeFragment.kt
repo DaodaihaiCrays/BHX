@@ -78,7 +78,7 @@ class HomeFragment : Fragment() {
         }
 
         apiCategoryInstance = RetrofitInstance.getInstance().create(CategoryController::class.java)
-
+        Log.i("test","hai")
         apiCategoryInstance.getCategoryProduct().enqueue(object : Callback<List<ReviewCategory>> {
             override fun onResponse(
                 call: Call<List<ReviewCategory>>,
@@ -89,8 +89,6 @@ class HomeFragment : Fragment() {
                     val data = response.body()
 
                     dialog.dismiss()
-
-                    Log.i("test","fdbgftb")
 
                     adapter = ProductAdapter(data as List<ReviewCategory>, container!!.context);
                     revProducts.layoutManager = LinearLayoutManager(container!!.context, RecyclerView.VERTICAL, false)
