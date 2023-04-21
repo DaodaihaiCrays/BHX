@@ -1,4 +1,4 @@
-package com.bhx.bhx.View.HomeFragment
+package com.bhx.bhx.View.ProductOfCateFragment
 
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -7,24 +7,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.view.WindowManager
-import android.widget.AutoCompleteTextView
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Controller.CategoryController
 import com.bhx.bhx.Controller.RetrofitInstance
-import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.Model.Product
+import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.R
-import com.google.gson.JsonObject
+import com.bhx.bhx.View.HomeFragment.HomeFragment
+import com.bhx.bhx.View.HomeFragment.ListProductAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.ZonedDateTime
-import java.util.Locale.Category
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,10 +32,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
+ * Use the [ProductOfCateFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class HomeFragment : Fragment() {
+class ProductOfCateFragment(private val category: ReviewCategory) : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -49,21 +48,36 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private lateinit var revProducts: RecyclerView
-    private lateinit var categories: MutableList<ReviewCategory>
-    private lateinit var adapter: ProductAdapter
-
+    var btnBack: Button?=null
+    var tvCate: TextView?=null
+    var revProductOfCate: RecyclerView?=null
+    private lateinit var adapter:ListProductAdapter
     lateinit var apiCategoryInstance: CategoryController
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view: View = inflater.inflate(R.layout.fragment_home, container, false)
-        //initDateCategories()
-        revProducts = view.findViewById(R.id.revProduct)
+        var view: View = inflater.inflate(R.layout.fragment_product_of_cate, container, false)
+
+        btnBack = view.findViewById(R.id.btnBack)
+        tvCate = view.findViewById(R.id.tvCate)
+        revProductOfCate = view.findViewById(R.id.revProductOfCate)
+
+        tvCate!!.setText(category.name)
+
+        btnBack!!.setOnClickListener {
+            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+            fragmentManager.beginTransaction().replace(
+                R.id.container,
+                HomeFragment()
+            ).commit()
+        }
+
+        apiCategoryInstance = RetrofitInstance.getInstance().create(CategoryController::class.java)
+
+        val categoryId: Int = category.id
+        val api = apiCategoryInstance.getAllProductsOfCate(categoryId)
 
         val dialog = ProgressDialog(context)
         dialog.create()
@@ -77,55 +91,28 @@ class HomeFragment : Fragment() {
             dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
         }
 
-        apiCategoryInstance = RetrofitInstance.getInstance().create(CategoryController::class.java)
-
-        apiCategoryInstance.getCategoryProduct().enqueue(object : Callback<List<ReviewCategory>> {
+        api.enqueue(object : Callback<List<Product>> {
             override fun onResponse(
-                call: Call<List<ReviewCategory>>,
-                response: Response<List<ReviewCategory>>
+                call: Call<List<Product>>,
+                response: Response<List<Product>>
             ) {
 
                 if (response.isSuccessful) {
                     val data = response.body()
-
                     dialog.dismiss()
-
-                    adapter = ProductAdapter(data as List<ReviewCategory>, container!!.context);
-                    revProducts.layoutManager = LinearLayoutManager(container!!.context, RecyclerView.VERTICAL, false)
-                    revProducts.adapter= adapter
+                    adapter = ListProductAdapter(data as List<Product>, container!!.context);
+                    revProductOfCate!!.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
+                    revProductOfCate!!.adapter= adapter
                 }else{
                     Toast.makeText(container!!.context, "Fail",Toast.LENGTH_SHORT).show()
                 }
             }
-            override fun onFailure(call: Call<List<ReviewCategory>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Product>>, t: Throwable) {
                 Toast.makeText(container!!.context,t.message,Toast.LENGTH_SHORT).show()
                 println(t.message)
             }
         })
 
-
-
         return view
-    }
-
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 
-@Serializable
 data class ReviewCategory (
     @SerializedName("id")
     @Expose()
@@ -21,5 +20,4 @@ data class ReviewCategory (
     @SerializedName("products")
     @Expose()
     val products: List<Product>
-
-    )
+)
