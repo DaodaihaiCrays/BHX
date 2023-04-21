@@ -30,7 +30,8 @@
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:layout_marginLeft="2dp"
+            android:textStyle="bold"
             android:inputType="textMultiLine"
             android:text="TextView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,6 +43,7 @@
             android:id="@+id/tvPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
             android:inputType="textMultiLine"
             android:text="TextView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,10 +58,12 @@
         android:id="@+id/tvBuy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/green_min"
+        android:background="@color/primary_min"
+        android:textColor="@color/black"
         android:gravity="center"
         android:text="Mua"
-        android:textSize="30dp"
+
+        android:textSize="20dp"
         android:layout_marginLeft="1dp"
         android:layout_marginRight="1dp"/>
 </LinearLayout>

@@ -4,31 +4,31 @@
     <item
         android:id="@+id/home"
         android:title="Sản phẩm"
-        app:cnb_textColor="@color/green"
-        app:cnb_iconColor="@color/green"
+        app:cnb_textColor="@color/primary_min"
+        app:cnb_iconColor="@color/primary_min"
         app:cnb_backgroundColor="#fff"
         android:icon="@drawable/ic_baseline_home_24"/>
 
     <item
         android:id="@+id/sale"
         android:title="Khuyến mại"
-        app:cnb_textColor="@color/green"
-        app:cnb_iconColor="@color/green"
+        app:cnb_textColor="@color/primary_min"
+        app:cnb_iconColor="@color/primary_min"
         app:cnb_backgroundColor="#fff"
         android:icon="@drawable/ic_baseline_money_off_24"/>
   <item
         android:id="@+id/notification"
         android:title="Thông báo"
-        app:cnb_textColor="@color/green"
-        app:cnb_iconColor="@color/green"
+        app:cnb_textColor="@color/primary_min"
+        app:cnb_iconColor="@color/primary_min"
         app:cnb_backgroundColor="#fff"
         android:icon="@drawable/ic_baseline_notifications_24"/>
 
     <item
         android:id="@+id/user"
         android:title="Tài khoản"
-        app:cnb_textColor="@color/green"
-        app:cnb_iconColor="@color/green"
+        app:cnb_textColor="@color/primary_min"
+        app:cnb_iconColor="@color/primary_min"
         app:cnb_backgroundColor="#fff"
         android:icon="@drawable/ic_baseline_person_24"/>
 </menu>
