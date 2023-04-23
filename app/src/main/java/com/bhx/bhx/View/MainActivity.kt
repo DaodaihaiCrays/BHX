@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction().replace(
                 R.id.container,
                 MenuFragment()
-            ).commit()
+            ).addToBackStack(null).commit()
         }
 
         Search.edtSearch.addTextChangedListener(object : TextWatcher {

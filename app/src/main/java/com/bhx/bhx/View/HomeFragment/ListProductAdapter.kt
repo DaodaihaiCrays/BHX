@@ -53,7 +53,7 @@ class ListProductAdapter(private var listProduct: List<Product>, private val con
             fragmentManager.beginTransaction().replace(
                 R.id.container,
                 DetailProductFragment(listProduct[position])
-            ).commit()
+            ).addToBackStack(null).commit()
         }
 
         holder.tvPrice.setOnClickListener {
@@ -61,7 +61,7 @@ class ListProductAdapter(private var listProduct: List<Product>, private val con
             fragmentManager.beginTransaction().replace(
                 R.id.container,
                 DetailProductFragment(listProduct[position])
-            ).commit()
+            ).addToBackStack(null).commit()
         }
 
         holder.imageView.setOnClickListener{
@@ -69,7 +69,7 @@ class ListProductAdapter(private var listProduct: List<Product>, private val con
             fragmentManager.beginTransaction().replace(
                 R.id.container,
                 DetailProductFragment(listProduct[position])
-            ).commit()
+            ).addToBackStack(null).commit()
         }
 
         holder.tvBuy.setOnClickListener {

@@ -92,11 +92,13 @@ class DetailProductFragment(private val product: Product) : Fragment() {
 
 
         btnBack!!.setOnClickListener {
-            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
-            fragmentManager.beginTransaction().replace(
-                R.id.container,
-                HomeFragment()
-            ).commit()
+//            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+//            fragmentManager.beginTransaction().replace(
+//                R.id.container,
+//                HomeFragment()
+//            ).commit()
+
+            parentFragmentManager.popBackStack()
         }
 
         return view

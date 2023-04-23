@@ -2,6 +2,7 @@ package com.bhx.bhx.View.Menu
 
 import android.app.ProgressDialog
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -52,6 +53,24 @@ class MenuFragment : Fragment() {
     private lateinit var adapter: NameCategoryAdapter
     private lateinit var btnBack: Button
 
+    private var isApiCalled: Boolean = false
+    private var recyclerViewState: Parcelable? = null
+    private var listReviewCategory : List<ReviewCategory> = listOf()
+
+    override fun onPause() {
+        super.onPause()
+        recyclerViewState = revListCategory.layoutManager?.onSaveInstanceState()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (recyclerViewState != null) {
+            revListCategory.layoutManager?.onRestoreInstanceState(recyclerViewState)
+        }
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,52 +81,64 @@ class MenuFragment : Fragment() {
         revListCategory = view.findViewById(R.id.revListCategory)
         btnBack = view.findViewById(R.id.btnBack)
 
-        val dialog = ProgressDialog(context)
-        dialog.create()
-        dialog.setContentView(R.layout.custom_progress_dialog)
-        dialog.setCancelable(false) //outside touch doesn't dismiss you
-        dialog.show()
-        val displayMetrics = context?.resources?.displayMetrics
-        val screenWidth = displayMetrics?.widthPixels
-        val width = (screenWidth?.times(0.5))?.toInt()
-        if (width != null) {
-            dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
-        }
+
 
         btnBack!!.setOnClickListener {
             Search.edtSearch.setText("")
 
-            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
-            fragmentManager.beginTransaction().replace(
-                R.id.container,
-                HomeFragment()
-            ).commit()
+//            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+//            fragmentManager.beginTransaction().replace(
+//                R.id.container,
+//                HomeFragment()
+//            ).addToBackStack(null).commit()
+
+            parentFragmentManager.popBackStack()
         }
 
-        RetrofitInstance.getInstance().create(CategoryController::class.java).getCategoryProduct().enqueue(object :
-            Callback<List<ReviewCategory>> {
-            override fun onResponse(
-                call: Call<List<ReviewCategory>>,
-                response: Response<List<ReviewCategory>>
-            ) {
+        if(!isApiCalled) {
 
-                if (response.isSuccessful) {
-                    val data = response.body()
+            val dialog = ProgressDialog(context)
+            dialog.create()
+            dialog.setContentView(R.layout.custom_progress_dialog)
+            dialog.setCancelable(false) //outside touch doesn't dismiss you
+            dialog.show()
+            val displayMetrics = context?.resources?.displayMetrics
+            val screenWidth = displayMetrics?.widthPixels
+            val width = (screenWidth?.times(0.5))?.toInt()
+            if (width != null) {
+                dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
+            }
 
-                    dialog.dismiss()
+            RetrofitInstance.getInstance().create(CategoryController::class.java).getCategoryProduct().enqueue(object :
+                Callback<List<ReviewCategory>> {
+                override fun onResponse(
+                    call: Call<List<ReviewCategory>>,
+                    response: Response<List<ReviewCategory>>
+                ) {
 
-                    adapter = NameCategoryAdapter(data as List<ReviewCategory>, container!!.context);
-                    revListCategory.layoutManager = LinearLayoutManager(container!!.context, RecyclerView.VERTICAL, false)
-                    revListCategory.adapter= adapter
-                }else{
-                    Toast.makeText(container!!.context, "Fail", Toast.LENGTH_SHORT).show()
+                    if (response.isSuccessful) {
+                        val data = response.body()
+
+                        dialog.dismiss()
+                        listReviewCategory = data as List<ReviewCategory>
+                        adapter = NameCategoryAdapter(listReviewCategory, container!!.context);
+                        revListCategory.layoutManager = LinearLayoutManager(container!!.context, RecyclerView.VERTICAL, false)
+                        revListCategory.adapter= adapter
+                        isApiCalled = true
+                    }else{
+                        Toast.makeText(container!!.context, "Fail", Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
-            override fun onFailure(call: Call<List<ReviewCategory>>, t: Throwable) {
-                Toast.makeText(container!!.context,t.message, Toast.LENGTH_SHORT).show()
-                println(t.message)
-            }
-        })
+                override fun onFailure(call: Call<List<ReviewCategory>>, t: Throwable) {
+                    Toast.makeText(container!!.context,t.message, Toast.LENGTH_SHORT).show()
+                    println(t.message)
+                }
+            })
+        }
+
+        adapter = NameCategoryAdapter(listReviewCategory, container!!.context);
+        revListCategory.layoutManager = LinearLayoutManager(container!!.context, RecyclerView.VERTICAL, false)
+        revListCategory.adapter= adapter
 
 
         return view

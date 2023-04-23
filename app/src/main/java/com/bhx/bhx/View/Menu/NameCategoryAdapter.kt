@@ -41,7 +41,7 @@ class NameCategoryAdapter(private val categories: List<ReviewCategory>, private 
             fragmentManager.beginTransaction().replace(
                 R.id.container,
                 ProductOfCateFragment(categories[position])
-            ).commit()
+            ).addToBackStack(null).commit()
         }
 
     }
