@@ -8,11 +8,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
-import com.bhx.bhx.Model.Account
 import com.bhx.bhx.Model.AccountLogin
 import com.bhx.bhx.R
-import okhttp3.internal.Util
-import java.io.DataInput
 
 class LoginActivity : AppCompatActivity() {
     lateinit var edtUsername: EditText;
