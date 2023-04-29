@@ -81,91 +81,53 @@ class HomeFragment : Fragment() {
         //initDateCategories()
         revProducts = view.findViewById(R.id.revProduct)
 
-        val dialog = ProgressDialog(context)
-        dialog.create()
-        dialog.setContentView(R.layout.custom_progress_dialog)
-        dialog.setCancelable(false) //outside touch doesn't dismiss you
-        dialog.show()
-        val displayMetrics = context?.resources?.displayMetrics
-        val screenWidth = displayMetrics?.widthPixels
-        val width = (screenWidth?.times(0.5))?.toInt()
-        if (width != null) {
-            dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
-        }
 
-        apiCategoryInstance = RetrofitInstance.getInstance().create(CategoryController::class.java)
-        Log.i("test","hai0")
-        apiCategoryInstance.getCategoryProduct().enqueue(object : Callback<List<ReviewCategory>> {
-            override fun onResponse(
-                call: Call<List<ReviewCategory>>,
-                response: Response<List<ReviewCategory>>
-            ) {
-                Log.i("test","hai1")
-                if (response.isSuccessful) {
-                    val data = response.body()
-                    Log.i("test","hai1")
-                    dialog.dismiss()
-
-                    adapter = ProductAdapter(data as MutableList<ReviewCategory>, container!!.context);
-                    revProducts.layoutManager = LinearLayoutManager(container!!.context, RecyclerView.VERTICAL, false)
-                    revProducts.adapter= adapter
-                }else{
-                    Toast.makeText(container!!.context, "Fail",Toast.LENGTH_SHORT).show()
-                }
-            }
-            override fun onFailure(call: Call<List<ReviewCategory>>, t: Throwable) {
-                Toast.makeText(container!!.context,t.message,Toast.LENGTH_SHORT).show()
-                println("on failure call api: "+t.message)
-            }
-        })
         Log.i("test","hai2")
-//        if (!isApiCalled) {
-//            val dialog = ProgressDialog(context)
-//            dialog.create()
-//            dialog.setContentView(R.layout.custom_progress_dialog)
-//            dialog.setCancelable(false) //outside touch doesn't dismiss you
-//            dialog.show()
-//            val displayMetrics = context?.resources?.displayMetrics
-//            val screenWidth = displayMetrics?.widthPixels
-//            val width = (screenWidth?.times(0.5))?.toInt()
-//            if (width != null) {
-//                dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
-//            }
-//
-//            apiCategoryInstance = RetrofitInstance.getInstance().create(CategoryController::class.java)
-//            apiCategoryInstance.getCategoryProduct().enqueue(object : Callback<List<ReviewCategory>> {
-//                override fun onResponse(
-//                    call: Call<List<ReviewCategory>>,
-//                    response: Response<List<ReviewCategory>>
-//                ) {
-//                    if (response.isSuccessful) {
-//                        val data = response.body()
-//
-//                        dialog.dismiss()
-//
-//                        Log.i("test","thanh cong api")
-//                        listReviewCategory = data as MutableList<ReviewCategory>
-//                        Log.i("test",listReviewCategory.toString())
-//                        adapter = ProductAdapter(listReviewCategory, container!!.context)
-//                        revProducts.layoutManager = LinearLayoutManager(container!!.context, RecyclerView.VERTICAL, false)
-//                        revProducts.adapter = adapter
-//                        isApiCalled = true
-//                    } else {
-//                        Toast.makeText(container!!.context, "Fail", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<List<ReviewCategory>>, t: Throwable) {
-//                    Toast.makeText(container!!.context, t.message, Toast.LENGTH_SHORT).show()
-//                    println(t.message)
-//                }
-//            })
-//        }
-//
-//
-//                adapter = ProductAdapter(listReviewCategory, container!!.context)
-//                revProducts.layoutManager = LinearLayoutManager(container!!.context, RecyclerView.VERTICAL, false)
-//                revProducts.adapter = adapter
+        if (!isApiCalled) {
+            val dialog = ProgressDialog(context)
+            dialog.create()
+            dialog.setContentView(R.layout.custom_progress_dialog)
+            dialog.setCancelable(false) //outside touch doesn't dismiss you
+            dialog.show()
+            val displayMetrics = context?.resources?.displayMetrics
+            val screenWidth = displayMetrics?.widthPixels
+            val width = (screenWidth?.times(0.5))?.toInt()
+            if (width != null) {
+                dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
+            }
+
+            apiCategoryInstance = RetrofitInstance.getInstance().create(CategoryController::class.java)
+            apiCategoryInstance.getCategoryProduct().enqueue(object : Callback<List<ReviewCategory>> {
+                override fun onResponse(
+                    call: Call<List<ReviewCategory>>,
+                    response: Response<List<ReviewCategory>>
+                ) {
+                    if (response.isSuccessful) {
+                        val data = response.body()
+
+                        dialog.dismiss()
+
+                        Log.i("test","thanh cong api")
+                        listReviewCategory = data as MutableList<ReviewCategory>
+                        Log.i("test",listReviewCategory.toString())
+                        adapter = ProductAdapter(listReviewCategory, container!!.context)
+                        revProducts.layoutManager = LinearLayoutManager(container!!.context, RecyclerView.VERTICAL, false)
+                        revProducts.adapter = adapter
+                        isApiCalled = true
+                    } else {
+                        Toast.makeText(container!!.context, "Fail", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<List<ReviewCategory>>, t: Throwable) {
+                    Toast.makeText(container!!.context, t.message, Toast.LENGTH_SHORT).show()
+                    println(t.message)
+                }
+            })
+        }
+                adapter = ProductAdapter(listReviewCategory, container!!.context)
+                revProducts.layoutManager = LinearLayoutManager(container!!.context, RecyclerView.VERTICAL, false)
+                revProducts.adapter = adapter
 
 
 

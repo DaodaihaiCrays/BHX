@@ -28,7 +28,7 @@
                     android:id="@+id/imgProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:scaleType="fitXY"
                     android:adjustViewBounds="true"
                     android:maxHeight="200dp"
                     android:src="@drawable/kinh_lup"/>

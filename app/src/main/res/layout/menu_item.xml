@@ -26,6 +26,15 @@
 
     </LinearLayout>
 
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"/>-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/revMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray_silver"/>
+
 
     <View
         android:layout_width="match_parent"
