@@ -8,7 +8,5 @@ data class OrderItem (
     @SerializedName("product")
     val product: Product,
     @SerializedName("quantity")
-    val quantity: Int,
-    @SerializedName("total_price")
-    val totalPrice: Double
+    val quantity: Int
 )

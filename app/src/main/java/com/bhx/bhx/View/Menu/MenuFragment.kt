@@ -1,4 +1,4 @@
-package com.bhx.bhx.View.ProductOfCateFragment
+package com.bhx.bhx.View.Menu
 
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -10,18 +10,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Controller.CategoryController
 import com.bhx.bhx.Controller.RetrofitInstance
-import com.bhx.bhx.Model.Product
+import com.bhx.bhx.Global.Search
 import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.R
 import com.bhx.bhx.View.HomeFragment.HomeFragment
-import com.bhx.bhx.View.HomeFragment.ListProductAdapter
+import com.bhx.bhx.View.HomeFragment.ProductAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,10 +32,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [ProductOfCateFragment.newInstance] factory method to
+ * Use the [MenuFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ProductOfCateFragment(private val category: ReviewCategory) : Fragment() {
+class MenuFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -49,25 +48,25 @@ class ProductOfCateFragment(private val category: ReviewCategory) : Fragment() {
         }
     }
 
-    var btnBack: Button?=null
-    var tvCate: TextView?=null
-    var revProductOfCate: RecyclerView?=null
-    private lateinit var adapter:ListProductAdapter
-    lateinit var apiCategoryInstance: CategoryController
+    private lateinit var revListCategory: RecyclerView
+    private lateinit var categories: MutableList<ReviewCategory>
+    private lateinit var adapter: NameCategoryAdapter
+    private lateinit var btnBack: Button
+
     private var isApiCalled: Boolean = false
     private var recyclerViewState: Parcelable? = null
-    private var listProduct : List<Product> = listOf()
+    private var listReviewCategory : List<ReviewCategory> = listOf()
 
     override fun onPause() {
         super.onPause()
-        recyclerViewState = revProductOfCate!!.layoutManager?.onSaveInstanceState()
+        recyclerViewState = revListCategory.layoutManager?.onSaveInstanceState()
 
     }
 
     override fun onResume() {
         super.onResume()
         if (recyclerViewState != null) {
-            revProductOfCate!!.layoutManager?.onRestoreInstanceState(recyclerViewState)
+            revListCategory.layoutManager?.onRestoreInstanceState(recyclerViewState)
         }
 
     }
@@ -76,29 +75,27 @@ class ProductOfCateFragment(private val category: ReviewCategory) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view: View = inflater.inflate(R.layout.fragment_product_of_cate, container, false)
+        // Inflate the layout for this fragment
+        var view: View = inflater.inflate(R.layout.fragment_menu, container, false)
 
+        revListCategory = view.findViewById(R.id.revListCategory)
         btnBack = view.findViewById(R.id.btnBack)
-        tvCate = view.findViewById(R.id.tvCate)
-        revProductOfCate = view.findViewById(R.id.revProductOfCate)
 
-        tvCate!!.setText(category.name)
+
 
         btnBack!!.setOnClickListener {
+            Search.edtSearch.setText("")
+
 //            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
 //            fragmentManager.beginTransaction().replace(
 //                R.id.container,
 //                HomeFragment()
-//            ).commit()
-            Log.i("test","nhan quay lai")
+//            ).addToBackStack(null).commit()
+
             parentFragmentManager.popBackStack()
         }
 
         if(!isApiCalled) {
-            apiCategoryInstance = RetrofitInstance.getInstance().create(CategoryController::class.java)
-
-            val categoryId: Int = category.id
-            val api = apiCategoryInstance.getAllProductsOfCate(categoryId)
 
             val dialog = ProgressDialog(context)
             dialog.create()
@@ -112,35 +109,58 @@ class ProductOfCateFragment(private val category: ReviewCategory) : Fragment() {
                 dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
             }
 
-            api.enqueue(object : Callback<List<Product>> {
+            RetrofitInstance.getInstance().create(CategoryController::class.java).getCategoryProduct().enqueue(object :
+                Callback<List<ReviewCategory>> {
                 override fun onResponse(
-                    call: Call<List<Product>>,
-                    response: Response<List<Product>>
+                    call: Call<List<ReviewCategory>>,
+                    response: Response<List<ReviewCategory>>
                 ) {
 
                     if (response.isSuccessful) {
                         val data = response.body()
+
                         dialog.dismiss()
-                        listProduct = data as List<Product>
-                        adapter = ListProductAdapter(listProduct, container!!.context);
-                        revProductOfCate!!.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
-                        revProductOfCate!!.adapter= adapter
+                        listReviewCategory = data as List<ReviewCategory>
+                        adapter = NameCategoryAdapter(listReviewCategory, container!!.context);
+                        revListCategory.layoutManager = LinearLayoutManager(container!!.context, RecyclerView.VERTICAL, false)
+                        revListCategory.adapter= adapter
                         isApiCalled = true
                     }else{
-                        Toast.makeText(container!!.context, "Fail",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(container!!.context, "Fail", Toast.LENGTH_SHORT).show()
                     }
                 }
-                override fun onFailure(call: Call<List<Product>>, t: Throwable) {
-                    Toast.makeText(container!!.context,t.message,Toast.LENGTH_SHORT).show()
+                override fun onFailure(call: Call<List<ReviewCategory>>, t: Throwable) {
+                    Toast.makeText(container!!.context,t.message, Toast.LENGTH_SHORT).show()
                     println(t.message)
                 }
             })
         }
 
-        adapter = ListProductAdapter(listProduct, container!!.context);
-        revProductOfCate!!.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
-        revProductOfCate!!.adapter= adapter
+        adapter = NameCategoryAdapter(listReviewCategory, container!!.context);
+        revListCategory.layoutManager = LinearLayoutManager(container!!.context, RecyclerView.VERTICAL, false)
+        revListCategory.adapter= adapter
+
 
         return view
+    }
+
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment MenuFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            MenuFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
+            }
     }
 }

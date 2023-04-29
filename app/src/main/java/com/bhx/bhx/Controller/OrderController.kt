@@ -5,6 +5,6 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface OrderController {
-    @GET("/orders")
+    @GET("/users/111/orders")
     fun getOrderList(): Call<List<Order>>
 }

@@ -8,11 +8,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green">#4CAF50</color>
-    <color name="color_btn_menu">#e9f5f0</color>
-    <color name="green_max">#026830</color>
-    <color name="yellow">#fdff00</color>
-    <color name="gray">#8E8D8D</color>
-    <color name="green_min">#B7F1D1</color>
+    <color name="color_btn_menu">#EAD30A</color>
+    <color name="primary_max">#053383</color>
+    <color name="primary_min">#1985D6</color>
     <color name="gray_silver">#C0C0C0</color>
     <color name="gray_min">#C4C7C6</color>
+    <color name="yellow">#fdff00</color>
+    <color name="gray">#8E8D8D</color>
 </resources>

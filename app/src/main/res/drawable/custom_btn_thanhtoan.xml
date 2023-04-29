@@ -3,7 +3,7 @@
     <item>
         <shape android:shape="rectangle">
             <!-- Màu nền của nút -->
-            <solid android:color="@color/green_max" />
+            <solid android:color="@color/primary_max" />
             <!-- Độ rộng và màu của đường viền -->
             <stroke
                 android:width="0.8dp"

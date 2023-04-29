@@ -22,6 +22,8 @@ import com.bumptech.glide.Glide
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.NumberFormat
+import java.util.*
 
 class DetailProductFragment(private val product: Product) : Fragment() {
 
@@ -64,7 +66,9 @@ class DetailProductFragment(private val product: Product) : Fragment() {
                 if (response.isSuccessful){
                     val product: Product? = response.body()
                     tvNameProduct.setText(product!!.name)
-                    tvPriceProduct.setText(product!!.unit_price.toString())
+                    val formatter = NumberFormat.getCurrencyInstance(Locale("vi", "VN"));
+                    formatter.currency = Currency.getInstance("VND");
+                    tvPriceProduct.setText(formatter.format((product!!.unit_price)))
                     tvInfor.setText(product!!.general_description)
                     //attribute
                     adapter = PropertiesAdapter(product?.attribute_label, product?.attribute_value)
@@ -88,11 +92,13 @@ class DetailProductFragment(private val product: Product) : Fragment() {
 
 
         btnBack!!.setOnClickListener {
-            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
-            fragmentManager.beginTransaction().replace(
-                R.id.container,
-                HomeFragment()
-            ).commit()
+//            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+//            fragmentManager.beginTransaction().replace(
+//                R.id.container,
+//                HomeFragment()
+//            ).commit()
+
+            parentFragmentManager.popBackStack()
         }
 
         return view

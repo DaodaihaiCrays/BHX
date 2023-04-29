@@ -36,12 +36,12 @@ class OrderRvAdapter(private val orderList: List<Order>,  private var onClickLis
         if (orderList[position].list.size > 1){
             title += " +${orderList[position].list.size - 1}"
         }
-        for (i in orderList[position].list){
-            totalPrice += i.totalPrice
-        }
+//        for (i in orderList[position].list){
+//            totalPrice += i.totalPrice
+//        }
         holder.orderName?.text = title
-        holder.delveryTime?.text = orderList[position].deliveryTime
-        val totalPriceStr = "$totalPrice vnd"
+        holder.delveryTime?.text = orderList[position].deliveryDate
+        val totalPriceStr = "${orderList[position].totalPrice} vnd"
         holder.totalPrice?.text = totalPriceStr
 
         holder.itemView.setOnClickListener{

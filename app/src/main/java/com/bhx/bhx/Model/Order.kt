@@ -21,11 +21,11 @@ data class Order (
     @Expose()
     val id: Int,
 
-    @SerializedName("item_list")
+    @SerializedName("items")
     val list: List<OrderItem>,
 //=== replace by data class ===
-    @SerializedName("user")
-    val user: String,
+    @SerializedName("user_id")
+    val user_id: String,
 //===
     @SerializedName("fullname")
     val fullname: String,
@@ -51,10 +51,22 @@ data class Order (
     @SerializedName("address")
     val address: String,
 //=== replace by data class ===
-    @SerializedName("delivery_time")
-    val deliveryTime: String,
+    @SerializedName("delivery_date")
+    val deliveryDate: String,
 
-    @SerializedName("payment_method")
-    val paymentMethod: String
+    @SerializedName("delivery_timerange_id")
+    val deliveryTimerange: String,
+
+    @SerializedName("payment_method_id")
+    val paymentMethod: String,
+
+    @SerializedName("total_price")
+    val totalPrice: Int,
+
+    @SerializedName("id_paid")
+    val isPaid: Boolean,
+
+    @SerializedName("status")
+    val status: String
 //===
 )
