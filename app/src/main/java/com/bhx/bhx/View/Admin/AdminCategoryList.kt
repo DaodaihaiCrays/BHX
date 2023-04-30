@@ -64,7 +64,6 @@ class AdminCategoryList : Fragment() {
                 call: Call<List<Category>>,
                 response: Response<List<Category>>
             ) {
-
                 if (response.isSuccessful) {
                     var listOfCategory: List<Category>? = response.body()
 
@@ -77,12 +76,13 @@ class AdminCategoryList : Fragment() {
 
                     tableLayout.removeAllViews()
                     var rowHeader = listOf<String>("Tên", "Mô tả", "")
-                    tableLayout.addView(rowHeader)
+
 
                     for (i in 0 until myAdapter.count) {
                         val rowView = myAdapter.getView(i, null, tableLayout)
                         tableLayout.addView(rowView)
                     }
+
                 }else{
                     Toast.makeText(container!!.context, "Fail",Toast.LENGTH_SHORT).show()
                 }
