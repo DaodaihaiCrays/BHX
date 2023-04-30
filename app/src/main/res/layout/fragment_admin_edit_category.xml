@@ -87,6 +87,6 @@
         android:textColor="@color/black"
         android:gravity="center"
         android:textSize="20dp"
-        android:text="TẠO LOẠI SẢN PHẨM" />
+        android:text="HIỆU CHỈNH LOẠI SẢN PHẨM" />
 
 </RelativeLayout>

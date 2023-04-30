@@ -1,18 +1,22 @@
 package com.bhx.bhx.View.Admin.Adapter
 
+import android.app.AlertDialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.Typeface
 import android.util.Log
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.TableLayout
-import android.widget.TableRow
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import com.bhx.bhx.Model.Category
 import com.bhx.bhx.R
+import com.bhx.bhx.View.Admin.AdminEditCategory
+import com.bhx.bhx.View.ProductOfCateFragment.ProductOfCateFragment
 
 class AdminCategoryAdapter(private val context: Context, private var data: List<Category>) : BaseAdapter() {
     override fun getCount(): Int {
@@ -35,6 +39,9 @@ class AdminCategoryAdapter(private val context: Context, private var data: List<
 
         val textView1 = TextView(context)
         textView1.text = data[position].name
+        textView1.width = 100
+        textView1.maxLines = 2
+        textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
         textView1.setPadding(10, 10, 10, 10)
         if (position % 2 == 0) {
             textView1.background = ContextCompat.getDrawable(context, R.drawable.admin_table_colors)
@@ -45,7 +52,10 @@ class AdminCategoryAdapter(private val context: Context, private var data: List<
         tableRow.addView(textView1)
 
         val textView2 = TextView(context)
-        textView2.text = data[position].description
+        textView2.text = "data[position].description"
+        textView2.width = 100
+        textView2.maxLines = 3
+        textView2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
         textView2.setPadding(10, 10, 10, 10)
         if (position % 2 == 0) {
             textView2.background = ContextCompat.getDrawable(context, R.drawable.admin_table_colors)
@@ -57,7 +67,14 @@ class AdminCategoryAdapter(private val context: Context, private var data: List<
         tableRow.addView(textView2)
 
         val textView3 = TextView(context)
-        textView3.text = ""
+        val tvXoa:TextView?? = null
+        textView3.setText("Chọn")
+        textView3.setTextColor(Color.BLUE)
+        textView3.setTypeface(null, Typeface.ITALIC)
+        textView3.gravity = Gravity.CENTER
+        textView3.width = 30
+        textView3.maxLines = 2
+        textView3.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
         textView3.setPadding(10, 10, 10, 10)
         if (position % 2 == 0) {
             textView3.background = ContextCompat.getDrawable(context, R.drawable.admin_table_colors)
@@ -72,6 +89,37 @@ class AdminCategoryAdapter(private val context: Context, private var data: List<
             // Lấy thông tin của hàng được bấm
             val rowData = data[position].id
             Log.d("TAG", "Row data: $rowData")
+
+            val builder = AlertDialog.Builder(context)
+
+// Thiết lập tiêu đề và thông điệp cho Dialog
+            builder.setTitle("Thông báo")
+            builder.setMessage("Hãy chọn một trong hai lựa chọn!")
+
+// Thêm hai nút cho hai lựa chọn
+            builder.setPositiveButton("Xóa") { dialog, _ ->
+                // Xử lý khi người dùng chọn lựa chọn 1
+
+                dialog.dismiss()
+            }
+            builder.setNegativeButton("Điều chỉnh") { dialog, _ ->
+                // Xử lý khi người dùng chọn lựa chọn 2
+                val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+                fragmentManager.beginTransaction().replace(
+                    R.id.container,
+                    AdminEditCategory()
+                ).commit()
+                dialog.dismiss()
+            }
+
+            builder.setNeutralButton("Quay lại") { dialog, _ ->
+                // Xử lý khi người dùng chọn "Quay lại"
+                dialog.dismiss()
+            }
+
+// Tạo và hiển thị Dialog
+            val alertDialog = builder.create()
+            alertDialog.show()
         }
 
         return tableRow
