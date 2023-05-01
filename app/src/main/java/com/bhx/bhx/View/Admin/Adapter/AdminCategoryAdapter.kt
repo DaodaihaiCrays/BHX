@@ -36,12 +36,15 @@ class AdminCategoryAdapter(private val context: Context, private var data: List<
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val tableRow = TableRow(context)
+        val params = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 200) // Chiều cao cố định là 200 pixels
+        tableRow.layoutParams = params
 
         val textView1 = TextView(context)
         textView1.text = data[position].name
         textView1.width = 100
+        textView1.height = 200
         textView1.maxLines = 2
-        textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
+        textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f)
         textView1.setPadding(10, 10, 10, 10)
         if (position % 2 == 0) {
             textView1.background = ContextCompat.getDrawable(context, R.drawable.admin_table_colors)
@@ -53,9 +56,10 @@ class AdminCategoryAdapter(private val context: Context, private var data: List<
 
         val textView2 = TextView(context)
         textView2.text = "data[position].description"
+        textView2.height = 200
         textView2.width = 100
         textView2.maxLines = 3
-        textView2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
+        textView2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f)
         textView2.setPadding(10, 10, 10, 10)
         if (position % 2 == 0) {
             textView2.background = ContextCompat.getDrawable(context, R.drawable.admin_table_colors)
@@ -71,11 +75,12 @@ class AdminCategoryAdapter(private val context: Context, private var data: List<
         textView3.setText("Chọn")
         textView3.setTextColor(Color.BLUE)
         textView3.setTypeface(null, Typeface.ITALIC)
-        textView3.gravity = Gravity.CENTER
-        textView3.width = 30
-        textView3.maxLines = 2
-        textView3.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
-        textView3.setPadding(10, 10, 10, 10)
+        textView3.gravity = Gravity.CENTER_HORIZONTAL
+        textView3.height = 200
+        textView3.width = 100
+        textView3.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f)
+        textView3.setPadding(0, 10, 10, 0)
+        //textView3.setPadding(10, 40, 10, 120)
         if (position % 2 == 0) {
             textView3.background = ContextCompat.getDrawable(context, R.drawable.admin_table_colors)
         }
@@ -92,13 +97,10 @@ class AdminCategoryAdapter(private val context: Context, private var data: List<
 
             val builder = AlertDialog.Builder(context)
 
-// Thiết lập tiêu đề và thông điệp cho Dialog
             builder.setTitle("Thông báo")
             builder.setMessage("Hãy chọn một trong hai lựa chọn!")
 
-// Thêm hai nút cho hai lựa chọn
             builder.setPositiveButton("Xóa") { dialog, _ ->
-                // Xử lý khi người dùng chọn lựa chọn 1
 
                 dialog.dismiss()
             }
@@ -106,7 +108,7 @@ class AdminCategoryAdapter(private val context: Context, private var data: List<
                 // Xử lý khi người dùng chọn lựa chọn 2
                 val fragmentManager = (context as AppCompatActivity).supportFragmentManager
                 fragmentManager.beginTransaction().replace(
-                    R.id.container,
+                    R.id.adminContainer,
                     AdminEditCategory()
                 ).commit()
                 dialog.dismiss()

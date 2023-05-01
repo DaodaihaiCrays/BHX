@@ -76,8 +76,8 @@ class AdminCategoryList : Fragment() {
                     val myAdapter = AdminCategoryAdapter(requireContext(), listOfCategory)
 
                     tableLayout.removeAllViews()
-                    var rowHeader = listOf<String>("Tên", "Mô tả", "")
-                    tableLayout.addView(rowHeader)
+//                    var rowHeader = listOf<String>("Tên", "Mô tả", "")
+//                    tableLayout.addView(rowHeader)
 
                     for (i in 0 until myAdapter.count) {
                         val rowView = myAdapter.getView(i, null, tableLayout)
