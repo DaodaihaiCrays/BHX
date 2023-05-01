@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.bhx.bhx.Controller.CategoryAdminController
 import com.bhx.bhx.Controller.RetrofitInstance
 import com.bhx.bhx.Model.Category
@@ -46,8 +47,13 @@ class AdminEditCategory : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_admin_edit_category, container, false)
         val saveButton = view.findViewById<Button>(R.id.saveBtn)
+        val btnBack = view.findViewById<Button>(R.id.btnBack)
 
         val category = arguments?.getSerializable("categoryEdit") as? Category
+
+        btnBack.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
 
         var apiCategoryAdminInstance: CategoryAdminController = RetrofitInstance.getInstance().create(
             CategoryAdminController::class.java)

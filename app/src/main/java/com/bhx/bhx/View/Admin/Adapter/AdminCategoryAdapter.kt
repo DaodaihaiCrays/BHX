@@ -105,21 +105,18 @@ class AdminCategoryAdapter(private val context: Context, private var data: List<
                 dialog.dismiss()
             }
             builder.setNegativeButton("Điều chỉnh") { dialog, _ ->
-                // Xử lý khi người dùng chọn lựa chọn 2
                 val fragmentManager = (context as AppCompatActivity).supportFragmentManager
                 fragmentManager.beginTransaction().replace(
                     R.id.adminContainer,
                     AdminEditCategory()
-                ).commit()
+                ).addToBackStack(null).commit()
                 dialog.dismiss()
             }
 
             builder.setNeutralButton("Quay lại") { dialog, _ ->
-                // Xử lý khi người dùng chọn "Quay lại"
                 dialog.dismiss()
             }
 
-// Tạo và hiển thị Dialog
             val alertDialog = builder.create()
             alertDialog.show()
         }

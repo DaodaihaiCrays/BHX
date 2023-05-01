@@ -1,13 +1,17 @@
 package com.bhx.bhx.View.Admin
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.HorizontalScrollView
 import android.widget.TableLayout
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +22,7 @@ import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.R
 import com.bhx.bhx.View.Admin.Adapter.AdminCategoryAdapter
 import com.bhx.bhx.View.HomeFragment.ProductAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,6 +42,12 @@ class AdminCategoryList : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var adapter: AdminCategoryAdapter
+    private var lastVisiblePositionY: Int = 0
+
+    private var horizontal_scroll_view:HorizontalScrollView?? =null
+    private var isApiCalled: Boolean = false
+    private var recyclerViewState: Parcelable? = null
+    private var listCategory : List<Category> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,52 +57,83 @@ class AdminCategoryList : Fragment() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        lastVisiblePositionY = horizontal_scroll_view!!.scrollY
+    }
+
+    override fun onResume() {
+        super.onResume()
+        horizontal_scroll_view!!.post { horizontal_scroll_view!!.scrollTo(0, lastVisiblePositionY) }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-
         val view: View = inflater.inflate(R.layout.fragment_admin_category_list, container, false)
+        var tableLayout = view.findViewById<TableLayout>(R.id.table_layout)
+        horizontal_scroll_view = view.findViewById(R.id.horizontal_scroll_view)
+        val btnAdd = view.findViewById<FloatingActionButton>(R.id.btnAdd)
 
-        val tableLayout = view.findViewById<TableLayout>(R.id.table_layout)
+        btnAdd.setOnClickListener {
+            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+            fragmentManager.beginTransaction().replace(
+                R.id.adminContainer,
+                AdminCreateCategory()
+            ).commit()
+        }
 
-        var apiCategoryAdminInstance: CategoryAdminController = RetrofitInstance.getInstance().create(
-            CategoryAdminController::class.java)
+        if(!isApiCalled) {
+            var apiCategoryAdminInstance: CategoryAdminController = RetrofitInstance.getInstance().create(
+                CategoryAdminController::class.java)
 
-        apiCategoryAdminInstance.findAll().enqueue(object : Callback<List<Category>> {
-            override fun onResponse(
-                call: Call<List<Category>>,
-                response: Response<List<Category>>
-            ) {
+            apiCategoryAdminInstance.findAll().enqueue(object : Callback<List<Category>> {
+                override fun onResponse(
+                    call: Call<List<Category>>,
+                    response: Response<List<Category>>
+                ) {
 
-                if (response.isSuccessful) {
-                    var listOfCategory: List<Category>? = response.body()
+                    if (response.isSuccessful) {
+                        var listOfCategory: List<Category>? = response.body()
 
-                    if (listOfCategory == null) {
-                        listOfCategory = listOf<Category>()
-                    }
+                        if (listOfCategory == null) {
+                            listOfCategory = listOf<Category>()
+                        }
+                        listCategory = listOfCategory
+                        Log.i("test", listOfCategory.toString())
+                        val myAdapter = AdminCategoryAdapter(requireContext(), listCategory)
 
-                    Log.i("test", listOfCategory.toString())
-                    val myAdapter = AdminCategoryAdapter(requireContext(), listOfCategory)
-
-                    tableLayout.removeAllViews()
+                        tableLayout.removeAllViews()
 //                    var rowHeader = listOf<String>("Tên", "Mô tả", "")
 //                    tableLayout.addView(rowHeader)
 
-                    for (i in 0 until myAdapter.count) {
-                        val rowView = myAdapter.getView(i, null, tableLayout)
-                        tableLayout.addView(rowView)
+                        for (i in 0 until myAdapter.count) {
+                            val rowView = myAdapter.getView(i, null, tableLayout)
+                            tableLayout.addView(rowView)
+                        }
+                        isApiCalled = true
+                    }else{
+                        Toast.makeText(container!!.context, "Fail",Toast.LENGTH_SHORT).show()
                     }
-                }else{
-                    Toast.makeText(container!!.context, "Fail",Toast.LENGTH_SHORT).show()
                 }
-            }
-            override fun onFailure(call: Call<List<Category>>, t: Throwable) {
-                Toast.makeText(container!!.context,t.message,Toast.LENGTH_SHORT).show()
-                println(t.message)
-            }
-        })
+                override fun onFailure(call: Call<List<Category>>, t: Throwable) {
+                    Toast.makeText(container!!.context,t.message,Toast.LENGTH_SHORT).show()
+                    println(t.message)
+                }
+            })
+        }
+
+        val myAdapter = AdminCategoryAdapter(requireContext(), listCategory)
+
+        tableLayout.removeAllViews()
+//                    var rowHeader = listOf<String>("Tên", "Mô tả", "")
+//                    tableLayout.addView(rowHeader)
+
+        for (i in 0 until myAdapter.count) {
+            val rowView = myAdapter.getView(i, null, tableLayout)
+            tableLayout.addView(rowView)
+        }
 
         return view
     }
