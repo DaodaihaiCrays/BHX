@@ -1,6 +1,7 @@
 package com.bhx.bhx.View.Admin
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -71,23 +72,27 @@ class AdminCreateCategory : Fragment() {
                 val newCategory = Category(null, name.editText?.text.toString(), description.editText?.text.toString())
 
                 apiCategoryAdminInstance.create(newCategory).enqueue(object : Callback<Category> {
-                    override fun onResponse(
-                        call: Call<Category>,
-                        response: Response<Category>
-                    ) {
-
+                    override fun onResponse(call: Call<Category>, response: Response<Category>) {
                         if (response.isSuccessful) {
-                            val data = response.body()
+                            // Category mới được tạo sẽ được trả về ở đây
+                            val category = response.body()
 
+                            Toast.makeText(container!!.context, "Create new category successfully", Toast.LENGTH_SHORT).show()
 
-                        }
-                        else {
-                            Toast.makeText(container!!.context, "Fail",Toast.LENGTH_SHORT).show()
+                            // Điều hướng trở lại danh sách Category
+                            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+                            fragmentManager.beginTransaction().replace(
+                                R.id.adminContainer,
+                                AdminCategoryList()
+                            ).commit()
+                        } else {
+                            Toast.makeText(container!!.context, "Create new category failed", Toast.LENGTH_SHORT).show()
                         }
                     }
+
                     override fun onFailure(call: Call<Category>, t: Throwable) {
-                        Toast.makeText(container!!.context,t.message,Toast.LENGTH_SHORT).show()
-                        println(t.message)
+                        Toast.makeText(container!!.context, "Create new category failed", Toast.LENGTH_SHORT).show()
+                        Log.e("AdminCreateCategory", "Create new category failed", t)
                     }
                 })
             }

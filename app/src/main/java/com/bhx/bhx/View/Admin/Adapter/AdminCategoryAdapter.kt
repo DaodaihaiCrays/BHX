@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
+import android.text.TextUtils
 import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
@@ -11,12 +12,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
+import com.bhx.bhx.Controller.CategoryAdminController
+import com.bhx.bhx.Controller.RetrofitInstance
 import com.bhx.bhx.Model.Category
 import com.bhx.bhx.R
+import com.bhx.bhx.View.Admin.AdminCategoryList
 import com.bhx.bhx.View.Admin.AdminEditCategory
-import com.bhx.bhx.View.ProductOfCateFragment.ProductOfCateFragment
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class AdminCategoryAdapter(private val context: Context, private var data: List<Category>) : BaseAdapter() {
     override fun getCount(): Int {
@@ -32,6 +37,11 @@ class AdminCategoryAdapter(private val context: Context, private var data: List<
     override fun getItemId(position: Int): Long {
         // Trả về id của hàng
         return position.toLong()
+    }
+
+    fun setList(list: List<Category>) {
+        this.data = list
+        notifyDataSetChanged()
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -55,10 +65,11 @@ class AdminCategoryAdapter(private val context: Context, private var data: List<
         tableRow.addView(textView1)
 
         val textView2 = TextView(context)
-        textView2.text = "data[position].description"
+        textView2.text = data[position].description
         textView2.height = 200
         textView2.width = 100
         textView2.maxLines = 3
+        textView2.ellipsize = TextUtils.TruncateAt.END
         textView2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f)
         textView2.setPadding(10, 10, 10, 10)
         if (position % 2 == 0) {
@@ -78,9 +89,9 @@ class AdminCategoryAdapter(private val context: Context, private var data: List<
         textView3.gravity = Gravity.CENTER_HORIZONTAL
         textView3.height = 200
         textView3.width = 100
+        textView3.ellipsize = TextUtils.TruncateAt.END
         textView3.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f)
         textView3.setPadding(0, 10, 10, 0)
-        //textView3.setPadding(10, 40, 10, 120)
         if (position % 2 == 0) {
             textView3.background = ContextCompat.getDrawable(context, R.drawable.admin_table_colors)
         }
@@ -101,14 +112,35 @@ class AdminCategoryAdapter(private val context: Context, private var data: List<
             builder.setMessage("Hãy chọn một trong hai lựa chọn!")
 
             builder.setPositiveButton("Xóa") { dialog, _ ->
+                var apiCategoryAdminInstance: CategoryAdminController = RetrofitInstance.getInstance().create(CategoryAdminController::class.java)
 
+                data[position].id?.let { it1 ->
+                    apiCategoryAdminInstance.delete(it1).enqueue(object : Callback<Void> {
+                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                            if (response.isSuccessful) {
+                                val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+                                fragmentManager.beginTransaction().replace(
+                                    R.id.adminContainer,
+                                    AdminCategoryList()
+                                ).commit()
+                            } else {
+                                Toast.makeText(context, "Delete category failed", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Void>, t: Throwable) {
+                            Toast.makeText(context, "Delete category failed", Toast.LENGTH_SHORT).show()
+                            Log.e("AdminEditCategory", "Delete category failed", t)
+                        }
+                    })
+                }
                 dialog.dismiss()
             }
             builder.setNegativeButton("Điều chỉnh") { dialog, _ ->
                 val fragmentManager = (context as AppCompatActivity).supportFragmentManager
                 fragmentManager.beginTransaction().replace(
                     R.id.adminContainer,
-                    AdminEditCategory()
+                    AdminEditCategory(data[position])
                 ).addToBackStack(null).commit()
                 dialog.dismiss()
             }

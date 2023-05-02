@@ -21,9 +21,6 @@ class AdminActivity : AppCompatActivity() {
             R.id.category -> {
                 // Code xử lý khi người dùng chọn mục Category
                 val categoryFragment = AdminCategoryList()
-                // val bundle = Bundle()
-                // bundle.putSerializable("categoryEdit", message)
-                // categoryFragment.arguments = bundle
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.adminContainer, categoryFragment)
                     .commit()
