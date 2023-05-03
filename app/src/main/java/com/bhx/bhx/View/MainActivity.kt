@@ -105,35 +105,6 @@ class MainActivity : AppCompatActivity() {
                 })
             }
         }
-
-//        Search.edtSearch.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-//            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-//            override fun afterTextChanged(s: Editable) {
-//                val strSearch = s.toString()
-//
-//                if(strSearch.length!=0) {
-//                    RetrofitInstance.getInstance().create(ProductController::class.java).getAllProductsOfSearch(strSearch).enqueue(object : Callback<List<Product>> {
-//                        override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
-//                            if (response.isSuccessful){
-//                                val product: List<Product>? = response.body()
-//
-//                                supportFragmentManager.beginTransaction().replace(
-//                                    R.id.container,
-//                                    ProductOfSearchFragment(product!!)
-//                                ).commit()
-//
-//                            }else {
-//                            }
-//                        }
-//                        override fun onFailure(call: Call<List<Product>>, t: Throwable) {
-//                            Log.i("test","fail2")
-//                        }
-//
-//                    })
-//                }
-//            }
-//        })
     }
 
     private fun bottomMenu() {
