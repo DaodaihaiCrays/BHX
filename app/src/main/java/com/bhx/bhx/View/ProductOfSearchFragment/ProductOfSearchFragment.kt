@@ -58,12 +58,7 @@ class ProductOfSearchFragment(private val listProduct: List<Product>) : Fragment
 
         btnBack!!.setOnClickListener {
             Search.edtSearch.setText("")
-
-            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
-            fragmentManager.beginTransaction().replace(
-                R.id.container,
-                HomeFragment()
-            ).commit()
+            parentFragmentManager.popBackStack()
         }
 
         adapter = ListProductAdapter(listProduct,container!!.context)
