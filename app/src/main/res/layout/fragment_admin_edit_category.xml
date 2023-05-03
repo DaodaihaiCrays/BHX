@@ -5,6 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
+
     <Button
         android:id="@+id/btnBack"
         android:layout_width="wrap_content"
@@ -77,9 +78,9 @@
                 android:layout_width="117dp"
                 android:layout_height="56dp"
                 android:layout_weight="1"
+                android:backgroundTint="@color/color_text_btn_admin"
                 android:text="Lưu"
                 android:textColor="@color/black"
-                android:backgroundTint="@color/color_text_btn_admin"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.967"
@@ -99,10 +100,10 @@
         android:layout_marginStart="9dp"
         android:layout_marginTop="84dp"
         android:layout_marginEnd="10dp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
         android:gravity="center"
+        android:text="HIỆU CHỈNH LOẠI SẢN PHẨM"
+        android:textColor="@color/black"
         android:textSize="20dp"
-        android:text="TẠO LOẠI SẢN PHẨM" />
+        android:textStyle="bold" />
 
 </RelativeLayout>

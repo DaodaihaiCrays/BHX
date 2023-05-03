@@ -1,12 +1,14 @@
 package com.bhx.bhx.View.Admin
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.bhx.bhx.Controller.CategoryAdminController
 import com.bhx.bhx.Controller.RetrofitInstance
 import com.bhx.bhx.Model.Category
@@ -46,8 +48,17 @@ class AdminCreateCategory : Fragment() {
         val view = inflater.inflate(R.layout.fragment_admin_create_category, container, false)
 
         val saveButton = view.findViewById<Button>(R.id.saveBtn)
+        val btnBack = view.findViewById<Button>(R.id.btnBack)
 
         val category = arguments?.getSerializable("categoryEdit") as? Category
+
+        btnBack.setOnClickListener {
+            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+            fragmentManager.beginTransaction().replace(
+                R.id.adminContainer,
+                AdminCategoryList()
+            ).commit()
+        }
 
         var apiCategoryAdminInstance: CategoryAdminController = RetrofitInstance.getInstance().create(CategoryAdminController::class.java)
 
@@ -61,23 +72,27 @@ class AdminCreateCategory : Fragment() {
                 val newCategory = Category(null, name.editText?.text.toString(), description.editText?.text.toString())
 
                 apiCategoryAdminInstance.create(newCategory).enqueue(object : Callback<Category> {
-                    override fun onResponse(
-                        call: Call<Category>,
-                        response: Response<Category>
-                    ) {
-
+                    override fun onResponse(call: Call<Category>, response: Response<Category>) {
                         if (response.isSuccessful) {
-                            val data = response.body()
+                            // Category mới được tạo sẽ được trả về ở đây
+                            val category = response.body()
 
+                            Toast.makeText(container!!.context, "Create new category successfully", Toast.LENGTH_SHORT).show()
 
-                        }
-                        else {
-                            Toast.makeText(container!!.context, "Fail",Toast.LENGTH_SHORT).show()
+                            // Điều hướng trở lại danh sách Category
+                            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+                            fragmentManager.beginTransaction().replace(
+                                R.id.adminContainer,
+                                AdminCategoryList()
+                            ).commit()
+                        } else {
+                            Toast.makeText(container!!.context, "Create new category failed", Toast.LENGTH_SHORT).show()
                         }
                     }
+
                     override fun onFailure(call: Call<Category>, t: Throwable) {
-                        Toast.makeText(container!!.context,t.message,Toast.LENGTH_SHORT).show()
-                        println(t.message)
+                        Toast.makeText(container!!.context, "Create new category failed", Toast.LENGTH_SHORT).show()
+                        Log.e("AdminCreateCategory", "Create new category failed", t)
                     }
                 })
             }

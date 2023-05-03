@@ -17,5 +17,7 @@
     <color name="table_row_odd">#FFFFFF</color>
     <color name="table_row_even">#f3f3f3</color>
     <color name="admin_table_border_color">#CCCCCC</color>
+    <color name="color_text_action">#024F8C</color>
+    <color name="color_text_btn_admin">#5EA7E1</color>
 
 </resources>
