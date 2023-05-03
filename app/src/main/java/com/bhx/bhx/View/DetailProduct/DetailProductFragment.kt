@@ -14,11 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Controller.ProductController
 import com.bhx.bhx.Controller.RetrofitInstance
+import com.bhx.bhx.Global.ShoppingCart
 import com.bhx.bhx.Model.Product
 import com.bhx.bhx.R
 import com.bhx.bhx.View.HomeFragment.HomeFragment
 import com.bhx.bhx.View.HomeFragment.ListProductAdapter
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,6 +42,7 @@ class DetailProductFragment(private val product: Product) : Fragment() {
     lateinit var tvPriceProduct: TextView
     lateinit var tvInfor: TextView
     lateinit var imgProduct:ImageView
+    lateinit var btnBuy: Button;
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -54,6 +57,7 @@ class DetailProductFragment(private val product: Product) : Fragment() {
         tvPriceProduct = view.findViewById(R.id.tvPrice)
         tvInfor = view.findViewById(R.id.tvInfor)
         imgProduct = view.findViewById(R.id.imgProduct)
+        btnBuy = view.findViewById(R.id.btnBuy);
 
         Glide.with(container!!.context).load(product.banner).error(R.drawable.xoai).into(imgProduct)
 
@@ -93,6 +97,12 @@ class DetailProductFragment(private val product: Product) : Fragment() {
                 R.id.container,
                 HomeFragment()
             ).commit()
+        }
+
+        btnBuy!!.setOnClickListener {
+            ShoppingCart.getInstance().addItem(product);
+
+            Snackbar.make(it, "Đã thêm ${product.name} vào giỏ hàng", 1000).show();
         }
 
         return view

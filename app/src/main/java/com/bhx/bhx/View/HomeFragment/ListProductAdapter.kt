@@ -14,10 +14,10 @@ import com.bhx.bhx.Model.Product
 import com.bhx.bhx.R
 import com.bhx.bhx.View.DetailProduct.DetailProductFragment
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 
-class ListProductAdapter(private var listProduct: List<Product>, private val context: Context):
-    RecyclerView.Adapter<ListProductAdapter.ListProductViewHolder>()
-{
+class ListProductAdapter(private var listProduct: List<Product>, private val context: Context) :
+    RecyclerView.Adapter<ListProductAdapter.ListProductViewHolder>() {
 
     fun setList(list: List<Product>) {
         this.listProduct = list
@@ -31,6 +31,7 @@ class ListProductAdapter(private var listProduct: List<Product>, private val con
         val tvPrice: TextView = itemView.findViewById(R.id.tvPrice)
         val tvBuy: TextView = itemView.findViewById(R.id.tvBuy)
     }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -42,7 +43,8 @@ class ListProductAdapter(private var listProduct: List<Product>, private val con
     override fun onBindViewHolder(holder: ListProductViewHolder, position: Int) {
         holder.tvName.text = listProduct[position].name
         holder.tvPrice.text = listProduct[position].unit_price.toString()
-        Glide.with(context).load(listProduct[position].banner).error(R.drawable.xoai).into(holder.imageView)
+        Glide.with(context).load(listProduct[position].banner).error(R.drawable.xoai)
+            .into(holder.imageView)
 
         holder.tvName.setOnClickListener {
             val fragmentManager = (context as AppCompatActivity).supportFragmentManager
@@ -60,7 +62,7 @@ class ListProductAdapter(private var listProduct: List<Product>, private val con
             ).commit()
         }
 
-        holder.imageView.setOnClickListener{
+        holder.imageView.setOnClickListener {
             val fragmentManager = (context as AppCompatActivity).supportFragmentManager
             fragmentManager.beginTransaction().replace(
                 R.id.container,
@@ -70,7 +72,8 @@ class ListProductAdapter(private var listProduct: List<Product>, private val con
 
         holder.tvBuy.setOnClickListener {
             ShoppingCart.getInstance().addItem(listProduct[position]);
-//            Toast.makeText(holder.itemView.context, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+
+            Snackbar.make(it, "Đã thêm ${listProduct[position].name} vào giỏ hàng", 1000).show();
         }
     }
 
