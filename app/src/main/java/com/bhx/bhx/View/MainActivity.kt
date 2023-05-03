@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var chipNavigationBar: ChipNavigationBar
     //public lateinit var edtSearch: AutoCompleteTextView
     lateinit var btnMenu: Button
+    lateinit var btnSearch: Button
     private lateinit var adapter: ProductAdapter
     private lateinit var revProducts: RecyclerView
 
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity() {
 
         Search.edtSearch = findViewById(R.id.edtSearch)
         btnMenu = findViewById(R.id.btnMenu)
+        btnSearch = findViewById(R.id.btnSearch)
 
         chipNavigationBar = findViewById(R.id.bottomNav);
         chipNavigationBar.setItemSelected(R.id.home, true);
@@ -79,34 +81,59 @@ class MainActivity : AppCompatActivity() {
             ).addToBackStack(null).commit()
         }
 
-        Search.edtSearch.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable) {
-                val strSearch = s.toString()
+        btnSearch.setOnClickListener {
+            val strSearch = Search.edtSearch.text.toString()
 
-                if(strSearch.length!=0) {
-                    RetrofitInstance.getInstance().create(ProductController::class.java).getAllProductsOfSearch(strSearch).enqueue(object : Callback<List<Product>> {
-                        override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
-                            if (response.isSuccessful){
-                                val product: List<Product>? = response.body()
+            if(strSearch.length!=0) {
+                RetrofitInstance.getInstance().create(ProductController::class.java).getAllProductsOfSearch(strSearch).enqueue(object : Callback<List<Product>> {
+                    override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
+                        if (response.isSuccessful){
+                            val product: List<Product>? = response.body()
 
-                                supportFragmentManager.beginTransaction().replace(
-                                    R.id.container,
-                                    ProductOfSearchFragment(product!!)
-                                ).commit()
+                            supportFragmentManager.beginTransaction().replace(
+                                R.id.container,
+                                ProductOfSearchFragment(product!!)
+                            ).commit()
 
-                            }else {
-                            }
+                        }else {
                         }
-                        override fun onFailure(call: Call<List<Product>>, t: Throwable) {
-                            Log.i("test","fail2")
-                        }
+                    }
+                    override fun onFailure(call: Call<List<Product>>, t: Throwable) {
+                        Log.i("test","fail2")
+                    }
 
-                    })
-                }
+                })
             }
-        })
+        }
+
+//        Search.edtSearch.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+//            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+//            override fun afterTextChanged(s: Editable) {
+//                val strSearch = s.toString()
+//
+//                if(strSearch.length!=0) {
+//                    RetrofitInstance.getInstance().create(ProductController::class.java).getAllProductsOfSearch(strSearch).enqueue(object : Callback<List<Product>> {
+//                        override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
+//                            if (response.isSuccessful){
+//                                val product: List<Product>? = response.body()
+//
+//                                supportFragmentManager.beginTransaction().replace(
+//                                    R.id.container,
+//                                    ProductOfSearchFragment(product!!)
+//                                ).commit()
+//
+//                            }else {
+//                            }
+//                        }
+//                        override fun onFailure(call: Call<List<Product>>, t: Throwable) {
+//                            Log.i("test","fail2")
+//                        }
+//
+//                    })
+//                }
+//            }
+//        })
     }
 
     private fun bottomMenu() {
