@@ -43,11 +43,12 @@ class AdminCategoryList : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var lastVisiblePositionY: Int = 0
-    private var autoCompleteTextView: AutoCompleteTextView?? = null
+    private var edtSearch: EditText?? = null
     private var horizontal_scroll_view:HorizontalScrollView?? =null
     private var isApiCalled: Boolean = false//Kiểm tra nếu call rồi thì kh call nữa
     private var listCategory : List<Category> = listOf()//Để khi không cần load lại api thì vẫn còn Cate cũ
     private var listCategorySearch : List<Category> = listOf()//Để lưu lại cate khi search
+    private var btnSearch:Button??=null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,7 +78,8 @@ class AdminCategoryList : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_admin_category_list, container, false)
         var tableLayout = view.findViewById<TableLayout>(R.id.table_layout)
         horizontal_scroll_view = view.findViewById(R.id.horizontal_scroll_view)
-        autoCompleteTextView = view.findViewById(R.id.autoCompleteTextView)
+        edtSearch = view.findViewById(R.id.edtSearch)
+        btnSearch = view.findViewById(R.id.btnSearch)
         val btnAdd = view.findViewById<FloatingActionButton>(R.id.btnAdd)
 
 
@@ -126,15 +128,10 @@ class AdminCategoryList : Fragment() {
             })
         }
 
-        autoCompleteTextView!!.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable) {
-                val strSearch = s.toString()
+        btnSearch!!.setOnClickListener {
+            val strSearch = edtSearch!!.text.toString()
 
-                println(strSearch)
-
-                if(strSearch.length!=0) {
+            if(strSearch.length!=0) {
                     RetrofitInstance.getInstance().create(CategoryAdminController::class.java).findCateOfSearch(strSearch).enqueue(object : Callback<List<Category>> {
                         override fun onResponse(call: Call<List<Category>>, response: Response<List<Category>>) {
                             if (response.isSuccessful){
@@ -172,9 +169,57 @@ class AdminCategoryList : Fragment() {
                         AdminCategoryList()
                     ).commit()
                 }
+        }
 
-            }
-        })
+//        autoCompleteTextView!!.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+//            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+//            override fun afterTextChanged(s: Editable) {
+//                val strSearch = s.toString()
+//
+//                println(strSearch)
+//
+//                if(strSearch.length!=0) {
+//                    RetrofitInstance.getInstance().create(CategoryAdminController::class.java).findCateOfSearch(strSearch).enqueue(object : Callback<List<Category>> {
+//                        override fun onResponse(call: Call<List<Category>>, response: Response<List<Category>>) {
+//                            if (response.isSuccessful){
+//                                var listOfCategory: List<Category>? = response.body()
+//
+//                                if (listOfCategory == null) {
+//                                    listOfCategory = listOf<Category>()
+//                                }
+//                                listCategorySearch = listOfCategory as List<Category>
+//                                val myAdapter = AdminCategoryAdapter(requireContext(), listCategorySearch)
+//
+//                                tableLayout.removeAllViews()
+//
+//                                for (i in 0 until myAdapter.count) {
+//                                    val rowView = myAdapter.getView(i, null, tableLayout)
+//                                    tableLayout.addView(rowView)
+//                                }
+//                            }else {
+//                                Log.i("test","fail1")
+//                                //Toast.makeText(context, "Fail",Toast.LENGTH_SHORT).show()
+//                            }
+//                        }
+//
+//                        override fun onFailure(call: Call<List<Category>>, t: Throwable) {
+//                            TODO("Not yet implemented")
+//                            Log.i("test","fail2")
+//                        }
+//
+//                    })
+//                }
+//                else {
+//                    val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+//                    fragmentManager.beginTransaction().replace(
+//                        R.id.adminContainer,
+//                        AdminCategoryList()
+//                    ).commit()
+//                }
+//
+//            }
+//        })
 
         tableLayout.removeAllViews()
 //                    var rowHeader = listOf<String>("Tên", "Mô tả", "")

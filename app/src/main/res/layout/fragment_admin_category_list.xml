@@ -30,12 +30,31 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteTextView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:hint="Tìm kiếm" />
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edtSearch"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center"
+                    android:layout_marginLeft="50dp"
+                    android:hint="Tìm kiếm" />
+
+                <Button
+                    android:id="@+id/btnSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="Tìm kiếm"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/color_text_btn_admin"/>
+
+            </LinearLayout>
+
+
 
             <TableLayout
                 android:id="@+id/table_layout_1"
