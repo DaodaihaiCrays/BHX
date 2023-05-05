@@ -1,18 +1,24 @@
 package com.bhx.bhx.View.Comments
 
+import android.app.Dialog
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Model.Comments
 import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.R
 import com.bhx.bhx.View.ProductOfCateFragment.ProductOfCateFragment
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 
 class CommentsAdapter(private val comments: List<Comments>, private val context: Context):
@@ -22,6 +28,7 @@ class CommentsAdapter(private val comments: List<Comments>, private val context:
         val tvNameCmt: TextView = itemView.findViewById(R.id.tvNameCmt)
         val tvContent: TextView = itemView.findViewById(R.id.tvContent)
         val revSubCmt: RecyclerView = itemView.findViewById(R.id.revSubCmt)
+        val tvRepCmt: TextView = itemView.findViewById(R.id.tvRepCmt)
     }
 
     override fun onCreateViewHolder(
@@ -42,6 +49,28 @@ class CommentsAdapter(private val comments: List<Comments>, private val context:
         adapter = SubCommentsAdapter(comments[position].replies, context)
         holder.revSubCmt.adapter = adapter
         holder.revSubCmt.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+
+        holder.tvRepCmt.setOnClickListener {
+            val dialog = Dialog(context)
+            dialog.setContentView(R.layout.dialog_replycmt_layout)
+            dialog.setCancelable(false)
+            val displayMetrics = context?.resources?.displayMetrics
+            val screenWidth = displayMetrics?.widthPixels
+            val width = (screenWidth?.times(1))?.toInt()
+            if (width != null) {
+                dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
+            }
+
+
+            val inputText = dialog.findViewById<TextInputLayout>(R.id.tiRepCmt)
+            val closeButton = dialog.findViewById<Button>(R.id.btnBack)
+
+            closeButton.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            dialog.show()
+        }
     }
 
     override fun getItemCount(): Int {

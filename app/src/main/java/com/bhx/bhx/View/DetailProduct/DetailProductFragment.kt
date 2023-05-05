@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Controller.CommentsController
@@ -22,6 +24,11 @@ import com.bhx.bhx.R
 import com.bhx.bhx.View.Comments.CommentsAdapter
 import com.bhx.bhx.View.HomeFragment.ListProductAdapter
 import com.bumptech.glide.Glide
+import com.google.android.material.textfield.TextInputLayout
+import okhttp3.MediaType
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,6 +54,8 @@ class DetailProductFragment(private val product: Product) : Fragment() {
     lateinit var tvPriceProduct: TextView
     lateinit var tvInfor: TextView
     lateinit var imgProduct:ImageView
+    lateinit var btnSubmitCmt: Button
+    lateinit var tiCmt: TextInputLayout
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -62,6 +71,35 @@ class DetailProductFragment(private val product: Product) : Fragment() {
         tvInfor = view.findViewById(R.id.tvInfor)
         imgProduct = view.findViewById(R.id.imgProduct)
         revComments = view.findViewById(R.id.revCmt)
+        btnSubmitCmt = view.findViewById(R.id.btnSubmitCmt)
+        tiCmt = view.findViewById(R.id.tiCmt)
+
+        btnSubmitCmt.setOnClickListener {
+            var str: String = tiCmt.editText?.text.toString()
+
+            if(str!=null && !str.isEmpty()) {
+                Log.i("test","str= " + str)
+                val commentData = JSONObject().apply {
+                    put("user_id", 9)
+                    put("comment_content", str)
+                }
+                val requestBody = RequestBody.create(MediaType.parse("application/json"), commentData.toString())
+                RetrofitInstance.getInstance().create(ProductController::class.java).postComment(product.id,requestBody).enqueue(object : Callback<ResponseBody>{
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        if (response.isSuccessful){
+                            tiCmt.editText?.setText("")
+                            callApiCmt(container)
+                            Toast.makeText(context,"Bình luận thành công",Toast.LENGTH_LONG).show()
+                        }else {
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    }
+
+                })
+            }
+        }
 
         Glide.with(container!!.context).load(product.banner).error(R.drawable.xoai).into(imgProduct)
 
@@ -93,12 +131,22 @@ class DetailProductFragment(private val product: Product) : Fragment() {
 
         })
 
+        callApiCmt(container)
+
+        btnBack!!.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
+
+        return view
+    }
+
+    fun callApiCmt(container:ViewGroup?) {
         RetrofitInstance.getInstance().create(CommentsController::class.java).getProductComments(product.id).enqueue(object : Callback<List<Comments>>{
             override fun onResponse(call: Call<List<Comments>>, response: Response<List<Comments>>) {
                 if (response.isSuccessful){
                     val data = response.body()
                     val comments: List<Comments> = data as List<Comments>
-                    Log.i("test","dddd: " + product.id)
+
                     adapterComments = CommentsAdapter(comments, container!!.context)
                     revComments.adapter = adapterComments
                     revComments.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -111,13 +159,6 @@ class DetailProductFragment(private val product: Product) : Fragment() {
             }
 
         })
-
-
-        btnBack!!.setOnClickListener {
-            parentFragmentManager.popBackStack()
-        }
-
-        return view
     }
 
 
