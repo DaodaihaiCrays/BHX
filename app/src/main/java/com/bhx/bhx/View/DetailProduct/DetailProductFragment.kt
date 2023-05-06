@@ -1,12 +1,14 @@
 package com.bhx.bhx.View.DetailProduct
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -22,6 +24,7 @@ import com.bhx.bhx.Model.Product
 import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.R
 import com.bhx.bhx.View.Comments.CommentsAdapter
+import com.bhx.bhx.View.Comments.IOnClickRepCmt
 import com.bhx.bhx.View.HomeFragment.ListProductAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
@@ -147,9 +150,10 @@ class DetailProductFragment(private val product: Product) : Fragment() {
                     val data = response.body()
                     val comments: List<Comments> = data as List<Comments>
 
-                    adapterComments = CommentsAdapter(comments, container!!.context)
+                    adapterComments = CommentsAdapter(comments, product.id,container!!.context)
                     revComments.adapter = adapterComments
                     revComments.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+
                 }else {
                 }
             }

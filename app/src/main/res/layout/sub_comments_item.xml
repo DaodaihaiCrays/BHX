@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/gray_min"
-    android:layout_marginBottom="2dp">
+    android:layout_marginBottom="5dp">
 
     <TextView
         android:id="@+id/tvNameSubCmt"
@@ -26,7 +26,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
         android:text="Nội dung"
         android:textSize="13dp"
         app:layout_constraintEnd_toEndOf="parent"

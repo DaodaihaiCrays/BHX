@@ -15,6 +15,9 @@ interface ProductController {
     @POST("products/{id}/comments")
     fun postComment(@Path("id") id: Int, @Body requestBody: RequestBody): Call<ResponseBody>
 
+    @POST("products/{id}/comments/{c_id}")
+    fun postSubComment(@Path("id") id: Int, @Path("c_id") c_id: Int, @Body requestBody: RequestBody): Call<ResponseBody>
+
 //    @GET("products/{id}")
 //    fun getProductWithoutRelated(@Path("id") id: Int, @Query("noRelated") noRelated: Boolean = true): Call<Product>
 }

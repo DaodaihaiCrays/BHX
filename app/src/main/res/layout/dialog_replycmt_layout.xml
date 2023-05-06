@@ -20,12 +20,27 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Close"
-        android:layout_marginLeft="10dp"
-        android:backgroundTint="@color/primary_min"/>
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Close"
+            android:layout_marginLeft="10dp"
+            android:backgroundTint="@color/primary_min"/>
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gửi"
+            android:layout_marginLeft="10dp"
+            android:backgroundTint="@color/primary_min"/>
+    </LinearLayout>
+
 
 </LinearLayout>

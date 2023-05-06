@@ -10,9 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Model.Comments
 import com.bhx.bhx.R
 
-class SubCommentsAdapter(private val comments: List<Comments>, private val context: Context):
+class SubCommentsAdapter(private var comments: List<Comments>, private val context: Context):
     RecyclerView.Adapter<SubCommentsAdapter.SubCommentsAdapterHolder>() {
 
+    fun updateSubCommet(subComments: List<Comments>){
+        comments = subComments
+        notifyDataSetChanged()
+    }
     class SubCommentsAdapterHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvNameSubCmt: TextView = itemView.findViewById(R.id.tvNameSubCmt)
         val tvSubContent: TextView = itemView.findViewById(R.id.tvSubContent)

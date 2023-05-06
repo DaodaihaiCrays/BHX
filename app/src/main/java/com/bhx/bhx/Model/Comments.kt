@@ -22,6 +22,6 @@ class Comments (
 
     @SerializedName("replies")
     @Expose()
-    val replies: List<Comments>,
+    val replies: MutableList<Comments>,
 
     )
