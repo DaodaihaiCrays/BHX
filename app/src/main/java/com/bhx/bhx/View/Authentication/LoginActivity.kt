@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
         if(currentUser != null) {
             UserInfo.getInstance().updateFromApi();
             val intent: Intent = Intent(this, MainActivity::class.java);
-//            startActivity(intent);
+            startActivity(intent); // comment this line to disable auto sign-in
         }
 
         supportFragmentManager.beginTransaction().replace(
