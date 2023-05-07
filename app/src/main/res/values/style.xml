@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="custom_spinner_item" parent="android:style/Widget.ListView.DropDown">
+        <item name="android:divider">@color/gray</item>
+        <item name="android:dividerHeight">1dp</item>
+    </style>
+
+    <style name="custom_spinner">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/custom_spinner_info_page</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:popupBackground">#DFFFFFFF</item>
+        <item name="android:dropDownListViewStyle">@style/custom_spinner_item</item>
+
+    </style>
+</resources>

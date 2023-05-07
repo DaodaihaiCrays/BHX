@@ -13,6 +13,7 @@ class PropertiesAdapter (private val attribute_label: List<String>?, private val
     class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvPropertyLable: TextView = view.findViewById(R.id.tvPropertyLable)
         val tvPropertyValue: TextView = view.findViewById(R.id.tvPropertyValue)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -29,5 +30,7 @@ class PropertiesAdapter (private val attribute_label: List<String>?, private val
         val value = attribute_value!!.get(position)
         holder.tvPropertyLable.setText(lable)
         holder.tvPropertyValue.setText(value)
+
+
     }
 }
