@@ -3,11 +3,13 @@ package com.bhx.bhx.View.Authentication
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import com.bhx.bhx.Constant.AuthConstanst
@@ -24,7 +26,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SignupUsernameFragment: Fragment() {
+class SignupPhoneFragment: Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
     }
@@ -57,14 +59,9 @@ class SignupUsernameFragment: Fragment() {
         auth = FirebaseAuth.getInstance();
         apiUserInstance = RetrofitInstance.getInstance().create(AccountController::class.java);
 
-        accountEdittext.doOnTextChanged { text, start, before, count ->
-            if(text!!.length < AuthConstanst.MIN_USERNAME_LENGTH) {
-                accountTextInputLayout.error = "Tên đăng nhập phải gồm ít nhất ${AuthConstanst.MIN_USERNAME_LENGTH} ký tự";
-            }
-            else {
-                accountTextInputLayout.error = null;
-            }
-        }
+        accountTextInputLayout.hint = "Số điện thoại";
+        accountEdittext.inputType = InputType.TYPE_CLASS_NUMBER;
+        accountTextInputLayout.startIconDrawable = ContextCompat.getDrawable(container?.context!!, R.drawable.ic_phone);
 
         passwordEdittext.doOnTextChanged { text, start, before, count ->
             if(text!!.length < AuthConstanst.MIN_PASSWORD_LENGTH) {
@@ -91,11 +88,10 @@ class SignupUsernameFragment: Fragment() {
                 dialog.setContentView(R.layout.custom_progress_dialog);
                 dialog.setCancelable(false);
                 dialog.show();
-                auth.createUserWithEmailAndPassword(accountEdittext.text.toString() + AuthConstanst.FAKE_USERNAME_DOMAIN, passwordEdittext.text.toString())
+                auth.createUserWithEmailAndPassword(accountEdittext.text.toString() + AuthConstanst.FAKE_PHONE_DOMAIN, passwordEdittext.text.toString())
                     .addOnCompleteListener(requireActivity()) { task ->
                         if (task.isSuccessful) {
                             val user = auth.currentUser;
-//                            Log.d("Shin", user.toString());
                             apiUserInstance.createUser(User(user!!.uid)).enqueue(object : Callback<User> {
                                 override fun onResponse(
                                     call: Call<User>,

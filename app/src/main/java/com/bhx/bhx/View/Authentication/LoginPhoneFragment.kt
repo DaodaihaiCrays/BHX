@@ -2,11 +2,13 @@ package com.bhx.bhx.View.Authentication
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import com.bhx.bhx.Constant.AuthConstanst
@@ -17,7 +19,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import kotlin.math.log
 
-class LoginUsernameFragment : Fragment() {
+class LoginPhoneFragment: Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
     }
@@ -33,7 +35,7 @@ class LoginUsernameFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View? {3
         var view: View = inflater.inflate(R.layout.fragment_login_input, container, false);
 
         accountTextInputLayout = view.findViewById(R.id.accountTextInputLayout);
@@ -43,9 +45,13 @@ class LoginUsernameFragment : Fragment() {
         loginBtn = view.findViewById(R.id.loginBtn);
         auth = FirebaseAuth.getInstance();
 
+        accountTextInputLayout.hint = "Số điện thoại";
+        accountEdittext.inputType = InputType.TYPE_CLASS_NUMBER;
+        accountTextInputLayout.startIconDrawable = ContextCompat.getDrawable(container?.context!!, R.drawable.ic_phone);
+
         accountEdittext.doOnTextChanged { text, start, before, count ->
             if (text!!.isEmpty()) {
-                accountTextInputLayout.error = "Tên đăng nhập không được bỏ trống";
+                accountTextInputLayout.error = "Số điện thoại không được bỏ trống";
             } else {
                 accountTextInputLayout.error = null;
             }
@@ -60,9 +66,9 @@ class LoginUsernameFragment : Fragment() {
         }
 
         loginBtn.setOnClickListener {
-            if (accountTextInputLayout.error.isNullOrEmpty() && passwordTextInputLayout.error.isNullOrEmpty()) {
+            if(accountTextInputLayout.error.isNullOrEmpty() && passwordTextInputLayout.error.isNullOrEmpty()) {
                 auth.signInWithEmailAndPassword(
-                    accountEdittext.text.toString() + AuthConstanst.FAKE_USERNAME_DOMAIN,
+                    accountEdittext.text.toString() + AuthConstanst.FAKE_PHONE_DOMAIN,
                     passwordEdittext.text.toString()
                 )
                     .addOnCompleteListener(requireActivity()) { task ->
@@ -72,7 +78,7 @@ class LoginUsernameFragment : Fragment() {
                                 Intent(requireActivity(), MainActivity::class.java);
                             startActivity(intent);
                         } else {
-                            Snackbar.make(it, "Tên đăng nhập hoặc mật khẩu không đúng", 1000)
+                            Snackbar.make(it, "Số điện thoại hoặc mật khẩu không đúng", 1000)
                                 .show();
                         }
                     }

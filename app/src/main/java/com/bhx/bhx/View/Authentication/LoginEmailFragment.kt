@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import com.bhx.bhx.Constant.AuthConstanst
@@ -17,7 +18,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import kotlin.math.log
 
-class LoginUsernameFragment : Fragment() {
+class LoginEmailFragment: Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
     }
@@ -33,9 +34,8 @@ class LoginUsernameFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View? {3
         var view: View = inflater.inflate(R.layout.fragment_login_input, container, false);
-
         accountTextInputLayout = view.findViewById(R.id.accountTextInputLayout);
         accountEdittext = view.findViewById(R.id.accountEdittext);
         passwordTextInputLayout = view.findViewById(R.id.passwordTextInputLayout);
@@ -43,9 +43,12 @@ class LoginUsernameFragment : Fragment() {
         loginBtn = view.findViewById(R.id.loginBtn);
         auth = FirebaseAuth.getInstance();
 
+        accountTextInputLayout.hint = "Email";
+        accountTextInputLayout.startIconDrawable = ContextCompat.getDrawable(container?.context!!, R.drawable.ic_mail);
+
         accountEdittext.doOnTextChanged { text, start, before, count ->
             if (text!!.isEmpty()) {
-                accountTextInputLayout.error = "Tên đăng nhập không được bỏ trống";
+                accountTextInputLayout.error = "Email không được bỏ trống";
             } else {
                 accountTextInputLayout.error = null;
             }
@@ -60,9 +63,9 @@ class LoginUsernameFragment : Fragment() {
         }
 
         loginBtn.setOnClickListener {
-            if (accountTextInputLayout.error.isNullOrEmpty() && passwordTextInputLayout.error.isNullOrEmpty()) {
+            if(accountTextInputLayout.error.isNullOrEmpty() && passwordTextInputLayout.error.isNullOrEmpty()) {
                 auth.signInWithEmailAndPassword(
-                    accountEdittext.text.toString() + AuthConstanst.FAKE_USERNAME_DOMAIN,
+                    accountEdittext.text.toString(),
                     passwordEdittext.text.toString()
                 )
                     .addOnCompleteListener(requireActivity()) { task ->
@@ -72,8 +75,7 @@ class LoginUsernameFragment : Fragment() {
                                 Intent(requireActivity(), MainActivity::class.java);
                             startActivity(intent);
                         } else {
-                            Snackbar.make(it, "Tên đăng nhập hoặc mật khẩu không đúng", 1000)
-                                .show();
+                            Snackbar.make(it, "Email hoặc mật khẩu không đúng", 1000).show();
                         }
                     }
             } else {

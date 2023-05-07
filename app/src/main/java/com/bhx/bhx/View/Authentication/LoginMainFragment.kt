@@ -17,6 +17,8 @@ class LoginMainFragment: Fragment() {
 
     lateinit var signupBtn: Button;
     lateinit var usernameBtn: MaterialButton;
+    lateinit var phoneBtn: MaterialButton;
+    lateinit var emailBtn: MaterialButton;
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,6 +28,8 @@ class LoginMainFragment: Fragment() {
         var view: View = inflater.inflate(R.layout.fragment_login_main, container, false);
         signupBtn = view.findViewById(R.id.signupBtn);
         usernameBtn = view.findViewById(R.id.usernameLoginBtn);
+        phoneBtn = view.findViewById(R.id.phoneLoginBtn);
+        emailBtn = view.findViewById(R.id.emailLoginBtn);
 
         signupBtn.setOnClickListener {
             val intent: Intent = Intent(container?.context, SignupActivity::class.java);
@@ -36,6 +40,18 @@ class LoginMainFragment: Fragment() {
             parentFragmentManager.beginTransaction().replace(
                 R.id.login_fragment_placeholder,
                 LoginUsernameFragment()
+            ).commit();
+        }
+        phoneBtn.setOnClickListener {
+            parentFragmentManager.beginTransaction().replace(
+                R.id.login_fragment_placeholder,
+                LoginPhoneFragment()
+            ).commit();
+        }
+        emailBtn.setOnClickListener {
+            parentFragmentManager.beginTransaction().replace(
+                R.id.login_fragment_placeholder,
+                LoginEmailFragment()
             ).commit();
         }
         return view;

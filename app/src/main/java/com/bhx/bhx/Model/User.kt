@@ -6,41 +6,41 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class User (
-    @SerializedName("id")
-    val id: Int,
+    @SerializedName("firebase_uid")
+    val id: String,
 
     @SerializedName("email")
-    val email: String,
+    val email: String? = null,
 
     @SerializedName("fullname")
-    val fullname: String,
+    val fullname: String? = null,
 
     @SerializedName("phone_number")
-    val phoneNumber: String,
+    val phoneNumber: String? = null,
 
     @SerializedName("province_id")
-    val provinceId: Int,
+    val provinceId: Int? = null,
 
     @SerializedName("district_id")
-    val districtId: Int, 
+    val districtId: Int? = null,
 
     @SerializedName("ward_id")
-    val wardId: Int, 
+    val wardId: Int? = null,
 
     @SerializedName("address")
-    val address: String, 
+    val address: String? = null,
 
     @SerializedName("gender")
-    val gender: String,
+    val gender: String? = null,
 
     @SerializedName("authority")
-    val authority: String,
+    val authority: String = "CUSTOMER",
 
     @SerializedName("created")
     @Expose()
-    val created: String,
+    val created: String? = null,
 
     @SerializedName("modified")
     @Expose()
-    val modified: String
+    val modified: String? = null
 )

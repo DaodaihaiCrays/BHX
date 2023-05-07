@@ -1,6 +1,7 @@
 package com.bhx.bhx.Global
 
 import android.os.AsyncTask
+import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -9,6 +10,7 @@ import com.bhx.bhx.Controller.UserController
 import com.bhx.bhx.Model.Order
 import com.bhx.bhx.Model.User
 import com.bhx.bhx.View.Adapter.OrderRvAdapter
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,7 +33,7 @@ class UserInfo{
     }
 
     private suspend fun syncFromApi() {
-        val uid = "111"
+        val uid = FirebaseAuth.getInstance().uid!!;
         val apiInstance = RetrofitInstance.getInstance().create(UserController::class.java)
         apiInstance.getUserInfo(uid).enqueue(object : Callback<User> {
             override fun onResponse(

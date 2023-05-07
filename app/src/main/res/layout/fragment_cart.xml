@@ -19,7 +19,7 @@
         android:id="@+id/btnBack"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/green_min"
+        android:backgroundTint="@color/primary_min"
         android:drawableLeft="@drawable/baseline_arrow_back_24"
         app:layout_constraintBottom_toBottomOf="@+id/cartTitle"
         app:layout_constraintStart_toStartOf="@+id/cartTitle"
@@ -79,7 +79,7 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="30dp"
-                android:backgroundTint="@color/green_max"
+                android:backgroundTint="@color/primary_max"
                 android:text="ĐẶt hàng" />
 
         </LinearLayout>

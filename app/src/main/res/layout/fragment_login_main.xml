@@ -22,7 +22,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:text="chưa có tài khoản ?"
-            android:textColor="@color/green" />
+            android:textColor="@color/primary_min" />
 
         <View
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
             android:layout_toLeftOf="@id/tvText"
-            android:background="@color/green" />
+            android:background="@color/primary_min" />
 
         <View
             android:layout_width="match_parent"
@@ -38,7 +38,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="16dp"
             android:layout_toRightOf="@id/tvText"
-            android:background="@color/green" />
+            android:background="@color/primary_min" />
 
     </RelativeLayout>
 
@@ -51,7 +51,7 @@
         android:layout_marginEnd="80dp"
         android:gravity="center"
         android:text="Email"
-        app:backgroundTint="@color/green"
+        app:backgroundTint="@color/primary_min"
         app:icon="@drawable/ic_mail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -67,7 +67,7 @@
         android:layout_marginEnd="80dp"
         android:gravity="center"
         android:text="Tên đăng nhập"
-        app:backgroundTint="@color/green"
+        app:backgroundTint="@color/primary_min"
         app:icon="@drawable/ic_account_circle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -83,7 +83,7 @@
         android:layout_marginEnd="80dp"
         android:gravity="center"
         android:text="Số điện thoại"
-        app:backgroundTint="@color/green"
+        app:backgroundTint="@color/primary_min"
         app:icon="@drawable/ic_phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -96,7 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Đăng nhập"
-        android:textColor="@color/green"
+        android:textColor="@color/primary_min"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -118,7 +118,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:text="hoặc đăng nhập với"
-            android:textColor="@color/green" />
+            android:textColor="@color/primary_min" />
 
         <View
             android:layout_width="match_parent"
@@ -126,7 +126,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
             android:layout_toLeftOf="@id/tvText2"
-            android:background="@color/green" />
+            android:background="@color/primary_min" />
 
         <View
             android:layout_width="match_parent"
@@ -134,12 +134,12 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="16dp"
             android:layout_toRightOf="@id/tvText2"
-            android:background="@color/green" />
+            android:background="@color/primary_min" />
 
     </RelativeLayout>
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/facebookBtn"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="120dp"
@@ -150,7 +150,7 @@
         app:srcCompat="@drawable/facebook" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/googleBtn"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="5dp"
@@ -167,7 +167,7 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="80dp"
-        android:backgroundTint="@color/green"
+        android:backgroundTint="@color/primary_min"
         android:text="Đăng ký"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

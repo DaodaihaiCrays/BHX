@@ -12,7 +12,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
-        android:backgroundTint="@color/green"
+        android:backgroundTint="@color/primary_min"
         android:text="Đăng ký"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -28,16 +28,16 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         android:hint="Mật khẩu"
-        app:boxStrokeColor="@color/green"
+        app:boxStrokeColor="@color/primary_min"
         app:endIconMode="password_toggle"
-        app:hintTextColor="@color/green"
+        app:errorEnabled="true"
+        app:hintTextColor="@color/primary_min"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/accountTextInputLayout"
         app:startIconDrawable="@drawable/ic_lock"
-        app:startIconTint="@color/custom_edittext_selector"
-        app:errorEnabled="true">
+        app:startIconTint="@color/custom_edittext_selector">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordEdittext"
@@ -55,16 +55,16 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         android:hint="Nhập lại mật khẩu"
-        app:boxStrokeColor="@color/green"
+        app:boxStrokeColor="@color/primary_min"
         app:endIconMode="password_toggle"
-        app:hintTextColor="@color/green"
+        app:errorEnabled="true"
+        app:hintTextColor="@color/primary_min"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordTextInputLayout"
         app:startIconDrawable="@drawable/ic_lock"
-        app:startIconTint="@color/custom_edittext_selector"
-        app:errorEnabled="true">
+        app:startIconTint="@color/custom_edittext_selector">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/rePasswordEdittext"
@@ -82,18 +82,31 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         android:hint="Tên đăng nhập"
-        app:boxStrokeColor="@color/green"
-        app:hintTextColor="@color/green"
+        app:boxStrokeColor="@color/primary_min"
+        app:errorEnabled="true"
+        app:hintTextColor="@color/primary_min"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:startIconDrawable="@drawable/ic_account_circle"
-        app:startIconTint="@color/custom_edittext_selector"
-        app:errorEnabled="true">
+        app:startIconTint="@color/custom_edittext_selector">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/accountEdittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/backBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:clickable="true"
+        app:backgroundTint="@color/primary_min"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_arrow_back"
+        app:tint="@color/white" />
 </androidx.constraintlayout.widget.ConstraintLayout>

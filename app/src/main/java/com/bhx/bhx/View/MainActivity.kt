@@ -18,6 +18,7 @@ import com.bhx.bhx.Controller.CategoryController
 import com.bhx.bhx.Controller.ProductController
 import com.bhx.bhx.Controller.RetrofitInstance
 import com.bhx.bhx.Global.Search
+import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.Model.Product
 import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.R

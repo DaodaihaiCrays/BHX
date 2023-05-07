@@ -6,7 +6,6 @@
     <!-- Facebook Application ID, prefixed by 'fb'. Enables Chrome Custom tabs. -->
     <string name="facebook_login_protocol_scheme" translatable="false">fb1032330604427694</string>
     <string name="app_version">ver 0.102 dev (UI build)</string>
-    <string name="hello_blank_fragment">working in progress</string>
     <!-- account info string -->
     <string name="full_name_label">Họ và Tên</string>
     <string name="default_full_name">Khách</string>

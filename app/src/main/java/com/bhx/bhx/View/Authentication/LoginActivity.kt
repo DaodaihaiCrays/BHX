@@ -10,12 +10,14 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.Model.AccountLogin
 import com.bhx.bhx.R
 import com.bhx.bhx.View.MainActivity
 import com.bhx.bhx.View.ShoppingCart.ShoppingCartFragment
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import com.google.firebase.auth.FirebaseAuth
 
 
 class LoginActivity : AppCompatActivity() {
@@ -27,6 +29,13 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login);
         val actionBar: ActionBar? = supportActionBar;
         actionBar?.hide();
+
+        val currentUser = FirebaseAuth.getInstance().currentUser;
+        if(currentUser != null) {
+            UserInfo.getInstance().updateFromApi();
+            val intent: Intent = Intent(this, MainActivity::class.java);
+//            startActivity(intent);
+        }
 
         supportFragmentManager.beginTransaction().replace(
             R.id.login_fragment_placeholder,
