@@ -1,11 +1,18 @@
 package com.bhx.bhx.View.AccountFragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.R
+import com.bhx.bhx.View.AccountInfoActivity
+import com.bhx.bhx.View.AccountOrderActivity
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,14 +26,51 @@ private const val ARG_PARAM2 = "param2"
  */
 class AccountFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var accInfoBtn: Button? = null
+    private var accOrdersBtn: Button? = null
+    private var accAvatar: ImageView? = null
+
+    private var userName: TextView? =null
+    private var userAuthority: TextView? = null
+    private var userEmail: TextView? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+//        arguments?.let {
+//            param1 = it.getString(ARG_PARAM1)
+//            param2 = it.getString(ARG_PARAM2)
+//        }
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        accInfoBtn = getView()?.findViewById(R.id.acc_info_btn)
+        accInfoBtn?.setOnClickListener{
+            var intent = Intent(context, AccountInfoActivity::class.java)
+            startActivity(intent)
+        }
+
+        accOrdersBtn = getView()?.findViewById(R.id.acc_orders_btn)
+        accOrdersBtn?.setOnClickListener{
+            var intent = Intent(context, AccountOrderActivity::class.java)
+            startActivity(intent)
+        }
+
+        accAvatar = getView()?.findViewById(R.id.acc_avatar)
+        accAvatar?.setImageResource(R.drawable.logo_login)
+
+        val user = UserInfo.getInstance().getUser()
+
+        userName = getView()?.findViewById(R.id.acc_full_name)
+        userEmail = getView()?.findViewById(R.id.acc_email)
+        userAuthority = getView()?.findViewById(R.id.acc_authority)
+
+        if (user != null){
+            userName?.text = user.fullname
+            userEmail?.text = user.email
+            userAuthority?.text = user.authority
         }
     }
 

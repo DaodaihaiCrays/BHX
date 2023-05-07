@@ -2,45 +2,45 @@ package com.bhx.bhx.Model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
-data class User(
-    @SerializedName("firebase_uid")
-    @Expose()
-    val firebaseUid: String,
+@Serializable
+data class User (
+    @SerializedName("id")
+    val id: Int,
 
     @SerializedName("email")
-    @Expose()
-    val email: String? = null,
+    val email: String,
 
     @SerializedName("fullname")
-    @Expose()
-    val fullname: String? = null,
+    val fullname: String,
 
     @SerializedName("phone_number")
-    @Expose()
-    val phoneNumber: String? = null,
+    val phoneNumber: String,
 
     @SerializedName("province_id")
-    @Expose()
-    val provinceId: Int? = null,
+    val provinceId: Int,
 
     @SerializedName("district_id")
-    @Expose()
-    val districtId: Int? = null,
+    val districtId: Int, 
 
     @SerializedName("ward_id")
-    @Expose()
-    val ward: Int? = null,
+    val wardId: Int, 
 
     @SerializedName("address")
-    @Expose()
-    val address: String? = null,
+    val address: String, 
 
     @SerializedName("gender")
-    @Expose()
-    val gender: String? = null,
+    val gender: String,
 
     @SerializedName("authority")
+    val authority: String,
+
+    @SerializedName("created")
     @Expose()
-    val authority: String = "CUSTOMER"
+    val created: String,
+
+    @SerializedName("modified")
+    @Expose()
+    val modified: String
 )

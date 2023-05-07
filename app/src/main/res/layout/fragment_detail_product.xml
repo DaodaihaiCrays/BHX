@@ -22,7 +22,7 @@
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/baseline_arrow_back_24"
-                    android:backgroundTint="@color/green_min"/>
+                    android:backgroundTint="@color/primary_min"/>
 
                 <ImageView
                     android:id="@+id/imgProduct"
@@ -62,7 +62,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/green_max"
+                        android:backgroundTint="@color/primary_max"
                         android:text="MUA" />
 
                 </LinearLayout>

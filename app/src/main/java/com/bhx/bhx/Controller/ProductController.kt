@@ -12,4 +12,10 @@ interface ProductController {
 
     @GET("products")
     fun getAllProductsOfSearch(@Query("keyword") keyword: String): Call<List<Product>>
+<<<<<<< HEAD
+=======
+
+//    @GET("products/{id}")
+//    fun getProductWithoutRelated(@Path("id") id: Int, @Query("noRelated") noRelated: Boolean = true): Call<Product>
+>>>>>>> c008b5f819b344a7add5304133f02db21af93cfa
 }
