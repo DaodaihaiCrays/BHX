@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.KSerializer
 import java.sql.Timestamp
 import kotlinx.serialization.Serializable
@@ -13,6 +14,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import java.sql.Date
 import java.time.ZonedDateTime
 
 @Serializable
@@ -52,7 +54,8 @@ data class Order (
     val address: String,
 //=== replace by data class ===
     @SerializedName("delivery_date")
-    val deliveryDate: String,
+    @Contextual
+    val deliveryDate: Date,
 
     @SerializedName("delivery_timerange_id")
     val deliveryTimerange: String,

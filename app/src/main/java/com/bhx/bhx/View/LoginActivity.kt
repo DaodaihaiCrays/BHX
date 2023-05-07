@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.Model.AccountLogin
 import com.bhx.bhx.R
 
@@ -28,6 +29,7 @@ class LoginActivity : AppCompatActivity() {
             val account: AccountLogin = AccountLogin(username, password)
             if (account!=null){
                 val intent: Intent = Intent(this@LoginActivity, MainActivity::class.java)
+                val user = UserInfo.getInstance()
                 startActivity(intent)
             }else {
                 Toast.makeText(this@LoginActivity, "Invalid account", Toast.LENGTH_SHORT).show()

@@ -32,8 +32,7 @@ class AccountOrderActivity : AppCompatActivity() {
         orderList = findViewById(R.id.order_list)
 
         apiCategoryInstance = RetrofitInstance.getInstance().create(OrderController::class.java)
-        Log.i("test","1")
-        apiCategoryInstance.getOrderList().enqueue(object : Callback<List<Order>> {
+        apiCategoryInstance.getOrderList("111").enqueue(object : Callback<List<Order>> {
             override fun onResponse(
                 call: Call<List<Order>>,
                 response: Response<List<Order>>

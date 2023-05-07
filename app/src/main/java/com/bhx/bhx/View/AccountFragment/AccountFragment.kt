@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
+import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.R
 import com.bhx.bhx.View.AccountInfoActivity
 import com.bhx.bhx.View.AccountOrderActivity
@@ -27,6 +29,11 @@ class AccountFragment : Fragment() {
     private var accInfoBtn: Button? = null
     private var accOrdersBtn: Button? = null
     private var accAvatar: ImageView? = null
+
+    private var userName: TextView? =null
+    private var userAuthority: TextView? = null
+    private var userEmail: TextView? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +60,18 @@ class AccountFragment : Fragment() {
 
         accAvatar = getView()?.findViewById(R.id.acc_avatar)
         accAvatar?.setImageResource(R.drawable.logo_login)
+
+        val user = UserInfo.getInstance().getUser()
+
+        userName = getView()?.findViewById(R.id.acc_full_name)
+        userEmail = getView()?.findViewById(R.id.acc_email)
+        userAuthority = getView()?.findViewById(R.id.acc_authority)
+
+        if (user != null){
+            userName?.text = user.fullname
+            userEmail?.text = user.email
+            userAuthority?.text = user.authority
+        }
     }
 
     override fun onCreateView(
