@@ -85,12 +85,6 @@ class ProductOfCateFragment(private val category: ReviewCategory) : Fragment() {
         tvCate!!.setText(category.name)
 
         btnBack!!.setOnClickListener {
-//            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
-//            fragmentManager.beginTransaction().replace(
-//                R.id.container,
-//                HomeFragment()
-//            ).commit()
-            Log.i("test","nhan quay lai")
             parentFragmentManager.popBackStack()
         }
 

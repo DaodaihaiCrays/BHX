@@ -28,11 +28,11 @@
             app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/img_logo_nav" />
 
-        <AutoCompleteTextView
+        <EditText
             android:id="@+id/edtSearch"
-            android:layout_width="310dp"
+            android:layout_width="200dp"
             android:layout_height="40dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginRight="105dp"
             android:layout_marginBottom="9dp"
             android:ems="10"
             android:hint="Tìm kiếm"
@@ -59,6 +59,22 @@
             app:layout_constraintEnd_toStartOf="@+id/edtSearch"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="9dp"
+            android:background="@drawable/custom_btn_menu"
+            android:backgroundTint="@color/color_btn_menu"
+            android:text="Tìm kiếm"
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/edtSearch" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_ThanhToan"

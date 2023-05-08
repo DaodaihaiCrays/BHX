@@ -23,7 +23,6 @@
             android:name=".View.AccountInfoActivity"
             android:exported="false" />
 
-        tools:targetApi="31">
         <activity
             android:name=".View.ShoppingCart.ShoppingCartActivity"
             android:exported="false" />
