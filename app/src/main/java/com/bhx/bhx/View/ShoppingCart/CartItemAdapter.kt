@@ -22,13 +22,17 @@ import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CartItemAdapter(private val items: ArrayList<CartItem>, private val context: Context, private val cartPrice: TextView) :
+class CartItemAdapter(
+    private val items: ArrayList<CartItem>,
+    private val context: Context,
+    private val cartPrice: TextView
+) :
     RecyclerView.Adapter<CartItemAdapter.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val itemName: TextView;
         val itemNote: TextView;
         val itemPrice: TextView;
-        val itemQuantity: EditText;
+        val itemQuantity: TextView;
         val itemBanner: ImageView;
         val itemIncreaseBtn: AppCompatButton;
         val itemDescreaseBtn: AppCompatButton;
@@ -58,29 +62,10 @@ class CartItemAdapter(private val items: ArrayList<CartItem>, private val contex
         holder.itemPrice.text = formatter.format(
             (items[position].product.unit_price * items[position].quantity)
         );
-        holder.itemQuantity.setText(items[position].quantity.toString());
+        holder.itemQuantity.text = items[position].quantity.toString();
         Glide.with(context).load(items[position].product.banner).error(R.drawable.xoai)
             .into(holder.itemBanner);
 
-        holder.itemQuantity.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-                if (holder.itemQuantity.text.toString() == "0") {
-                    ShoppingCart.getInstance().removeItem(items[holder.adapterPosition]);
-                    notifyItemChanged(holder.adapterPosition);
-                } else {
-                    items[holder.adapterPosition].quantity =
-                        holder.itemQuantity.text.toString().toIntOrNull() ?: 0;
-                }
-            }
-        });
         holder.itemIncreaseBtn.setOnClickListener {
             ShoppingCart.getInstance().addItem(items[holder.adapterPosition].product);
             notifyItemChanged(position);
@@ -88,8 +73,14 @@ class CartItemAdapter(private val items: ArrayList<CartItem>, private val contex
         }
 
         holder.itemDescreaseBtn.setOnClickListener {
-            ShoppingCart.getInstance().reduceItem(items[holder.adapterPosition]);
-            notifyItemChanged(position);
+            if (items[position].quantity > 1) {
+                ShoppingCart.getInstance().reduceItem(position);
+                notifyItemChanged(position);
+            }
+            else {
+                ShoppingCart.getInstance().removeItem(position);
+                notifyDataSetChanged();
+            }
             cartPrice.text = formatter.format(ShoppingCart.getInstance().sumPrice());
         }
     }

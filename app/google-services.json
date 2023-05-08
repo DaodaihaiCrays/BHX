@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "877084486309",
+    "project_id": "bhx-clone-development",
+    "storage_bucket": "bhx-clone-development.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:877084486309:android:e6252dd397b014f31a7b4c",
+        "android_client_info": {
+          "package_name": "com.bhx.bhx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "877084486309-dpcsthgvi8j3ghiprl67jda8hn16ajtb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHfXDIg4wh_DXKr9mhgwgWTeJfHjV2ojE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "877084486309-dpcsthgvi8j3ghiprl67jda8hn16ajtb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

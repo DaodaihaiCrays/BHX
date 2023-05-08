@@ -18,6 +18,7 @@ import com.bhx.bhx.Controller.CategoryController
 import com.bhx.bhx.Controller.ProductController
 import com.bhx.bhx.Controller.RetrofitInstance
 import com.bhx.bhx.Global.Search
+import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.Model.Product
 import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.R
@@ -32,6 +33,7 @@ import com.bhx.bhx.View.NotificationFragment.NotificationFragment
 import com.bhx.bhx.View.ProductOfSearchFragment.ProductOfSearchFragment
 import com.bhx.bhx.View.SaleFragment.SaleFragment
 import com.bhx.bhx.View.ShoppingCart.ShoppingCartActivity
+import com.bhx.bhx.View.ShoppingCart.ShoppingCartFragment
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import retrofit2.Call
 import retrofit2.Callback
@@ -66,8 +68,12 @@ class MainActivity : AppCompatActivity() {
 
         val btn_ThanhToan: Button = findViewById(R.id.btn_ThanhToan);
         btn_ThanhToan.setOnClickListener {
-            val intent: Intent = Intent(this, ShoppingCartActivity::class.java);
-            startActivity(intent);
+//            val intent: Intent = Intent(this, ShoppingCartActivity::class.java);
+//            startActivity(intent);
+            supportFragmentManager.beginTransaction().replace(
+                R.id.container,
+                ShoppingCartFragment()
+            ).commit();
         }
 
         if(Search.edtSearch.text.toString().length!=0) {

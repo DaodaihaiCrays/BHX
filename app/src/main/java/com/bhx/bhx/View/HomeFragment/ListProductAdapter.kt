@@ -14,12 +14,12 @@ import com.bhx.bhx.Model.Product
 import com.bhx.bhx.R
 import com.bhx.bhx.View.DetailProduct.DetailProductFragment
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import java.text.NumberFormat
 import java.util.*
 
-class ListProductAdapter(private var listProduct: List<Product>, private val context: Context):
-    RecyclerView.Adapter<ListProductAdapter.ListProductViewHolder>()
-{
+class ListProductAdapter(private var listProduct: List<Product>, private val context: Context) :
+    RecyclerView.Adapter<ListProductAdapter.ListProductViewHolder>() {
 
     fun setList(list: List<Product>) {
         this.listProduct = list
@@ -33,6 +33,7 @@ class ListProductAdapter(private var listProduct: List<Product>, private val con
         val tvPrice: TextView = itemView.findViewById(R.id.tvPrice)
         val tvBuy: TextView = itemView.findViewById(R.id.tvBuy)
     }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -64,7 +65,7 @@ class ListProductAdapter(private var listProduct: List<Product>, private val con
             ).addToBackStack(null).commit()
         }
 
-        holder.imageView.setOnClickListener{
+        holder.imageView.setOnClickListener {
             val fragmentManager = (context as AppCompatActivity).supportFragmentManager
             fragmentManager.beginTransaction().replace(
                 R.id.container,
@@ -74,7 +75,8 @@ class ListProductAdapter(private var listProduct: List<Product>, private val con
 
         holder.tvBuy.setOnClickListener {
             ShoppingCart.getInstance().addItem(listProduct[position]);
-//            Toast.makeText(holder.itemView.context, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+
+            Snackbar.make(it, "Đã thêm ${listProduct[position].name} vào giỏ hàng", 1000).show();
         }
     }
 

@@ -17,6 +17,7 @@ import com.bhx.bhx.Controller.CommentsController
 import com.bhx.bhx.Controller.ProductController
 import com.bhx.bhx.Controller.RetrofitInstance
 import com.bhx.bhx.Model.Comments
+import com.bhx.bhx.Global.ShoppingCart
 import com.bhx.bhx.Model.Product
 import com.bhx.bhx.R
 import com.bhx.bhx.View.Comments.CommentsAdapter
@@ -27,6 +28,8 @@ import okhttp3.MediaType
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import org.json.JSONObject
+import com.google.android.material.snackbar.Snackbar
+import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -52,6 +55,7 @@ class DetailProductFragment(private val product: Product) : Fragment() {
     lateinit var tvPriceProduct: TextView
     lateinit var tvInfor: TextView
     lateinit var imgProduct:ImageView
+    lateinit var btnBuy: Button;
     lateinit var btnSubmitCmt: Button
     lateinit var tiCmt: TextInputLayout
 
@@ -81,7 +85,7 @@ class DetailProductFragment(private val product: Product) : Fragment() {
                     put("user_id", 9)
                     put("comment_content", str)
                 }
-                val requestBody = RequestBody.create(MediaType.parse("application/json"), commentData.toString())
+                val requestBody = RequestBody.create("application/json".toMediaType(), commentData.toString())
                 RetrofitInstance.getInstance().create(ProductController::class.java).postComment(product.id,requestBody).enqueue(object : Callback<ResponseBody>{
                     override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                         if (response.isSuccessful){
@@ -98,6 +102,7 @@ class DetailProductFragment(private val product: Product) : Fragment() {
                 })
             }
         }
+        btnBuy = view.findViewById(R.id.btnBuy);
 
         Glide.with(container!!.context).load(product.banner).error(R.drawable.xoai).into(imgProduct)
 
@@ -133,6 +138,12 @@ class DetailProductFragment(private val product: Product) : Fragment() {
 
         btnBack!!.setOnClickListener {
             parentFragmentManager.popBackStack()
+        }
+
+        btnBuy!!.setOnClickListener {
+            ShoppingCart.getInstance().addItem(product);
+
+            Snackbar.make(it, "Đã thêm ${product.name} vào giỏ hàng", 1000).show();
         }
 
         return view
