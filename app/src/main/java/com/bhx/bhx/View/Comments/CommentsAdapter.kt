@@ -24,6 +24,7 @@ import com.bhx.bhx.View.ProductOfCateFragment.ProductOfCateFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -87,7 +88,7 @@ class CommentsAdapter(private var comments: List<Comments>, private val id: Int,
                         put("user_id", 9)
                         put("comment_content", str)
                     }
-                    val requestBody = RequestBody.create(MediaType.parse("application/json"), commentData.toString())
+                    val requestBody = RequestBody.create("application/json".toMediaType(), commentData.toString())
                     RetrofitInstance.getInstance().create(ProductController::class.java).postSubComment(id, comments[position].id,requestBody).enqueue(object :
                         Callback<ResponseBody> {
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

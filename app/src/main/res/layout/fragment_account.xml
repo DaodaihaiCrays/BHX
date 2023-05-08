@@ -1,14 +1,231 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.AccountFragment.AccountFragment">
+    tools:context=".View.AccountFragment.AccountFragment"
+    android:contentDescription="@string/account_view_description">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="15sp"
+                android:background="@drawable/background_navbar">
+                <ImageView
+                    android:id="@+id/acc_avatar"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="32dp"
+                    android:contentDescription="@string/avatar_description"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@tools:sample/avatars" />
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="account fragment" />
+                <TextView
+                    android:id="@+id/acc_full_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/default_full_name"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/acc_avatar"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+                <TextView
+                    android:id="@+id/email_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/email_label"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/acc_avatar"
+                    app:layout_constraintTop_toBottomOf="@+id/authority_label" />
+
+                <TextView
+                    android:id="@+id/acc_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/default_email"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/email_label"
+                    app:layout_constraintTop_toBottomOf="@+id/authority_label" />
+
+                <TextView
+                    android:id="@+id/acc_authority"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/default_authority"
+                    android:textSize="18sp"
+                    android:textStyle="italic"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/authority_label"
+                    app:layout_constraintTop_toBottomOf="@+id/acc_full_name" />
+
+                <TextView
+                    android:id="@+id/authority_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/authority_label"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/acc_avatar"
+                    app:layout_constraintTop_toBottomOf="@+id/acc_full_name" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginVertical="10sp"
+                android:layout_marginHorizontal="20sp"
+                android:padding="5sp"
+                android:background="@drawable/custom_btn_acc_page"
+                >
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/acc_info_btn"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_btn_acc_page"
+                    android:drawableEnd="@drawable/btn_arrow_right"
+                    android:padding="10sp"
+                    android:text="@string/acc_info_btn"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/acc_orders_btn"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/custom_btn_acc_page"
+                    android:drawableEnd="@drawable/btn_arrow_right"
+                    android:padding="10sp"
+                    android:text="@string/order_btn"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/acc_info_btn" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="20sp"
+                android:padding="5sp"
+                android:background="@drawable/custom_btn_acc_page"
+                >
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/sales_btn"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_btn_acc_page"
+                    android:drawableEnd="@drawable/btn_arrow_right"
+                    android:padding="10sp"
+                    android:text="@string/sales_btn"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginVertical="10sp"
+                android:layout_marginHorizontal="20sp"
+                android:padding="5sp"
+                android:background="@drawable/custom_btn_acc_page"
+                >
+
+                <TextView
+                    android:id="@+id/app_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="3dp"
+                    android:text="@string/app_version"
+                    android:textAlignment="textEnd"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/app_version_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:text="@string/version_label"
+                    android:textAlignment="textStart"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/customer_support_btn"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/custom_btn_acc_page"
+                    android:drawableEnd="@drawable/btn_arrow_right"
+                    android:padding="10sp"
+                    android:text="@string/customer_support_btn"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/app_version_label" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/term_of_service_btn"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/custom_btn_acc_page"
+                    android:drawableEnd="@drawable/btn_arrow_right"
+                    android:padding="10sp"
+                    android:text="@string/term_of_services_btn"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/customer_support_btn" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/setting_btn"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/custom_btn_acc_page"
+                    android:drawableEnd="@drawable/btn_arrow_right"
+                    android:padding="10sp"
+                    android:text="@string/setting_btn"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/term_of_service_btn" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+</ScrollView>

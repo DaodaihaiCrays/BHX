@@ -65,15 +65,12 @@ class ShoppingCart private constructor() {
 //            });
 //    }
 
-    fun reduceItem(item: CartItem) {
-        if (item.quantity > 1) instance?.items!![instance?.items!!.indexOf(
-            item
-        )].quantity--;
-        else instance?.items!!.remove(item);
+    fun reduceItem(index: Int) {
+        instance?.items?.get(index)?.quantity = instance?.items?.get(index)?.quantity!! - 1;
     }
 
-    fun removeItem(item: CartItem) {
-        instance?.items!!.remove(item);
+    fun removeItem(index: Int) {
+        instance?.items!!.removeAt(index);
     }
 
     fun sumPrice(): Int {
