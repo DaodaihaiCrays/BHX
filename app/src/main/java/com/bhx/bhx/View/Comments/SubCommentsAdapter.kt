@@ -36,6 +36,10 @@ class SubCommentsAdapter(private var comments: List<Comments>, private val conte
             "test",
             "cmt name: " + comments[position].comment_content + " - " + position.toString()
         )
+        Log.i(
+            "test",
+            "name: " + comments[position].fullname + " - " + position.toString()
+        )
         holder.tvNameSubCmt.text = comments[position].fullname
         holder.tvSubContent.text = comments[position].comment_content
     }

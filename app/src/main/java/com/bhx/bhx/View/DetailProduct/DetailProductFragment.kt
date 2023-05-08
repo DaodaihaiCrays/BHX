@@ -18,6 +18,7 @@ import com.bhx.bhx.Controller.ProductController
 import com.bhx.bhx.Controller.RetrofitInstance
 import com.bhx.bhx.Model.Comments
 import com.bhx.bhx.Global.ShoppingCart
+import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.Model.Product
 import com.bhx.bhx.R
 import com.bhx.bhx.View.Comments.CommentsAdapter
@@ -35,6 +36,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.NumberFormat
 import java.util.*
+import kotlin.properties.Delegates
 
 class DetailProductFragment(private val product: Product) : Fragment() {
 
@@ -58,6 +60,8 @@ class DetailProductFragment(private val product: Product) : Fragment() {
     lateinit var btnBuy: Button;
     lateinit var btnSubmitCmt: Button
     lateinit var tiCmt: TextInputLayout
+    lateinit var imgLike:ImageView
+    var checkChange by Delegates.notNull<Boolean>()
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -75,32 +79,50 @@ class DetailProductFragment(private val product: Product) : Fragment() {
         revComments = view.findViewById(R.id.revCmt)
         btnSubmitCmt = view.findViewById(R.id.btnSubmitCmt)
         tiCmt = view.findViewById(R.id.tiCmt)
+        imgLike = view.findViewById(R.id.imgLike)
+
+        checkChange = true
+
+        imgLike.setOnClickListener {
+            checkChange=!checkChange
+            if(!checkChange)
+                imgLike.setImageResource(R.drawable.heart_like)
+            else
+                imgLike.setImageResource(R.drawable.heart)
+        }
 
         btnSubmitCmt.setOnClickListener {
             var str: String = tiCmt.editText?.text.toString()
 
-            if(str!=null && !str.isEmpty()) {
-                Log.i("test","str= " + str)
-                val commentData = JSONObject().apply {
-                    put("user_id", 9)
-                    put("comment_content", str)
-                }
-                val requestBody = RequestBody.create("application/json".toMediaType(), commentData.toString())
-                RetrofitInstance.getInstance().create(ProductController::class.java).postComment(product.id,requestBody).enqueue(object : Callback<ResponseBody>{
-                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                        if (response.isSuccessful){
-                            tiCmt.editText?.setText("")
-                            callApiCmt(container)
-                            Toast.makeText(context,"Bình luận thành công",Toast.LENGTH_LONG).show()
-                        }else {
+            val user_id= UserInfo.getInstance().getUser()?.id
+
+            if(user_id != null) {
+
+                if(str!=null && !str.isEmpty()) {
+
+                    val commentData = JSONObject().apply {
+                        put("user_id", UserInfo.getInstance().getUser()!!.id)
+                        put("comment_content", str)
+                    }
+                    val requestBody = RequestBody.create("application/json".toMediaType(), commentData.toString())
+                    RetrofitInstance.getInstance().create(ProductController::class.java).postComment(product.id,requestBody).enqueue(object : Callback<ResponseBody>{
+                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                            if (response.isSuccessful){
+                                tiCmt.editText?.setText("")
+                                callApiCmt(container)
+                                Toast.makeText(context,"Bình luận thành công",Toast.LENGTH_LONG).show()
+                            }else {
+                            }
                         }
-                    }
 
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    }
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        }
 
-                })
+                    })
+                }
             }
+
+
         }
         btnBuy = view.findViewById(R.id.btnBuy);
 

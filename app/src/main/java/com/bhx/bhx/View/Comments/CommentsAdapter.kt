@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Controller.ProductController
 import com.bhx.bhx.Controller.RetrofitInstance
+import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.Model.Comments
 import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.R
@@ -83,9 +84,8 @@ class CommentsAdapter(private var comments: List<Comments>, private val id: Int,
                 var str: String = inputText.editText?.text.toString()
 
                 if(str!=null && !str.isEmpty()) {
-                    Log.i("test","str= " + str)
                     val commentData = JSONObject().apply {
-                        put("user_id", 9)
+                        put("user_id", UserInfo.getInstance().getUser()!!.id)
                         put("comment_content", str)
                     }
                     val requestBody = RequestBody.create("application/json".toMediaType(), commentData.toString())
@@ -93,9 +93,7 @@ class CommentsAdapter(private var comments: List<Comments>, private val id: Int,
                         Callback<ResponseBody> {
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                             if (response.isSuccessful){
-//                                callApiCmt(container)
-
-                                comments[position].replies.add(Comments(0, "Hai", str, "", mutableListOf<Comments>()))
+                                comments[position].replies.add(Comments(0, UserInfo.getInstance().getUser()!!.fullname!!, str, "", mutableListOf<Comments>()))
                                 adapter.updateSubCommet(comments[position].replies)
                                 Toast.makeText(context,"Bình luận thành công",Toast.LENGTH_LONG).show()
                                 dialog.dismiss()
@@ -120,7 +118,6 @@ class CommentsAdapter(private var comments: List<Comments>, private val id: Int,
     }
 
     override fun getItemCount(): Int {
-        //Log.i("test","cmt size: " + comments.size)
         return comments.size
     }
 

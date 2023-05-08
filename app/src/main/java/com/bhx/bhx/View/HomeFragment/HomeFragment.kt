@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Controller.CategoryController
 import com.bhx.bhx.Controller.RetrofitInstance
+import com.bhx.bhx.Global.Search
 import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.Model.Product
 import com.bhx.bhx.R
@@ -81,6 +82,8 @@ class HomeFragment : Fragment() {
         //initDateCategories()
         revProducts = view.findViewById(R.id.revProduct)
 
+        Search.edtSearch.setText("")
+
         if (!isApiCalled) {
             val dialog = ProgressDialog(context)
             dialog.create()
@@ -105,9 +108,8 @@ class HomeFragment : Fragment() {
 
                         dialog.dismiss()
 
-                        Log.i("test","thanh cong api")
                         listReviewCategory = data as MutableList<ReviewCategory>
-                        Log.i("test",listReviewCategory.toString())
+
                         adapter = ProductAdapter(listReviewCategory, container!!.context)
                         revProducts.layoutManager = LinearLayoutManager(container!!.context, RecyclerView.VERTICAL, false)
                         revProducts.adapter = adapter
@@ -123,35 +125,11 @@ class HomeFragment : Fragment() {
                 }
             })
         }
-
-
-                adapter = ProductAdapter(listReviewCategory, container!!.context)
-                revProducts.layoutManager = LinearLayoutManager(container!!.context, RecyclerView.VERTICAL, false)
-                revProducts.adapter = adapter
-
-
+        adapter = ProductAdapter(listReviewCategory, container!!.context)
+        revProducts.layoutManager = LinearLayoutManager(container!!.context, RecyclerView.VERTICAL, false)
+        revProducts.adapter = adapter
 
         return view
     }
 
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }
