@@ -13,4 +13,5 @@
     <color name="primary_min">#1985D6</color>
     <color name="gray_silver">#C0C0C0</color>
     <color name="gray_min">#E1E4E3</color>
+    <color name="btn_cancel">#F40A0A</color>
 </resources>

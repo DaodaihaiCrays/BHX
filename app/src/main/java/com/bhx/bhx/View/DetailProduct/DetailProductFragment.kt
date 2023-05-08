@@ -1,19 +1,16 @@
 package com.bhx.bhx.View.DetailProduct
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Controller.CommentsController
@@ -21,10 +18,8 @@ import com.bhx.bhx.Controller.ProductController
 import com.bhx.bhx.Controller.RetrofitInstance
 import com.bhx.bhx.Model.Comments
 import com.bhx.bhx.Model.Product
-import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.R
 import com.bhx.bhx.View.Comments.CommentsAdapter
-import com.bhx.bhx.View.Comments.IOnClickRepCmt
 import com.bhx.bhx.View.HomeFragment.ListProductAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
