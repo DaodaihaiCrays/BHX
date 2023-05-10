@@ -55,7 +55,7 @@ class CommentsAdapter(private var comments: List<Comments>, private val id: Int,
     }
 
     override fun onBindViewHolder(holder: CommentsHolder, @SuppressLint("RecyclerView") position: Int) {
-        holder.tvNameCmt.text = comments[position].fullname
+        holder.tvNameCmt.text = UserInfo.getInstance().getUser()!!.fullname
         holder.tvContent.text = comments[position].comment_content
 
         var adapter: SubCommentsAdapter

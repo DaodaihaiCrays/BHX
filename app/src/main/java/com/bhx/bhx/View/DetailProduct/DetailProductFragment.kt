@@ -1,6 +1,8 @@
 package com.bhx.bhx.View.DetailProduct
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,6 +13,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Controller.CommentsController
@@ -21,6 +24,8 @@ import com.bhx.bhx.Global.ShoppingCart
 import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.Model.Product
 import com.bhx.bhx.R
+import com.bhx.bhx.View.Authentication.LoginActivity
+import com.bhx.bhx.View.Authentication.LoginMainFragment
 import com.bhx.bhx.View.Comments.CommentsAdapter
 import com.bhx.bhx.View.HomeFragment.ListProductAdapter
 import com.bumptech.glide.Glide
@@ -83,14 +88,6 @@ class DetailProductFragment(private val product: Product) : Fragment() {
 
         checkChange = true
 
-        imgLike.setOnClickListener {
-            checkChange=!checkChange
-            if(!checkChange)
-                imgLike.setImageResource(R.drawable.heart_like)
-            else
-                imgLike.setImageResource(R.drawable.heart)
-        }
-
         btnSubmitCmt.setOnClickListener {
             var str: String = tiCmt.editText?.text.toString()
 
@@ -99,6 +96,7 @@ class DetailProductFragment(private val product: Product) : Fragment() {
             if(user_id != null) {
 
                 if(str!=null && !str.isEmpty()) {
+                    Log.i("test","1111")
 
                     val commentData = JSONObject().apply {
                         put("user_id", UserInfo.getInstance().getUser()!!.id)
@@ -121,6 +119,12 @@ class DetailProductFragment(private val product: Product) : Fragment() {
                     })
                 }
             }
+            else {
+                val intent = Intent(context, LoginActivity::class.java)
+                //resultLauncher.launch(intent)
+                startActivity(intent)
+                Log.i("test","22222")
+            }
 
 
         }
@@ -128,11 +132,21 @@ class DetailProductFragment(private val product: Product) : Fragment() {
 
         Glide.with(container!!.context).load(product.banner).error(R.drawable.xoai).into(imgProduct)
 
+        var product_item: Product? = null
+
         //call api
-        RetrofitInstance.getInstance().create(ProductController::class.java).getDetailProduct(product.id).enqueue(object : Callback<Product>{
+        RetrofitInstance.getInstance().create(ProductController::class.java).getDetailProduct(product.id, UserInfo.getInstance().getUser()!!.id).enqueue(object : Callback<Product>{
             override fun onResponse(call: Call<Product>, response: Response<Product>) {
                 if (response.isSuccessful){
-                    val product: Product? = response.body()
+
+                    var product: Product? = response.body()
+                    product_item=product
+                    Log.i("test","favorite: " + product!!.favorite.toString() + "  --  " + UserInfo.getInstance().getUser()!!.id)
+                    if(product!!.favorite)
+                        imgLike.setImageResource(R.drawable.heart_like)
+                    else
+                        imgLike.setImageResource(R.drawable.heart)
+
                     tvNameProduct.setText(product!!.name)
                     val formatter = NumberFormat.getCurrencyInstance(Locale("vi", "VN"));
                     formatter.currency = Currency.getInstance("VND");
@@ -156,7 +170,50 @@ class DetailProductFragment(private val product: Product) : Fragment() {
 
         })
 
+
         callApiCmt(container)
+
+        imgLike.setOnClickListener {
+            product_item!!.favorite=!product_item!!.favorite
+            if(product_item!!.favorite)
+            {
+                imgLike.setImageResource(R.drawable.heart_like)
+                val favoriteData = JSONObject().apply {
+                    put("user_id", UserInfo.getInstance().getUser()!!.id)
+                }
+                val requestBody = RequestBody.create("application/json".toMediaType(), favoriteData.toString())
+                RetrofitInstance.getInstance().create(ProductController::class.java).postProductFavorite(product.id,requestBody).enqueue(object : Callback<ResponseBody>{
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        if (response.isSuccessful){
+
+                            Toast.makeText(context,"Đã thêm vào danh sách yêu thích",Toast.LENGTH_LONG).show()
+                        }else {
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    }
+
+                })
+            }
+            else
+            {
+                imgLike.setImageResource(R.drawable.heart)
+                RetrofitInstance.getInstance().create(ProductController::class.java).removeProductFavorites(product.id,UserInfo.getInstance().getUser()!!.id).enqueue(object : Callback<Void>{
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        if (response.isSuccessful){
+
+                            Toast.makeText(context,"Đã xóasản phẩm khỏi danh sách yêu thích",Toast.LENGTH_LONG).show()
+                        }else {
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                    }
+
+                })
+            }
+        }
 
         btnBack!!.setOnClickListener {
             parentFragmentManager.popBackStack()

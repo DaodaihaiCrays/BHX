@@ -1,38 +1,24 @@
 package com.bhx.bhx.View
 
-import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
-import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bhx.bhx.Controller.CategoryController
 import com.bhx.bhx.Controller.ProductController
 import com.bhx.bhx.Controller.RetrofitInstance
 import com.bhx.bhx.Global.Search
-import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.Model.Product
-import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.R
 import com.bhx.bhx.View.AccountFragment.AccountFragment
-import com.bhx.bhx.View.DetailProduct.DetailProductFragment
-import com.bhx.bhx.View.DetailProduct.PropertiesAdapter
 import com.bhx.bhx.View.HomeFragment.HomeFragment
-import com.bhx.bhx.View.HomeFragment.ListProductAdapter
 import com.bhx.bhx.View.HomeFragment.ProductAdapter
 import com.bhx.bhx.View.Menu.MenuFragment
-import com.bhx.bhx.View.NotificationFragment.NotificationFragment
+import com.bhx.bhx.View.FavoriteProductFragment.FavoriteProductFragment
 import com.bhx.bhx.View.ProductOfSearchFragment.ProductOfSearchFragment
 import com.bhx.bhx.View.SaleFragment.SaleFragment
-import com.bhx.bhx.View.ShoppingCart.ShoppingCartActivity
 import com.bhx.bhx.View.ShoppingCart.ShoppingCartFragment
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import retrofit2.Call
@@ -118,7 +104,7 @@ class MainActivity : AppCompatActivity() {
             val selectedFragment: Fragment = when (id) {
                 R.id.home -> HomeFragment()
                 R.id.sale -> SaleFragment()
-                R.id.notification -> NotificationFragment()
+                R.id.notification -> FavoriteProductFragment()
                 R.id.user -> AccountFragment()
                 else -> HomeFragment()
             }
