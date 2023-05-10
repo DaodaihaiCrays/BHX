@@ -1,21 +1,17 @@
-package com.bhx.bhx.View
+package com.bhx.bhx.View.AccountActivity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bhx.bhx.Controller.CategoryController
 import com.bhx.bhx.Controller.OrderController
 import com.bhx.bhx.Controller.RetrofitInstance
 import com.bhx.bhx.Model.Order
-import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.R
 import com.bhx.bhx.View.Adapter.OrderRvAdapter
-import com.bhx.bhx.View.HomeFragment.ProductAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

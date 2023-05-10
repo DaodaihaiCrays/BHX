@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Controller.CategoryController
 import com.bhx.bhx.Controller.ProductController
 import com.bhx.bhx.Controller.RetrofitInstance
+import com.bhx.bhx.Global.LocationData
 import com.bhx.bhx.Global.Search
 import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.Model.Product
@@ -55,6 +56,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
+
+        LocationData.getInstance()
 
         Search.edtSearch = findViewById(R.id.edtSearch)
         btnMenu = findViewById(R.id.btnMenu)

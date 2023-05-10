@@ -17,10 +17,10 @@
         android:usesCleartextTraffic="true"
         >
         <activity
-            android:name=".View.AccountOrderActivity"
+            android:name=".View.AccountActivity.AccountOrderActivity"
             android:exported="false" />
         <activity
-            android:name=".View.AccountInfoActivity"
+            android:name=".View.AccountActivity.AccountInfoActivity"
             android:exported="false" />
 
         <activity

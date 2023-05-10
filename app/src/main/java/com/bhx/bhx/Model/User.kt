@@ -19,13 +19,13 @@ data class User (
     val phoneNumber: String? = null,
 
     @SerializedName("province_id")
-    val provinceId: Int? = null,
+    var provinceId: Int? = null,
 
     @SerializedName("district_id")
-    val districtId: Int? = null,
+    var districtId: Int? = null,
 
     @SerializedName("ward_id")
-    val wardId: Int? = null,
+    var wardId: Int? = null,
 
     @SerializedName("address")
     val address: String? = null,

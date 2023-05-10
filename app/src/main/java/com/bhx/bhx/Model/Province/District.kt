@@ -11,6 +11,6 @@ data class District (
     val id: Int,
     @SerializedName("name")
     val name: String,
-    @SerializedName("wards")
-    val wards: List<Ward>
+    @SerializedName("province_id")
+    val province_id: Int
 )
