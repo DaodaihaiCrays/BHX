@@ -76,7 +76,7 @@ class UserInfo{
     }
 
     private suspend fun syncToApi() : Boolean{
-        var success: Boolean = false
+        var success: Boolean = true
         val nData = JSONObject().apply {
             put("email", _data!!.email)
             put("fullname", _data!!.fullname)
@@ -93,12 +93,13 @@ class UserInfo{
         RetrofitInstance.getInstance().create(UserController::class.java).updateUserInfo(_data!!.id, requestBody).enqueue(object :
             Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful){
-                    success = true
+                if (!response.isSuccessful){
+                    success = false
                 }
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                success = false
             }
         })
         return success

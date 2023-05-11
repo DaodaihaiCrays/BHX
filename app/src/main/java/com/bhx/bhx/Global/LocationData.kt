@@ -1,8 +1,10 @@
 package com.bhx.bhx.Global
 
+import android.content.res.Resources
 import com.bhx.bhx.Controller.LocationController
 import com.bhx.bhx.Controller.RetrofitInstance
 import com.bhx.bhx.Model.Province.*
+import com.bhx.bhx.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -39,13 +41,17 @@ class LocationData {
             ) {
                 if (response.isSuccessful) {
                     provinceList = response.body()
+//                    provinceList = provinceList!! + listOf(Province(-1, "Tỉnh/Thành Phố"))
                 }
             }
 
             override fun onFailure(call: Call<List<Province>>, t: Throwable) {
+//                provinceList = listOf(Province(-1, "Tỉnh/Thành Phố"))
                 provinceList = listOf()
             }
         })
+
+
         return result
     }
 
@@ -60,13 +66,17 @@ class LocationData {
             ) {
                 if (response.isSuccessful) {
                     districtList = response.body()
+//                    districtList = districtList!! + listOf(District(-1, "Quận/Huyện", -1))
                 }
             }
 
             override fun onFailure(call: Call<List<District>>, t: Throwable) {
+//                districtList = listOf(District(-1, "Quận/Huyện", -1))
                 districtList = listOf()
             }
         })
+
+
         return result
     }
 
@@ -80,13 +90,17 @@ class LocationData {
             ) {
                 if (response.isSuccessful) {
                     wardList = response.body()
+//                    wardList = wardList!! + listOf(Ward(-1, "Ấp/Xã", -1))
                 }
             }
 
             override fun onFailure(call: Call<List<Ward>>, t: Throwable) {
+//                wardList = listOf(Ward(-1, "Ấp/Xã", -1))
                 wardList = listOf()
             }
         })
+
+
         return result
     }
 
