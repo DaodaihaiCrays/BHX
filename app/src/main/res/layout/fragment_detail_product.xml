@@ -22,12 +22,13 @@
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/baseline_arrow_back_24"
-                    android:backgroundTint="@color/green_min"/>
+                    android:backgroundTint="@color/primary_min"/>
 
                 <ImageView
                     android:id="@+id/imgProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
                     android:adjustViewBounds="true"
                     android:maxHeight="200dp"
                     android:src="@drawable/kinh_lup"/>
@@ -36,7 +37,8 @@
                     android:id="@+id/tvNameProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:layout_marginLeft="10dp"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="19dp"
                     android:textStyle="bold" />
@@ -51,17 +53,18 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView"
+                        android:layout_marginLeft="10dp"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="20dp"
                         android:textStyle="bold" />
 
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/btnBuy"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/green_max"
+                        android:backgroundTint="@color/primary_max"
                         android:text="MUA" />
 
                 </LinearLayout>
@@ -70,7 +73,9 @@
                     android:id="@+id/tvInfor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextViewfdvrtbtrgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_margin="10dp"
@@ -85,6 +90,7 @@
                     android:id="@+id/tvProductRelate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:text="Sản phẩm liên quan"
                     android:textColor="@color/black"
                     android:textSize="17dp"
@@ -94,7 +100,52 @@
                     android:id="@+id/revRelatedProduct"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:minHeight="200dp"/>
+                    android:minHeight="200dp"
+                    android:layout_marginBottom="10dp"/>
+
+                <TextView
+                    android:id="@+id/tvCmt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="Bình luận"
+                    android:textColor="@color/black"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tiCmt"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:hint="Viết bình luận">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btnSubmitCmt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:backgroundTint="@color/primary_max"
+                    android:text="Gửi" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/revCmt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="200dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"/>
+
 
 
             </LinearLayout>

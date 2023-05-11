@@ -18,13 +18,19 @@
         android:paddingBottom="0dp"
         android:text="-"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/itemQuantity" />
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/itemInscreaseBtn"
+        app:layout_constraintEnd_toStartOf="@+id/itemQuantity"
+        app:layout_constraintTop_toTopOf="@+id/itemInscreaseBtn" />
 
     <ImageView
         android:id="@+id/itemBanner"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
         android:src="@drawable/xoai"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,6 +41,7 @@
         android:id="@+id/itemName"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:paddingStart="10dp"
         android:text="TextView"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/itemBanner"
@@ -44,6 +51,7 @@
         android:id="@+id/itemNote"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:paddingStart="10dp"
         android:text="TextView"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/itemBanner"
@@ -61,12 +69,13 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/itemName"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/itemBanner" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/itemInscreaseBtn"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/circle_background"
         android:backgroundTint="@color/gray_silver"
         android:padding="0dp"
@@ -76,19 +85,25 @@
         android:paddingBottom="0dp"
         android:text="+"
         android:textColor="@color/white"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <EditText
+    <View
+        android:id="@+id/divider"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
         android:id="@+id/itemQuantity"
         android:layout_width="30dp"
         android:layout_height="0dp"
-        android:background="@null"
-        android:ems="10"
         android:gravity="center"
-        android:inputType="numberDecimal"
-        android:text="1"
-        android:textSize="14sp"
+        android:text="99"
         app:layout_constraintBottom_toBottomOf="@+id/itemInscreaseBtn"
         app:layout_constraintEnd_toStartOf="@+id/itemInscreaseBtn"
         app:layout_constraintTop_toTopOf="@+id/itemInscreaseBtn" />

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:minWidth="200dp"
+    android:minWidth="150dp"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/custom_item"
     android:layout_margin="10dp"
@@ -10,9 +11,9 @@
 
     <LinearLayout
         android:id="@+id/ln0"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="1dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -20,17 +21,17 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
             android:src="@drawable/xoai"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <TextView
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:layout_marginLeft="2dp"
+            android:textStyle="bold"
             android:inputType="textMultiLine"
             android:text="TextView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,6 +43,7 @@
             android:id="@+id/tvPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
             android:inputType="textMultiLine"
             android:text="TextView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -49,18 +51,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
-        <TextView
-            android:id="@+id/tvBuy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/green_min"
-            android:gravity="center"
-            android:text="Mua"
-            android:textSize="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvPrice" />
+
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tvBuy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_min"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:text="Mua"
+        android:textSize="20dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"/>
 </LinearLayout>

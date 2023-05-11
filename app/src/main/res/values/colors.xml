@@ -8,16 +8,20 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green">#4CAF50</color>
-    <color name="color_btn_menu">#e9f5f0</color>
     <color name="green_max">#026830</color>
     <color name="green_min">#B7F1D1</color>
+    <color name="color_btn_menu">#EAD30A</color>
+    <color name="primary_max">#053383</color>
+    <color name="primary_min">#1985D6</color>
     <color name="gray_silver">#C0C0C0</color>
-    <color name="gray_min">#C4C7C6</color>
-
+    <color name="gray_min">#E1E4E3</color>
+    <color name="btn_cancel">#F40A0A</color>
+    <color name="red">#FF0000</color>
+    <color name="yellow">#fdff00</color>
+    <color name="gray">#8E8D8D</color>
     <color name="table_row_odd">#FFFFFF</color>
     <color name="table_row_even">#f3f3f3</color>
     <color name="admin_table_border_color">#CCCCCC</color>
     <color name="color_text_action">#024F8C</color>
     <color name="color_text_btn_admin">#5EA7E1</color>
-
 </resources>

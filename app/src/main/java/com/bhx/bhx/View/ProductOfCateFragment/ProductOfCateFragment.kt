@@ -1,11 +1,14 @@
 package com.bhx.bhx.View.ProductOfCateFragment
 
+import android.app.ProgressDialog
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -51,6 +54,23 @@ class ProductOfCateFragment(private val category: ReviewCategory) : Fragment() {
     var revProductOfCate: RecyclerView?=null
     private lateinit var adapter:ListProductAdapter
     lateinit var apiCategoryInstance: CategoryController
+    private var isApiCalled: Boolean = false
+    private var recyclerViewState: Parcelable? = null
+    private var listProduct : List<Product> = listOf()
+
+    override fun onPause() {
+        super.onPause()
+        recyclerViewState = revProductOfCate!!.layoutManager?.onSaveInstanceState()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (recyclerViewState != null) {
+            revProductOfCate!!.layoutManager?.onRestoreInstanceState(recyclerViewState)
+        }
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,68 +85,56 @@ class ProductOfCateFragment(private val category: ReviewCategory) : Fragment() {
         tvCate!!.setText(category.name)
 
         btnBack!!.setOnClickListener {
-            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
-            fragmentManager.beginTransaction().replace(
-                R.id.container,
-                HomeFragment()
-            ).commit()
+            parentFragmentManager.popBackStack()
         }
 
-        //Log.i("test",category.id.toString())
+        if(!isApiCalled) {
+            apiCategoryInstance = RetrofitInstance.getInstance().create(CategoryController::class.java)
 
-        //Toast.makeText(container!!.context, category.id.toString(),Toast.LENGTH_SHORT).show()
-        apiCategoryInstance = RetrofitInstance.getInstance().create(CategoryController::class.java)
+            val categoryId: Int = category.id
+            val api = apiCategoryInstance.getAllProductsOfCate(categoryId)
 
-        val categoryId: Int = category.id
-        Log.i("test",id.toString())
-        val api = apiCategoryInstance.getAllProductsOfCate(categoryId)
+            val dialog = ProgressDialog(context)
+            dialog.create()
+            dialog.setContentView(R.layout.custom_progress_dialog)
+            dialog.setCancelable(false) //outside touch doesn't dismiss you
+            dialog.show()
+            val displayMetrics = context?.resources?.displayMetrics
+            val screenWidth = displayMetrics?.widthPixels
+            val width = (screenWidth?.times(0.5))?.toInt()
+            if (width != null) {
+                dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
+            }
 
-        api.enqueue(object : Callback<List<Product>> {
-            override fun onResponse(
-                call: Call<List<Product>>,
-                response: Response<List<Product>>
-            ) {
+            api.enqueue(object : Callback<List<Product>> {
+                override fun onResponse(
+                    call: Call<List<Product>>,
+                    response: Response<List<Product>>
+                ) {
 
-                if (response.isSuccessful) {
-                    val data = response.body()
-
-                    adapter = ListProductAdapter(data as List<Product>, container!!.context);
-                    revProductOfCate!!.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
-                    revProductOfCate!!.adapter= adapter
-                }else{
-                    Toast.makeText(container!!.context, "Fail",Toast.LENGTH_SHORT).show()
+                    if (response.isSuccessful) {
+                        val data = response.body()
+                        dialog.dismiss()
+                        listProduct = data as List<Product>
+                        adapter = ListProductAdapter(listProduct, container!!.context);
+                        revProductOfCate!!.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
+                        revProductOfCate!!.adapter= adapter
+                        isApiCalled = true
+                    }else{
+                        Toast.makeText(container!!.context, "Fail",Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
-            override fun onFailure(call: Call<List<Product>>, t: Throwable) {
-                Toast.makeText(container!!.context,t.message,Toast.LENGTH_SHORT).show()
-                println(t.message)
-            }
-        })
+                override fun onFailure(call: Call<List<Product>>, t: Throwable) {
+                    Toast.makeText(container!!.context,t.message,Toast.LENGTH_SHORT).show()
+                    println(t.message)
+                }
+            })
+        }
+
+        adapter = ListProductAdapter(listProduct, container!!.context);
+        revProductOfCate!!.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
+        revProductOfCate!!.adapter= adapter
 
         return view
     }
-
-//    companion object {
-//        /**
-//         * Use this factory method to create a new instance of
-//         * this fragment using the provided parameters.
-//         *
-//         * @param param1 Parameter 1.
-//         * @param param2 Parameter 2.
-//         * @return A new instance of fragment ProductOfCateFragment.
-//         */
-//        // TODO: Rename and change types and number of parameters
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            ProductOfCateFragment().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
-//    }
-
-
-
-
 }

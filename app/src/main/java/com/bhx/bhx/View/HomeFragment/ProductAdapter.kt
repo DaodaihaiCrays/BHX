@@ -1,6 +1,7 @@
 package com.bhx.bhx.View.HomeFragment
 
 import android.content.Context
+import android.util.Log
 
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +15,7 @@ import com.bhx.bhx.R
 import androidx.appcompat.app.AppCompatActivity
 import com.bhx.bhx.View.ProductOfCateFragment.ProductOfCateFragment
 
-class ProductAdapter(private val categories: List<ReviewCategory>, private val context: Context) :
+class ProductAdapter(private val categories: MutableList<ReviewCategory>, private val context: Context) :
     RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -33,14 +34,12 @@ class ProductAdapter(private val categories: List<ReviewCategory>, private val c
         holder.btnSeeMore.text = "Xem tất cả " + (categories[position].countProducts) + " sản phẩm"
 
         holder.btnSeeMore.setOnClickListener {
-
-            //Log.i("test",categories[position].id.toString())
-
+            Log.i("test","Nhan see more")
             val fragmentManager = (context as AppCompatActivity).supportFragmentManager
             fragmentManager.beginTransaction().replace(
                 R.id.container,
                 ProductOfCateFragment(categories[position])
-            ).commit()
+            ).addToBackStack(null).commit()
         }
         var adapter = ListProductAdapter(categories[position].products, context)
         holder.revListProduct.adapter = adapter
