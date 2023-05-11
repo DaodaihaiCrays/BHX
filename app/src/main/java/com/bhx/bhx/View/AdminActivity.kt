@@ -7,6 +7,8 @@ import android.view.MenuItem
 import com.bhx.bhx.R
 import com.bhx.bhx.View.Admin.AdminCategoryList
 import com.bhx.bhx.View.Admin.AdminCreateCategory
+import com.bhx.bhx.View.Admin.AdminProductList
+import com.bhx.bhx.View.Admin.AdminPromotionsFragment
 
 class AdminActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +25,24 @@ class AdminActivity : AppCompatActivity() {
                 val categoryFragment = AdminCategoryList()
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.adminContainer, categoryFragment)
+                    .commit()
+
+                return true
+            }
+            R.id.sale -> {
+                // Code xử lý khi người dùng chọn mục Sale
+                val promotionFragment = AdminPromotionsFragment()
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.adminContainer, promotionFragment)
+                    .commit()
+
+                return true
+            }
+            R.id.product -> {
+                // Code xử lý khi người dùng chọn mục Product
+                val productFragment = AdminProductList()
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.adminContainer, productFragment)
                     .commit()
 
                 return true

@@ -13,9 +13,9 @@ import com.bhx.bhx.Controller.CategoryAdminController
 import com.bhx.bhx.Controller.RetrofitInstance
 import com.bhx.bhx.Model.Category
 import com.bhx.bhx.R
-import retrofit2.Callback
 import com.google.android.material.textfield.TextInputLayout
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
@@ -25,10 +25,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [AdminCreateCategory.newInstance] factory method to
+ * Use the [AdminCreateProduct.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AdminCreateCategory : Fragment() {
+class AdminCreateProduct : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -45,7 +45,7 @@ class AdminCreateCategory : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_admin_create_product, container, false)
+        val view = inflater.inflate(R.layout.fragment_admin_create_category, container, false)
 
         val saveButton = view.findViewById<Button>(R.id.saveBtn)
         val btnBack = view.findViewById<Button>(R.id.btnBack)
@@ -60,7 +60,8 @@ class AdminCreateCategory : Fragment() {
             ).commit()
         }
 
-        var apiCategoryAdminInstance: CategoryAdminController = RetrofitInstance.getInstance().create(CategoryAdminController::class.java)
+        var apiCategoryAdminInstance: CategoryAdminController = RetrofitInstance.getInstance().create(
+            CategoryAdminController::class.java)
 
         if (category != null) { // edit
 
@@ -102,5 +103,6 @@ class AdminCreateCategory : Fragment() {
         // Inflate the layout for this fragment
         return view
     }
+
 
 }
