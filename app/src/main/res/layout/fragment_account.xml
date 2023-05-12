@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".View.AccountFragment.AccountFragment"
+
     android:contentDescription="@string/account_view_description">
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -158,6 +159,7 @@
                 android:layout_marginVertical="10sp"
                 android:layout_marginHorizontal="20sp"
                 android:padding="5sp"
+                android:layout_marginBottom="1dp"
                 android:background="@drawable/custom_btn_acc_page"
                 >
 
@@ -226,6 +228,40 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/term_of_service_btn" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Logout_btn"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/custom_btn_acc_page"
+                    android:padding="10sp"
+                    android:text="Đăng xuất"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/setting_btn" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/Login_btn"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/custom_btn_acc_page"
+                    android:padding="10sp"
+                    android:text="Đăng nhập"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/Logout_btn" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 </ScrollView>

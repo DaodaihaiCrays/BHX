@@ -19,5 +19,5 @@ data class ReviewCategory (
 
     @SerializedName("products")
     @Expose()
-    val products: List<Product>
+    val products: MutableList<Product>
 )

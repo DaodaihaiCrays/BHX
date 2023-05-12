@@ -13,9 +13,9 @@
             android:id="@+id/tvCate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:text="TextView"
-            android:textSize="30dp"/>
+            android:textSize="25dp"/>
         <TextView
             android:id="@+id/tvCount"
             android:layout_width="wrap_content"
