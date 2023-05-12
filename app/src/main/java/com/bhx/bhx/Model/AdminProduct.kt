@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 data class AdminProduct(
     @SerializedName("id")
     @Expose()
-    val id: Int,
+    val id: Int?,
 
     @SerializedName("name")
     @Expose()
@@ -28,13 +28,6 @@ data class AdminProduct(
     @Expose()
     val general_description: String,
 
-    @SerializedName("attribute_label")
-    @Expose()
-    val attribute_label: List<String>?,
-
-    @SerializedName("attribute_value")
-    @Expose()
-    val attribute_value: List<String>?,
 
     @SerializedName("promotion_id")
     @Expose()
@@ -44,17 +37,9 @@ data class AdminProduct(
     @Expose()
     val note: String?,
 
-    @SerializedName("created")
-    @Expose()
-    val created: String,
-
-    @SerializedName("modified")
-    @Expose()
-    val modified: String,
-
     @SerializedName("banner")
     @Expose()
-    val banner: String,
+    val banner: String?,
 
     @SerializedName("status")
     @Expose()
@@ -62,5 +47,5 @@ data class AdminProduct(
 
     @SerializedName("category_name")
     @Expose()
-    val category_name: String,
+    val category_name: String?,
 )

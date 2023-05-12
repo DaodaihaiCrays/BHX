@@ -84,13 +84,12 @@ class AdminEditCategory( var Cate: Category) : Fragment() {
                             AdminCategoryList()
                         ).commit()
                     } else {
-                        Toast.makeText(context, "Update category failed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Cập nhật loại sản phẩm thất bại", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<Category>, t: Throwable) {
-                    Toast.makeText(context, "Update category failed", Toast.LENGTH_SHORT).show()
-                    Log.e("AdminEditCategory", "Update category failed", t)
+                    Toast.makeText(context, "Cập nhật loại sản phẩm thất bại", Toast.LENGTH_SHORT).show()
                 }
             })
         }

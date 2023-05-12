@@ -45,7 +45,7 @@ class AdminCreateCategory : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_admin_create_product, container, false)
+        val view = inflater.inflate(R.layout.fragment_admin_create_category, container, false)
 
         val saveButton = view.findViewById<Button>(R.id.saveBtn)
         val btnBack = view.findViewById<Button>(R.id.btnBack)
@@ -77,7 +77,7 @@ class AdminCreateCategory : Fragment() {
                             // Category mới được tạo sẽ được trả về ở đây
                             val category = response.body()
 
-                            Toast.makeText(container!!.context, "Create new category successfully", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(container!!.context, "Tạo loại sản phẩm thành công", Toast.LENGTH_SHORT).show()
 
                             // Điều hướng trở lại danh sách Category
                             val fragmentManager = (context as AppCompatActivity).supportFragmentManager
@@ -86,13 +86,12 @@ class AdminCreateCategory : Fragment() {
                                 AdminCategoryList()
                             ).commit()
                         } else {
-                            Toast.makeText(container!!.context, "Create new category failed", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(container!!.context, "Tạo loại sản phẩm thất bại", Toast.LENGTH_SHORT).show()
                         }
                     }
 
                     override fun onFailure(call: Call<Category>, t: Throwable) {
-                        Toast.makeText(container!!.context, "Create new category failed", Toast.LENGTH_SHORT).show()
-                        Log.e("AdminCreateCategory", "Create new category failed", t)
+                        Toast.makeText(container!!.context, "Tạo loại sản phẩm thất bại", Toast.LENGTH_SHORT).show()
                     }
                 })
             }

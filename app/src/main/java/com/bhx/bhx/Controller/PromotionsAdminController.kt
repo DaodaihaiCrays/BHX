@@ -8,6 +8,9 @@ interface PromotionsAdminController {
     @GET("admin/promotions")
     fun findAll(): Call<List<Promotion>>
 
+    @GET("admin/promotions/active")
+    fun findActive(): Call<List<Promotion>>
+
     @GET("admin/promotions")
     fun search(@Query("keyword") keyword: String): Call<List<Promotion>>
 

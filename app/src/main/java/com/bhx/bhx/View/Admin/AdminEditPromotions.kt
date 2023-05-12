@@ -160,16 +160,14 @@ class AdminEditPromotions(var pPromotion: Promotion) : Fragment() {
                             response: Response<Promotion>
                         ) {
                             if (response.isSuccessful) {
-                                // Promotion mới được tạo sẽ được trả về ở đây
                                 val promotion = response.body()
 
                                 Toast.makeText(
                                     container!!.context,
-                                    "Tạo đợt giảm giá thành công",
+                                    "Cập nhật đợt giảm giá thành công",
                                     Toast.LENGTH_SHORT
                                 ).show()
 
-                                // Điều hướng trở lại danh sách Promotions
                                 val fragmentManager =
                                     (context as AppCompatActivity).supportFragmentManager
                                 fragmentManager.beginTransaction().replace(
@@ -179,7 +177,7 @@ class AdminEditPromotions(var pPromotion: Promotion) : Fragment() {
                             } else {
                                 Toast.makeText(
                                     container!!.context,
-                                    "Tạo đợt giảm giá thất bại",
+                                    "Cập nhật đợt giảm giá thất bại",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
@@ -188,7 +186,7 @@ class AdminEditPromotions(var pPromotion: Promotion) : Fragment() {
                         override fun onFailure(call: Call<Promotion>, t: Throwable) {
                             Toast.makeText(
                                 container!!.context,
-                                "Tạo đợt giảm giá thất bại",
+                                "Cập nhật đợt giảm giá thất bại",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }

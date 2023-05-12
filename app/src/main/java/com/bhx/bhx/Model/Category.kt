@@ -15,4 +15,11 @@ data class Category(
     @SerializedName("description")
     @Expose()
     val description: String,
+
 )
+{
+    override fun toString(): String {
+        return name
+    }
+
+}

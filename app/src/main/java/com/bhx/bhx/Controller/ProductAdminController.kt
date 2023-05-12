@@ -20,6 +20,6 @@ interface ProductAdminController {
     @PUT("admin/products/{id}")
     fun update(@Path("id") id: Int, @Body product: AdminProduct): Call<AdminProduct>
 
-    @DELETE("admin/products/{id}/status")
-    fun updateStatus(@Path("id") id: Int, @Body productStatus: AdminProductStatus): Call<Void>
+    @PUT("admin/products/{id}/status")
+    fun updateStatus(@Path("id") id: Int, @Body productStatus: AdminProductStatus): Call<AdminProduct>
 }

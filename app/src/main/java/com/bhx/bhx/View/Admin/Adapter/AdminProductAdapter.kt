@@ -23,7 +23,9 @@ import com.bhx.bhx.Model.AdminProduct
 import com.bhx.bhx.Model.AdminProductStatus
 import com.bhx.bhx.Model.Promotion
 import com.bhx.bhx.R
+import com.bhx.bhx.View.Admin.AdminEditProduct
 import com.bhx.bhx.View.Admin.AdminEditPromotions
+import com.bhx.bhx.View.Admin.AdminProductList
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -59,7 +61,7 @@ class AdminProductAdapter(private val context: Context, private var data: List<A
 
         val textView1 = TextView(context)
         textView1.text = data[position].name
-        textView1.width = 100
+        textView1.width = 300
         textView1.height = 200
         textView1.maxLines = 2
         textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f)
@@ -124,7 +126,7 @@ class AdminProductAdapter(private val context: Context, private var data: List<A
         val textView22 = TextView(context)
         textView22.text = data[position].status
         textView22.height = 200
-        textView22.width = 100
+        textView22.width = 200
         textView22.maxLines = 3
         textView22.ellipsize = TextUtils.TruncateAt.END
         textView22.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f)
@@ -184,34 +186,35 @@ class AdminProductAdapter(private val context: Context, private var data: List<A
                 var productStatus: AdminProductStatus = AdminProductStatus(nextStatus)
 
                 data[position].id?.let { it1 ->
-                    apiProductAdminInstance.updateStatus(it1, productStatus).enqueue(object : Callback<Void> {
-                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    apiProductAdminInstance.updateStatus(it1, productStatus).enqueue(object : Callback<AdminProduct> {
+                        override fun onResponse(call: Call<AdminProduct>, response: Response<AdminProduct>) {
                             if (response.isSuccessful) {
                                 val fragmentManager = (context as AppCompatActivity).supportFragmentManager
                                 fragmentManager.beginTransaction().replace(
                                     R.id.adminContainer,
-                                    AdminPromotionsFragment()
+                                    AdminProductList()
                                 ).commit()
                             } else {
-                                Toast.makeText(context, "Cập nhật status thành công", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "Cập nhật trạng thái thành công", Toast.LENGTH_SHORT).show()
                             }
                         }
 
-                        override fun onFailure(call: Call<Void>, t: Throwable) {
-                            Toast.makeText(context, "Cập nhật status thất bại", Toast.LENGTH_SHORT).show()
+                        override fun onFailure(call: Call<AdminProduct>, t: Throwable) {
+                            Toast.makeText(context, "Cập nhật trạng thái thất bại", Toast.LENGTH_SHORT).show()
                         }
                     })
                 }
                 dialog.dismiss()
             }
-//            builder.setNegativeButton("Điều chỉnh") { dialog, _ ->
-//                val fragmentManager = (context as AppCompatActivity).supportFragmentManager
-//                fragmentManager.beginTransaction().replace(
-//                    R.id.adminContainer,
-//                    AdminEditPromotions(data[position])
-//                ).addToBackStack(null).commit()
-//                dialog.dismiss()
-//            }
+
+            builder.setNegativeButton("Điều chỉnh") { dialog, _ ->
+                val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+                fragmentManager.beginTransaction().replace(
+                    R.id.adminContainer,
+                    AdminEditProduct(data[position])
+                ).addToBackStack(null).commit()
+                dialog.dismiss()
+            }
 
             builder.setNeutralButton("Quay lại") { dialog, _ ->
                 dialog.dismiss()

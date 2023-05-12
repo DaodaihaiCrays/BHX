@@ -24,3 +24,9 @@ data class Promotion(
     @Expose()
     val end_time: String,
 )
+{
+    override fun toString(): String {
+        return name
+    }
+
+}

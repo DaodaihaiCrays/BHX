@@ -1,22 +1,36 @@
 package com.bhx.bhx.View.Admin
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
+import android.widget.*
+import com.bhx.bhx.View.Adapter.SpinnerAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bhx.bhx.Controller.CategoryAdminController
+import com.bhx.bhx.Controller.ProductAdminController
+import com.bhx.bhx.Controller.PromotionsAdminController
 import com.bhx.bhx.Controller.RetrofitInstance
+import com.bhx.bhx.Model.AdminProduct
 import com.bhx.bhx.Model.Category
+import com.bhx.bhx.Model.Promotion
 import com.bhx.bhx.R
+import com.bhx.bhx.View.Admin.Adapter.CategorySpinnerAdapter
+import com.bhx.bhx.View.Admin.Adapter.PromotionSpinnerAdaper
+import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,6 +46,15 @@ class AdminCreateProduct : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var selectedImageUri: Uri? = null
+    private var pName : String? = null
+    private var pPrice : Double? = null
+    private var pStock : Int? = null
+    private var pCategoryId : Int? = null
+    private var pPromotionId : Int? = null
+    private var pNote : String? = null
+    private var pDescription : String? = null
+    private var pImageUrl : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,64 +68,178 @@ class AdminCreateProduct : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_admin_create_category, container, false)
+        val view = inflater.inflate(R.layout.fragment_admin_create_product, container, false)
 
         val saveButton = view.findViewById<Button>(R.id.saveBtn)
         val btnBack = view.findViewById<Button>(R.id.btnBack)
 
-        val category = arguments?.getSerializable("categoryEdit") as? Category
 
         btnBack.setOnClickListener {
             val fragmentManager = (context as AppCompatActivity).supportFragmentManager
             fragmentManager.beginTransaction().replace(
                 R.id.adminContainer,
-                AdminCategoryList()
+                AdminProductList()
             ).commit()
         }
 
         var apiCategoryAdminInstance: CategoryAdminController = RetrofitInstance.getInstance().create(
             CategoryAdminController::class.java)
 
-        if (category != null) { // edit
+        var categoryList: List<Category>
 
-        } else { // create
+        apiCategoryAdminInstance.findAll().enqueue(object : Callback<List<Category>> {
+            override fun onResponse(
+                call: Call<List<Category>>,
+                response: Response<List<Category>>
+            ) {
 
-            saveButton.setOnClickListener{
-                val name = view.findViewById<TextInputLayout>(R.id.categoryName)
-                val description = view.findViewById<TextInputLayout>(R.id.categoryDescription)
-                val newCategory = Category(null, name.editText?.text.toString(), description.editText?.text.toString())
+                if (response.isSuccessful) {
+                    categoryList = response.body()!!
 
-                apiCategoryAdminInstance.create(newCategory).enqueue(object : Callback<Category> {
-                    override fun onResponse(call: Call<Category>, response: Response<Category>) {
-                        if (response.isSuccessful) {
-                            // Category mới được tạo sẽ được trả về ở đây
-                            val category = response.body()
+                    var categorySpinner = view.findViewById<Spinner>(R.id.spinnerCategory)
+                    categorySpinner.adapter = CategorySpinnerAdapter(requireContext(), categoryList)
 
-                            Toast.makeText(container!!.context, "Create new category successfully", Toast.LENGTH_SHORT).show()
+                    categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                            val selectedItem = parent.getItemAtPosition(position) as Category
+                            pCategoryId = selectedItem.id
+                        }
 
-                            // Điều hướng trở lại danh sách Category
-                            val fragmentManager = (context as AppCompatActivity).supportFragmentManager
-                            fragmentManager.beginTransaction().replace(
-                                R.id.adminContainer,
-                                AdminCategoryList()
-                            ).commit()
-                        } else {
-                            Toast.makeText(container!!.context, "Create new category failed", Toast.LENGTH_SHORT).show()
+                        override fun onNothingSelected(parent: AdapterView<*>) {
                         }
                     }
 
-                    override fun onFailure(call: Call<Category>, t: Throwable) {
-                        Toast.makeText(container!!.context, "Create new category failed", Toast.LENGTH_SHORT).show()
-                        Log.e("AdminCreateCategory", "Create new category failed", t)
+                }else{
+                    Toast.makeText(container!!.context, "Fail",Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onFailure(call: Call<List<Category>>, t: Throwable) {
+                Toast.makeText(container!!.context,t.message,Toast.LENGTH_SHORT).show()
+                println(t.message)
+            }
+        })
+
+        var apiPromotionAdminInstance: PromotionsAdminController = RetrofitInstance.getInstance().create(
+            PromotionsAdminController::class.java)
+
+        var promotionList : List<Promotion>
+
+        apiPromotionAdminInstance.findAll().enqueue(object : Callback<List<Promotion>> {
+            override fun onResponse(
+                call: Call<List<Promotion>>,
+                response: Response<List<Promotion>>
+            ) {
+
+                if (response.isSuccessful) {
+                    promotionList = response.body()!!
+
+                    var promotionSpinner = view.findViewById<Spinner>(R.id.spinnerPromotion)
+                    promotionSpinner.adapter = PromotionSpinnerAdaper(requireContext(), listOf(null) + promotionList)
+
+                    promotionSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                            val selectedItem = parent.getItemAtPosition(position) as Promotion?
+                            pPromotionId = selectedItem?.id ?: null
+                        }
+
+                        override fun onNothingSelected(parent: AdapterView<*>) {
+                        }
                     }
-                })
+
+                }else{
+                    Toast.makeText(container!!.context, "Fail",Toast.LENGTH_SHORT).show()
+                }
             }
 
+            override fun onFailure(call: Call<List<Promotion>>, t: Throwable) {
+                Toast.makeText(container!!.context,t.message,Toast.LENGTH_SHORT).show()
+                println(t.message)
+            }
+        })
+
+        var button_select_image = view.findViewById<Button>(R.id.btnSelectImage)
+        button_select_image.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            intent.type = "image/*"
+            imagePickerLauncher.launch(intent)
+        }
+
+        saveButton.setOnClickListener{
+            submit(view)
         }
 
         // Inflate the layout for this fragment
         return view
     }
 
+    private val imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+       var image_preview = view?.findViewById<ImageView>(R.id.image_preview)
+
+        if (result.resultCode == Activity.RESULT_OK) {
+            selectedImageUri = result.data?.data
+            selectedImageUri?.let { uri: Uri ->
+                Glide.with(this)
+                    .load(uri)
+                    .into(image_preview!!)
+            }
+        }
+    }
+
+    private fun submit(view: View) {
+        selectedImageUri?.let { uri ->
+            val storageRef = Firebase.storage.reference.child("uploads/${System.currentTimeMillis()}.jpg")
+            storageRef.putFile(uri)
+                .addOnSuccessListener {
+                    storageRef.downloadUrl.addOnSuccessListener { downloadUri ->
+
+                        var apiProductAdminInstance: ProductAdminController = RetrofitInstance.getInstance().create(
+                            ProductAdminController::class.java)
+
+                        var nameInput = view.findViewById<TextInputLayout>(R.id.createName)
+                        pName = nameInput.editText?.text.toString()
+
+                        var priceInput = view.findViewById<TextInputLayout>(R.id.createUnitPrice)
+                        pPrice = priceInput.editText?.text?.toString()?.toDoubleOrNull() ?: 0.0
+
+                        var stockInput = view.findViewById<TextInputLayout>(R.id.createStock)
+                        pStock = stockInput.editText?.text?.toString()?.toIntOrNull() ?: 0
+
+                        var noteInput = view.findViewById<TextInputLayout>(R.id.createNote)
+                        pNote = noteInput.editText?.text.toString()
+
+                        var descriptionInput = view.findViewById<TextInputLayout>(R.id.createDescription)
+                        pDescription = descriptionInput.editText?.text.toString()
+
+                        pImageUrl = downloadUri.toString()
+
+                        val newProduct = AdminProduct(null, pName!!, pPrice!!, pStock!!, pCategoryId!!, pDescription!!, pPromotionId, pNote, pImageUrl!!, "ACTIVE", null)
+
+                        apiProductAdminInstance.create(newProduct).enqueue(object : Callback<AdminProduct> {
+                            override fun onResponse(call: Call<AdminProduct>, response: Response<AdminProduct>) {
+                                if (response.isSuccessful) {
+
+                                    Toast.makeText(requireContext(), "Tạo sản phẩm thành công", Toast.LENGTH_SHORT).show()
+
+                                    val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+                                    fragmentManager.beginTransaction().replace(
+                                        R.id.adminContainer,
+                                        AdminProductList()
+                                    ).commit()
+                                } else {
+                                    Toast.makeText(requireContext(), "Tạo sản phẩm thất bại", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+
+                            override fun onFailure(call: Call<AdminProduct>, t: Throwable) {
+                                Toast.makeText(requireContext(), "Tạo sản phẩm thất bại", Toast.LENGTH_SHORT).show()
+                            }
+                        })
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(context, "Tải lên ảnh thất bại: ${exception.message}", Toast.LENGTH_SHORT).show()
+                }
+        } ?: Toast.makeText(context, "Chưa chọn ảnh", Toast.LENGTH_SHORT).show()
+    }
 
 }

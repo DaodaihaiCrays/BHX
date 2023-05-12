@@ -223,6 +223,6 @@
         android:textColor="@color/black"
         android:gravity="center"
         android:textSize="20dp"
-        android:text="TẠO SẢN PHẨM" />
+        android:text="CẬP NHẬT SẢN PHẨM" />
 
 </RelativeLayout>

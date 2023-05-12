@@ -96,7 +96,7 @@ class AdminPromotionsFragment() : Fragment() {
                         }
                         isApiCalled = true
                     }else{
-                        Toast.makeText(container!!.context, "Fail", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(container!!.context, "Thất bại", Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: Call<List<Promotion>>, t: Throwable) {
@@ -129,7 +129,7 @@ class AdminPromotionsFragment() : Fragment() {
                                 tableLayout.addView(rowView)
                             }
                         }else {
-                            //Toast.makeText(context, "Fail",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Thất bại",Toast.LENGTH_SHORT).show()
                         }
                     }
 

@@ -69,16 +69,16 @@
                     android:gravity="center_vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:padding="10dp"
+                        android:text="Tên"
                         android:textSize="15dp"
-                        android:textStyle="bold"
-                        android:text="Tên" />
+                        android:textStyle="bold" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:padding="10dp"
@@ -87,7 +87,7 @@
                         android:text="Giá gốc" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:padding="10dp"
@@ -96,7 +96,7 @@
                         android:text="Tồn kho" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:padding="10dp"
@@ -105,7 +105,7 @@
                         android:text="Lĩnh vực" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:padding="10dp"
@@ -114,7 +114,7 @@
                         android:text="Trạng thái" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:padding="10dp"

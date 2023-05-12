@@ -66,7 +66,7 @@ class AdminProductList : Fragment() {
             val fragmentManager = (context as AppCompatActivity).supportFragmentManager
             fragmentManager.beginTransaction().replace(
                 R.id.adminContainer,
-                AdminCreatePromotions()
+                AdminCreateProduct()
             ).commit()
         }
 
@@ -106,46 +106,46 @@ class AdminProductList : Fragment() {
             })
         }
 
-//        btnSearch!!.setOnClickListener {
-//            val strSearch = edtSearch!!.text.toString()
-//            if(strSearch.length!=0) {
-//                RetrofitInstance.getInstance().create(PromotionsAdminController::class.java).search(strSearch).enqueue(object :
-//                    Callback<List<Promotion>> {
-//                    override fun onResponse(call: Call<List<Promotion>>, response: Response<List<Promotion>>) {
-//                        if (response.isSuccessful){
-//                            var listOfPromotion: List<Promotion>? = response.body()
-//
-//                            if (listOfPromotion == null) {
-//                                listOfPromotion = listOf<Promotion>()
-//                            }
-//                            listPromotionsSearch = listOfPromotion as List<Promotion>
-//                            val myAdapter = AdminPromotionAdapter(requireContext(), listPromotionsSearch)
-//
-//                            tableLayout.removeAllViews()
-//
-//                            for (i in 0 until myAdapter.count) {
-//                                val rowView = myAdapter.getView(i, null, tableLayout)
-//                                tableLayout.addView(rowView)
-//                            }
-//                        }else {
-//                            //Toast.makeText(context, "Fail",Toast.LENGTH_SHORT).show()
-//                        }
-//                    }
-//
-//                    override fun onFailure(call: Call<List<Promotion>>, t: Throwable) {
-//                        TODO("Not yet implemented")
-//                    }
-//
-//                })
-//            }
-//            else {
-//                val fragmentManager = (context as AppCompatActivity).supportFragmentManager
-//                fragmentManager.beginTransaction().replace(
-//                    R.id.adminContainer,
-//                    AdminCategoryList()
-//                ).commit()
-//            }
-//        }
+        btnSearch!!.setOnClickListener {
+            val strSearch = edtSearch!!.text.toString()
+            if(strSearch.length!=0) {
+                RetrofitInstance.getInstance().create(ProductAdminController::class.java).search(strSearch).enqueue(object :
+                    Callback<List<AdminProduct>> {
+                    override fun onResponse(call: Call<List<AdminProduct>>, response: Response<List<AdminProduct>>) {
+                        if (response.isSuccessful){
+                            var listOfProduct: List<AdminProduct>? = response.body()
+
+                            if (listOfProduct == null) {
+                                listOfProduct = listOf<AdminProduct>()
+                            }
+                            listProductsSearch = listOfProduct as List<AdminProduct>
+                            val myAdapter = AdminProductAdapter(requireContext(), listProductsSearch)
+
+                            tableLayout.removeAllViews()
+
+                            for (i in 0 until myAdapter.count) {
+                                val rowView = myAdapter.getView(i, null, tableLayout)
+                                tableLayout.addView(rowView)
+                            }
+                        }else {
+                            Toast.makeText(context, "Tìm kiếm thất bại",Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<List<AdminProduct>>, t: Throwable) {
+                        Toast.makeText(context, "Tìm kiếm thất bại",Toast.LENGTH_SHORT).show()
+                    }
+
+                })
+            }
+            else {
+                val fragmentManager = (context as AppCompatActivity).supportFragmentManager
+                fragmentManager.beginTransaction().replace(
+                    R.id.adminContainer,
+                    AdminProductList()
+                ).commit()
+            }
+        }
 
         tableLayout.removeAllViews()
 
