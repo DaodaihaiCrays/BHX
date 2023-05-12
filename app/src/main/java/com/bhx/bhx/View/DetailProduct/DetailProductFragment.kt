@@ -70,7 +70,6 @@ class DetailProductFragment(private val product: Product) : Fragment() {
     lateinit var btnSubmitCmt: Button
     lateinit var tiCmt: TextInputLayout
     lateinit var imgLike:ImageView
-    var checkChange by Delegates.notNull<Boolean>()
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -90,8 +89,19 @@ class DetailProductFragment(private val product: Product) : Fragment() {
         tiCmt = view.findViewById(R.id.tiCmt)
         imgLike = view.findViewById(R.id.imgLike)
 
-        checkChange = true
-        CheckChangeFavorite.checkInDetailProduct=!CheckChangeFavorite.checkInDetailProduct
+
+        if(FirebaseAuth.getInstance().currentUser==null) {
+            tiCmt.editText?.setOnClickListener {
+                val intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        else {
+            tiCmt.editText?.apply {
+                isFocusable = true
+                isFocusableInTouchMode = true
+            }
+        }
 
         btnSubmitCmt.setOnClickListener {
             var str: String = tiCmt.editText?.text.toString()
@@ -101,7 +111,6 @@ class DetailProductFragment(private val product: Product) : Fragment() {
             if(user_id != null) {
 
                 if(str!=null && !str.isEmpty()) {
-                    Log.i("test","1111")
 
                     val commentData = JSONObject().apply {
                         put("user_id", UserInfo.getInstance().getUser()!!.id)
@@ -127,7 +136,6 @@ class DetailProductFragment(private val product: Product) : Fragment() {
             else {
                 val intent = Intent(context, LoginActivity::class.java)
                 startActivity(intent)
-                Log.i("test","22222")
             }
 
 
@@ -282,7 +290,6 @@ class DetailProductFragment(private val product: Product) : Fragment() {
 //                imgLike.visibility=View.GONE
                 val intent = Intent(context, LoginActivity::class.java)
                 startActivity(intent)
-                Log.i("test","22222")
             }
         }
 
