@@ -34,12 +34,8 @@ class SubCommentsAdapter(private var comments: List<Comments>, private val conte
     }
 
     override fun onBindViewHolder(holder: SubCommentsAdapterHolder, position: Int) {
-
-        if(FirebaseAuth.getInstance().currentUser!=null) {
-            holder.tvNameSubCmt.text = UserInfo.getInstance().getUser()!!.fullname
-            holder.tvSubContent.text = comments[position].comment_content
-        }
-
+        holder.tvNameSubCmt.text = comments[position].fullname
+        holder.tvSubContent.text = comments[position].comment_content
     }
 
     override fun getItemCount(): Int {

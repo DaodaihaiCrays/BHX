@@ -279,7 +279,7 @@ class DetailProductFragment(private val product: Product) : Fragment() {
                 }
             }
             else {
-                imgLike.visibility=View.GONE
+//                imgLike.visibility=View.GONE
                 val intent = Intent(context, LoginActivity::class.java)
                 startActivity(intent)
                 Log.i("test","22222")
