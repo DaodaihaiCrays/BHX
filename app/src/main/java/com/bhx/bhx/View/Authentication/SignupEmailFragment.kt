@@ -1,20 +1,21 @@
 package com.bhx.bhx.View.Authentication
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import com.bhx.bhx.Constant.AuthConstanst
-import com.bhx.bhx.Controller.AccountController
 import com.bhx.bhx.Controller.RetrofitInstance
+import com.bhx.bhx.Controller.UserController
 import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.Model.User
 import com.bhx.bhx.R
@@ -22,6 +23,7 @@ import com.bhx.bhx.View.MainActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,7 +42,7 @@ class SignupEmailFragment: Fragment() {
     lateinit var signupBtn: Button;
     lateinit var backBtn: FloatingActionButton;
     lateinit var auth: FirebaseAuth;
-    lateinit var apiUserInstance: AccountController;
+    lateinit var apiUserInstance: UserController;
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,7 +59,7 @@ class SignupEmailFragment: Fragment() {
         signupBtn = view.findViewById(R.id.signupBtn);
         backBtn = view.findViewById(R.id.backBtn);
         auth = FirebaseAuth.getInstance();
-        apiUserInstance = RetrofitInstance.getInstance().create(AccountController::class.java);
+        apiUserInstance = RetrofitInstance.getInstance().create(UserController::class.java);
 
         accountTextInputLayout.hint = "Email";
         accountTextInputLayout.startIconDrawable = ContextCompat.getDrawable(container?.context!!, R.drawable.ic_mail);
@@ -80,9 +82,58 @@ class SignupEmailFragment: Fragment() {
             }
         }
 
+        val dialog = ProgressDialog(context);
+        var user: FirebaseUser? = null;
+
+        val initializeInfoLauncher: ActivityResultLauncher<Intent> =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val data: Intent? = result.data;
+
+                    apiUserInstance.createUser(
+                        User(
+                            firebase_uid = user!!.uid,
+                            fullname = data?.getStringExtra("name"),
+                            phoneNumber = data?.getStringExtra("phone"),
+                            email = data?.getStringExtra("email")
+                        )
+                    )
+                        .enqueue(object : Callback<User> {
+                            override fun onResponse(
+                                call: Call<User>,
+                                response: Response<User>
+                            ) {
+                                if (response.isSuccessful) {
+                                    UserInfo.getInstance().updateFromApi();
+                                    dialog.dismiss();
+                                    val intent: Intent =
+                                        Intent(
+                                            requireActivity(),
+                                            MainActivity::class.java
+                                        );
+                                    startActivity(intent);
+                                }
+                            }
+
+                            override fun onFailure(
+                                call: Call<User>,
+                                t: Throwable
+                            ) {
+                                dialog.dismiss();
+                                Snackbar.make(
+                                    view,
+                                    "Đã có lỗi xảy ra, vui lòng thử lại sau",
+                                    1000
+                                ).show();
+                                activity?.finish();
+                            }
+
+                        })
+                }
+            }
+
         signupBtn.setOnClickListener {
             if(accountTextInputLayout.error.isNullOrEmpty() && passwordTextInputLayout.error.isNullOrEmpty() && rePasswordTextInputLayout.error.isNullOrEmpty()) {
-                val dialog = ProgressDialog(context);
                 dialog.create();
                 dialog.setContentView(R.layout.custom_progress_dialog);
                 dialog.setCancelable(false);
@@ -90,28 +141,12 @@ class SignupEmailFragment: Fragment() {
                 auth.createUserWithEmailAndPassword(accountEdittext.text.toString(), passwordEdittext.text.toString())
                     .addOnCompleteListener(requireActivity()) { task ->
                         if (task.isSuccessful) {
-                            val user = auth.currentUser;
-//                            Log.d("Shin", user.toString());
-                            apiUserInstance.createUser(User(user!!.uid)).enqueue(object : Callback<User> {
-                                override fun onResponse(
-                                    call: Call<User>,
-                                    response: Response<User>
-                                ) {
-                                    if (response.isSuccessful) {
-                                        UserInfo.getInstance().updateFromApi();
-                                        val intent: Intent = Intent(requireActivity(), MainActivity::class.java);
-                                        startActivity(intent);
-                                    }
-                                }
+                            user = auth.currentUser;
+                            val intent: Intent =
+                                Intent(container?.context, InitializeInfoActivity::class.java);
+                            intent.putExtra("email", accountEdittext.text.toString());
 
-                                override fun onFailure(call: Call<User>, t: Throwable) {
-                                    dialog.dismiss();
-                                    Snackbar.make(it, "Đã có lỗi xảy ra, vui lòng thử lại sau", 1000).show();
-                                    activity?.finish();
-                                }
-
-                            })
-                            dialog.dismiss();
+                            initializeInfoLauncher.launch(intent);
                         } else {
                             dialog.dismiss();
                             Snackbar.make(it, "Đã có lỗi xảy ra, vui lòng thử lại sau", 1000).show();

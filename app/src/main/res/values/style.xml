@@ -18,4 +18,11 @@
         <item name="android:dropDownListViewStyle">@style/custom_spinner_item</item>
 
     </style>
+
+    <style name="FirebaseBlueTheme" parent="FirebaseUI">
+        <item name="colorPrimary">@color/primary_min</item>
+        <item name="colorPrimaryVariant">@color/primary_max</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>

@@ -3,7 +3,6 @@ package com.bhx.bhx.View.Authentication
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,6 @@ import com.bhx.bhx.R
 import com.bhx.bhx.View.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import kotlin.math.log
 
 class LoginPhoneFragment: Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
