@@ -14,6 +14,9 @@
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="10dp"
         android:background="@color/white"
+        app:boxStrokeColor="@color/primary_min"
+        app:hintTextColor="@color/primary_min"
+        app:startIconTint="@color/custom_edittext_selector"
         android:hint="Viết bình luận">
 
         <com.google.android.material.textfield.TextInputEditText

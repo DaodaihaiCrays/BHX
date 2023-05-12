@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.Model.Comments
 import com.bhx.bhx.R
+import com.google.firebase.auth.FirebaseAuth
 
 class SubCommentsAdapter(private var comments: List<Comments>, private val context: Context):
     RecyclerView.Adapter<SubCommentsAdapter.SubCommentsAdapterHolder>() {
@@ -32,10 +34,6 @@ class SubCommentsAdapter(private var comments: List<Comments>, private val conte
     }
 
     override fun onBindViewHolder(holder: SubCommentsAdapterHolder, position: Int) {
-        Log.i(
-            "test",
-            "cmt name: " + comments[position].comment_content + " - " + position.toString()
-        )
         holder.tvNameSubCmt.text = comments[position].fullname
         holder.tvSubContent.text = comments[position].comment_content
     }

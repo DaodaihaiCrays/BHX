@@ -2,38 +2,27 @@ package com.bhx.bhx.View
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
-import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bhx.bhx.Controller.CategoryController
 import com.bhx.bhx.Controller.ProductController
 import com.bhx.bhx.Controller.RetrofitInstance
 import com.bhx.bhx.Global.Search
 import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.Model.Product
-import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.R
 import com.bhx.bhx.View.AccountFragment.AccountFragment
-import com.bhx.bhx.View.DetailProduct.DetailProductFragment
-import com.bhx.bhx.View.DetailProduct.PropertiesAdapter
 import com.bhx.bhx.View.HomeFragment.HomeFragment
-import com.bhx.bhx.View.HomeFragment.ListProductAdapter
 import com.bhx.bhx.View.HomeFragment.ProductAdapter
 import com.bhx.bhx.View.Menu.MenuFragment
-import com.bhx.bhx.View.NotificationFragment.NotificationFragment
+import com.bhx.bhx.View.FavoriteProductFragment.FavoriteProductFragment
 import com.bhx.bhx.View.ProductOfSearchFragment.ProductOfSearchFragment
 import com.bhx.bhx.View.SaleFragment.SaleFragment
-import com.bhx.bhx.View.ShoppingCart.ShoppingCartActivity
 import com.bhx.bhx.View.ShoppingCart.ShoppingCartFragment
+import com.google.firebase.auth.FirebaseAuth
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import retrofit2.Call
 import retrofit2.Callback
@@ -55,6 +44,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
+
+        UserInfo.getInstance()
 
         Search.edtSearch = findViewById(R.id.edtSearch)
         btnMenu = findViewById(R.id.btnMenu)
@@ -91,10 +82,10 @@ class MainActivity : AppCompatActivity() {
             val strSearch = Search.edtSearch.text.toString()
 
             if(strSearch.length!=0) {
-                RetrofitInstance.getInstance().create(ProductController::class.java).getAllProductsOfSearch(strSearch).enqueue(object : Callback<List<Product>> {
-                    override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
+                RetrofitInstance.getInstance().create(ProductController::class.java).getAllProductsOfSearch(strSearch).enqueue(object : Callback<MutableList<Product>> {
+                    override fun onResponse(call: Call<MutableList<Product>>, response: Response<MutableList<Product>>) {
                         if (response.isSuccessful){
-                            val product: List<Product>? = response.body()
+                            val product: MutableList<Product>? = response.body()
 
                             supportFragmentManager.beginTransaction().replace(
                                 R.id.container,
@@ -104,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                         }else {
                         }
                     }
-                    override fun onFailure(call: Call<List<Product>>, t: Throwable) {
+                    override fun onFailure(call: Call<MutableList<Product>>, t: Throwable) {
                         Log.i("test","fail2")
                     }
 
@@ -118,7 +109,7 @@ class MainActivity : AppCompatActivity() {
             val selectedFragment: Fragment = when (id) {
                 R.id.home -> HomeFragment()
                 R.id.sale -> SaleFragment()
-                R.id.notification -> NotificationFragment()
+                R.id.notification -> FavoriteProductFragment()
                 R.id.user -> AccountFragment()
                 else -> HomeFragment()
             }

@@ -27,7 +27,7 @@
             android:name=".View.ShoppingCart.ShoppingCartActivity"
             android:exported="false" />
         <activity
-            android:name=".View.Authentication.LoginActivity"
+            android:name=".View.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,7 +47,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".View.MainActivity"
+            android:name=".View.Authentication.LoginActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"

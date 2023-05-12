@@ -56,7 +56,7 @@ class ProductOfCateFragment(private val category: ReviewCategory) : Fragment() {
     lateinit var apiCategoryInstance: CategoryController
     private var isApiCalled: Boolean = false
     private var recyclerViewState: Parcelable? = null
-    private var listProduct : List<Product> = listOf()
+    private var listProduct : MutableList<Product> = mutableListOf()
 
     override fun onPause() {
         super.onPause()
@@ -115,7 +115,7 @@ class ProductOfCateFragment(private val category: ReviewCategory) : Fragment() {
                     if (response.isSuccessful) {
                         val data = response.body()
                         dialog.dismiss()
-                        listProduct = data as List<Product>
+                        listProduct = data as MutableList<Product>
                         adapter = ListProductAdapter(listProduct, container!!.context);
                         revProductOfCate!!.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
                         revProductOfCate!!.adapter= adapter

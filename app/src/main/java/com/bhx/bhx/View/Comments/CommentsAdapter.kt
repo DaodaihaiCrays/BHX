@@ -3,6 +3,7 @@ package com.bhx.bhx.View.Comments
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,16 +14,20 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Controller.ProductController
 import com.bhx.bhx.Controller.RetrofitInstance
+import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.Model.Comments
 import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.R
+import com.bhx.bhx.View.Authentication.LoginActivity
 import com.bhx.bhx.View.ProductOfCateFragment.ProductOfCateFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
@@ -35,8 +40,6 @@ import retrofit2.Response
 
 class CommentsAdapter(private var comments: List<Comments>, private val id: Int,private val context: Context):
     RecyclerView.Adapter<CommentsAdapter.CommentsHolder>() {
-
-
 
     class CommentsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvNameCmt: TextView = itemView.findViewById(R.id.tvNameCmt)
@@ -54,8 +57,11 @@ class CommentsAdapter(private var comments: List<Comments>, private val id: Int,
     }
 
     override fun onBindViewHolder(holder: CommentsHolder, @SuppressLint("RecyclerView") position: Int) {
+
+
         holder.tvNameCmt.text = comments[position].fullname
         holder.tvContent.text = comments[position].comment_content
+
 
         var adapter: SubCommentsAdapter
 
@@ -63,64 +69,65 @@ class CommentsAdapter(private var comments: List<Comments>, private val id: Int,
         holder.revSubCmt.adapter = adapter
         holder.revSubCmt.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
-        holder.tvRepCmt.setOnClickListener {
-            //rep cmt click
-            val dialog = Dialog(context)
-            dialog.setContentView(R.layout.dialog_replycmt_layout)
-            dialog.setCancelable(false)
-            val displayMetrics = context?.resources?.displayMetrics
-            val screenWidth = displayMetrics?.widthPixels
-            val width = (screenWidth?.times(1))?.toInt()
-            if (width != null) {
-                dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
-            }
-
-            val inputText = dialog.findViewById<TextInputLayout>(R.id.tiRepCmt)
-            val closeButton = dialog.findViewById<Button>(R.id.btnBack)
-            val submitButton = dialog.findViewById<Button>(R.id.btnSubmit)
-
-            submitButton.setOnClickListener {
-                var str: String = inputText.editText?.text.toString()
-
-                if(str!=null && !str.isEmpty()) {
-                    Log.i("test","str= " + str)
-                    val commentData = JSONObject().apply {
-                        put("user_id", 9)
-                        put("comment_content", str)
-                    }
-                    val requestBody = RequestBody.create("application/json".toMediaType(), commentData.toString())
-                    RetrofitInstance.getInstance().create(ProductController::class.java).postSubComment(id, comments[position].id,requestBody).enqueue(object :
-                        Callback<ResponseBody> {
-                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                            if (response.isSuccessful){
-//                                callApiCmt(container)
-
-                                comments[position].replies.add(Comments(0, "Hai", str, "", mutableListOf<Comments>()))
-                                adapter.updateSubCommet(comments[position].replies)
-                                Toast.makeText(context,"Bình luận thành công",Toast.LENGTH_LONG).show()
-                                dialog.dismiss()
-                            }else {
-                            }
-                        }
-
-                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        }
-
-                    })
+        if(FirebaseAuth.getInstance().currentUser!=null) {
+            holder.tvRepCmt.setOnClickListener {
+                //rep cmt click
+                val dialog = Dialog(context)
+                dialog.setContentView(R.layout.dialog_replycmt_layout)
+                dialog.setCancelable(false)
+                val displayMetrics = context?.resources?.displayMetrics
+                val screenWidth = displayMetrics?.widthPixels
+                val width = (screenWidth?.times(1))?.toInt()
+                if (width != null) {
+                    dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
                 }
+
+                val inputText = dialog.findViewById<TextInputLayout>(R.id.tiRepCmt)
+                val closeButton = dialog.findViewById<Button>(R.id.btnBack)
+                val submitButton = dialog.findViewById<Button>(R.id.btnSubmit)
+
+                submitButton.setOnClickListener {
+                    var str: String = inputText.editText?.text.toString()
+
+                    if(str!=null && !str.isEmpty()) {
+                        val commentData = JSONObject().apply {
+                            put("user_id", UserInfo.getInstance().getUser()!!.id)
+                            put("comment_content", str)
+                        }
+                        val requestBody = RequestBody.create("application/json".toMediaType(), commentData.toString())
+                        RetrofitInstance.getInstance().create(ProductController::class.java).postSubComment(id, comments[position].id,requestBody).enqueue(object :
+                            Callback<ResponseBody> {
+                            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                                if (response.isSuccessful){
+                                    comments[position].replies.add(Comments(0, UserInfo.getInstance().getUser()!!.fullname!!, str, "", mutableListOf<Comments>()))
+                                    adapter.updateSubCommet(comments[position].replies)
+                                    Toast.makeText(context,"Bình luận thành công",Toast.LENGTH_LONG).show()
+                                    dialog.dismiss()
+                                }else {
+                                }
+                            }
+
+                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            }
+
+                        })
+                    }
+                }
+
+                closeButton.setOnClickListener {
+                    dialog.dismiss()
+                }
+
+                dialog.show()
+
             }
-
-            closeButton.setOnClickListener {
-                dialog.dismiss()
-            }
-
-            dialog.show()
-
+        }
+        else {
+            holder.tvRepCmt.visibility=View.GONE
         }
     }
 
     override fun getItemCount(): Int {
-        //Log.i("test","cmt size: " + comments.size)
         return comments.size
     }
 
