@@ -1,11 +1,33 @@
 package com.bhx.bhx.View.FavoriteProductFragment
 
+import android.app.ProgressDialog
 import android.os.Bundle
+import android.os.Parcelable
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bhx.bhx.Controller.CategoryController
+import com.bhx.bhx.Controller.ProductController
+import com.bhx.bhx.Controller.RetrofitInstance
+import com.bhx.bhx.Global.CheckChangeFavorite
+import com.bhx.bhx.Global.UserInfo
+import com.bhx.bhx.Model.Product
+import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.R
+import com.bhx.bhx.View.HomeFragment.ListProductAdapter
+import com.bhx.bhx.View.HomeFragment.ProductAdapter
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,12 +52,94 @@ class FavoriteProductFragment : Fragment() {
         }
     }
 
+    private lateinit var revProducts: RecyclerView
+    private lateinit var adapter: ListProductAdapter
+    private var isApiCalled: Boolean = false
+    private var recyclerViewState: Parcelable? = null
+    private var listFavoriteProduct : MutableList<Product> = mutableListOf()
+
+
+    override fun onPause() {
+        super.onPause()
+        if(FirebaseAuth.getInstance().currentUser!=null) {
+            recyclerViewState = revProducts.layoutManager?.onSaveInstanceState()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if(FirebaseAuth.getInstance().currentUser!=null) {
+            revProducts.layoutManager?.onRestoreInstanceState(recyclerViewState)
+        }
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorite_product, container, false)
+        var view: View = inflater.inflate(R.layout.fragment_favorite_product, container, false)
+
+        if(FirebaseAuth.getInstance().currentUser!=null) {
+            revProducts = view.findViewById(R.id.revListFavoriteProduct)
+
+            if (!isApiCalled) {
+                callApi()
+                //Log.i("test","id= " + UserInfo.getInstance().getUser()!!.id)
+            }
+
+            adapter = ListProductAdapter(listFavoriteProduct,container!!.context)
+            CheckChangeFavorite.adapterFavorite=adapter
+            revProducts.layoutManager =  GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
+            revProducts.adapter = adapter
+        }
+        else Toast.makeText(context,"Đăng nhập để xem",Toast.LENGTH_SHORT).show()
+        return view
+    }
+
+    fun callApi() {
+        val dialog = ProgressDialog(context)
+        dialog.create()
+        dialog.setContentView(R.layout.custom_progress_dialog)
+        dialog.setCancelable(false) //outside touch doesn't dismiss you
+        dialog.show()
+        val displayMetrics = context?.resources?.displayMetrics
+        val screenWidth = displayMetrics?.widthPixels
+        val width = (screenWidth?.times(0.5))?.toInt()
+        if (width != null) {
+            dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
+        }
+
+        RetrofitInstance.getInstance().create(ProductController::class.java).getFavoriteProduct(
+            UserInfo.getInstance().getUser()!!.id).enqueue(object : Callback<List<Product>> {
+            override fun onResponse(
+                call: Call<List<Product>>,
+                response: Response<List<Product>>
+            ) {
+                if (response.isSuccessful) {
+                    val data = response.body()
+
+                    dialog.dismiss()
+
+                    listFavoriteProduct = data as MutableList<Product>
+
+                    adapter = ListProductAdapter(listFavoriteProduct,context!!)
+                    CheckChangeFavorite.adapterFavorite=adapter
+                    revProducts.layoutManager =  GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
+                    revProducts.adapter = adapter
+                    isApiCalled = true
+                } else {
+                    Toast.makeText(context, "Fail", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<List<Product>>, t: Throwable) {
+                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+                println(t.message)
+            }
+        })
     }
 
     companion object {

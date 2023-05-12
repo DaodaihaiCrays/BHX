@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.Model.Comments
 import com.bhx.bhx.R
+import com.google.firebase.auth.FirebaseAuth
 
 class SubCommentsAdapter(private var comments: List<Comments>, private val context: Context):
     RecyclerView.Adapter<SubCommentsAdapter.SubCommentsAdapterHolder>() {
@@ -34,8 +35,11 @@ class SubCommentsAdapter(private var comments: List<Comments>, private val conte
 
     override fun onBindViewHolder(holder: SubCommentsAdapterHolder, position: Int) {
 
-        holder.tvNameSubCmt.text = UserInfo.getInstance().getUser()!!.fullname
-        holder.tvSubContent.text = comments[position].comment_content
+        if(FirebaseAuth.getInstance().currentUser!=null) {
+            holder.tvNameSubCmt.text = UserInfo.getInstance().getUser()!!.fullname
+            holder.tvSubContent.text = comments[position].comment_content
+        }
+
     }
 
     override fun getItemCount(): Int {

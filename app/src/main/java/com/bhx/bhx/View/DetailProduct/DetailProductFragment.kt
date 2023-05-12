@@ -14,11 +14,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Controller.CommentsController
 import com.bhx.bhx.Controller.ProductController
 import com.bhx.bhx.Controller.RetrofitInstance
+import com.bhx.bhx.Global.CheckChangeFavorite
 import com.bhx.bhx.Model.Comments
 import com.bhx.bhx.Global.ShoppingCart
 import com.bhx.bhx.Global.UserInfo
@@ -27,6 +29,7 @@ import com.bhx.bhx.R
 import com.bhx.bhx.View.Authentication.LoginActivity
 import com.bhx.bhx.View.Authentication.LoginMainFragment
 import com.bhx.bhx.View.Comments.CommentsAdapter
+import com.bhx.bhx.View.FavoriteProductFragment.FavoriteProductFragment
 import com.bhx.bhx.View.HomeFragment.ListProductAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputLayout
@@ -35,6 +38,7 @@ import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Call
 import retrofit2.Callback
@@ -87,6 +91,7 @@ class DetailProductFragment(private val product: Product) : Fragment() {
         imgLike = view.findViewById(R.id.imgLike)
 
         checkChange = true
+        CheckChangeFavorite.checkInDetailProduct=!CheckChangeFavorite.checkInDetailProduct
 
         btnSubmitCmt.setOnClickListener {
             var str: String = tiCmt.editText?.text.toString()
@@ -121,7 +126,6 @@ class DetailProductFragment(private val product: Product) : Fragment() {
             }
             else {
                 val intent = Intent(context, LoginActivity::class.java)
-                //resultLauncher.launch(intent)
                 startActivity(intent)
                 Log.i("test","22222")
             }
@@ -135,83 +139,150 @@ class DetailProductFragment(private val product: Product) : Fragment() {
         var product_item: Product? = null
 
         //call api
-        RetrofitInstance.getInstance().create(ProductController::class.java).getDetailProduct(product.id, UserInfo.getInstance().getUser()!!.id).enqueue(object : Callback<Product>{
-            override fun onResponse(call: Call<Product>, response: Response<Product>) {
-                if (response.isSuccessful){
+        if(FirebaseAuth.getInstance().currentUser!=null)  {
+            RetrofitInstance.getInstance().create(ProductController::class.java).getDetailProduct(product.id, UserInfo.getInstance().getUser()!!.id).enqueue(object : Callback<Product>{
+                override fun onResponse(call: Call<Product>, response: Response<Product>) {
+                    if (response.isSuccessful){
 
-                    var product: Product? = response.body()
-                    product_item=product
-                    Log.i("test","favorite: " + product!!.favorite.toString() + "  --  " + UserInfo.getInstance().getUser()!!.id)
-                    if(product!!.favorite)
-                        imgLike.setImageResource(R.drawable.heart_like)
-                    else
-                        imgLike.setImageResource(R.drawable.heart)
+                        var product: Product? = response.body()
 
-                    tvNameProduct.setText(product!!.name)
-                    val formatter = NumberFormat.getCurrencyInstance(Locale("vi", "VN"));
-                    formatter.currency = Currency.getInstance("VND");
-                    tvPriceProduct.setText(formatter.format((product!!.unit_price)))
-                    tvInfor.setText(product!!.general_description)
-                    //attribute
-                    adapter = PropertiesAdapter(product?.attribute_label, product?.attribute_value)
-                    revProperties.adapter = adapter
-                    revProperties.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-                    //related product
-                    relatedProductAdapter = ListProductAdapter(product!!.related, container!!.context)
-                    revRelatedProduct.adapter = relatedProductAdapter
-                    revRelatedProduct.layoutManager = LinearLayoutManager(container.context, RecyclerView.HORIZONTAL, false)
-                }else {
+                        product_item=product
+                        if(product!!.favorite)
+                            imgLike.setImageResource(R.drawable.heart_like)
+                        else
+                            imgLike.setImageResource(R.drawable.heart)
+
+                        tvNameProduct.setText(product!!.name)
+                        val formatter = NumberFormat.getCurrencyInstance(Locale("vi", "VN"));
+                        formatter.currency = Currency.getInstance("VND");
+                        tvPriceProduct.setText(formatter.format((product!!.unit_price)))
+                        tvInfor.setText(product!!.general_description)
+                        //attribute
+                        adapter = PropertiesAdapter(product?.attribute_label, product?.attribute_value)
+                        revProperties.adapter = adapter
+                        revProperties.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                        //related product
+                        relatedProductAdapter = ListProductAdapter(product!!.related as MutableList<Product>, container!!.context)
+                        revRelatedProduct.adapter = relatedProductAdapter
+                        revRelatedProduct.layoutManager = LinearLayoutManager(container.context, RecyclerView.HORIZONTAL, false)
+                    }else {
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<Product>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
+                override fun onFailure(call: Call<Product>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
 
-        })
+            })
+        }
+        else {
+            RetrofitInstance.getInstance().create(ProductController::class.java).getDetailProduct(product.id).enqueue(object : Callback<Product>{
+                override fun onResponse(call: Call<Product>, response: Response<Product>) {
+                    if (response.isSuccessful){
 
+                        var product: Product? = response.body()
+
+                        product_item=product
+                        if(product!!.favorite)
+                            imgLike.setImageResource(R.drawable.heart_like)
+                        else
+                            imgLike.setImageResource(R.drawable.heart)
+
+                        tvNameProduct.setText(product!!.name)
+                        val formatter = NumberFormat.getCurrencyInstance(Locale("vi", "VN"));
+                        formatter.currency = Currency.getInstance("VND");
+                        tvPriceProduct.setText(formatter.format((product!!.unit_price)))
+                        tvInfor.setText(product!!.general_description)
+                        //attribute
+                        adapter = PropertiesAdapter(product?.attribute_label, product?.attribute_value)
+                        revProperties.adapter = adapter
+                        revProperties.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+                        //related product
+                        relatedProductAdapter = ListProductAdapter(product!!.related as MutableList<Product>, container!!.context)
+                        revRelatedProduct.adapter = relatedProductAdapter
+                        revRelatedProduct.layoutManager = LinearLayoutManager(container.context, RecyclerView.HORIZONTAL, false)
+                    }else {
+                    }
+                }
+
+                override fun onFailure(call: Call<Product>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+        }
 
         callApiCmt(container)
 
         imgLike.setOnClickListener {
-            product_item!!.favorite=!product_item!!.favorite
-            if(product_item!!.favorite)
-            {
-                imgLike.setImageResource(R.drawable.heart_like)
-                val favoriteData = JSONObject().apply {
-                    put("user_id", UserInfo.getInstance().getUser()!!.id)
+
+            if(FirebaseAuth.getInstance().currentUser!=null) {
+                product_item!!.favorite = !product_item!!.favorite
+                if (product_item!!.favorite) {
+                    imgLike.setImageResource(R.drawable.heart_like)
+                    val favoriteData = JSONObject().apply {
+                        put("user_id", UserInfo.getInstance().getUser()!!.id)
+                    }
+                    val requestBody = RequestBody.create(
+                        "application/json".toMediaType(),
+                        favoriteData.toString()
+                    )
+                    RetrofitInstance.getInstance().create(ProductController::class.java)
+                        .postProductFavorite(product.id, requestBody)
+                        .enqueue(object : Callback<ResponseBody> {
+                            override fun onResponse(
+                                call: Call<ResponseBody>,
+                                response: Response<ResponseBody>
+                            ) {
+                                if (response.isSuccessful) {
+                                    Toast.makeText(
+                                        context,
+                                        "Đã thêm vào danh sách yêu thích",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                } else {
+                                }
+                            }
+
+                            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            }
+
+                        })
+                } else {
+                    imgLike.setImageResource(R.drawable.heart)
+                    RetrofitInstance.getInstance().create(ProductController::class.java)
+                        .removeProductFavorites(
+                            product.id,
+                            UserInfo.getInstance().getUser()!!.id
+                        ).enqueue(object : Callback<Void> {
+                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                            if (response.isSuccessful) {
+                                //CheckChangeFavorite.adapterFavorite!!.addList(product)
+                                CheckChangeFavorite.adapterFavorite!!.getList()
+                                    .removeAll { it.id == product!!.id }
+                                CheckChangeFavorite.adapterFavorite!!.setList(
+                                    CheckChangeFavorite.adapterFavorite!!.getList()
+                                )
+                                Toast.makeText(
+                                    context,
+                                    "Đã xóa sản phẩm khỏi danh sách yêu thích",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Void>, t: Throwable) {
+                        }
+
+                    })
                 }
-                val requestBody = RequestBody.create("application/json".toMediaType(), favoriteData.toString())
-                RetrofitInstance.getInstance().create(ProductController::class.java).postProductFavorite(product.id,requestBody).enqueue(object : Callback<ResponseBody>{
-                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                        if (response.isSuccessful){
-
-                            Toast.makeText(context,"Đã thêm vào danh sách yêu thích",Toast.LENGTH_LONG).show()
-                        }else {
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    }
-
-                })
             }
-            else
-            {
-                imgLike.setImageResource(R.drawable.heart)
-                RetrofitInstance.getInstance().create(ProductController::class.java).removeProductFavorites(product.id,UserInfo.getInstance().getUser()!!.id).enqueue(object : Callback<Void>{
-                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                        if (response.isSuccessful){
-
-                            Toast.makeText(context,"Đã xóasản phẩm khỏi danh sách yêu thích",Toast.LENGTH_LONG).show()
-                        }else {
-                        }
-                    }
-
-                    override fun onFailure(call: Call<Void>, t: Throwable) {
-                    }
-
-                })
+            else {
+                imgLike.visibility=View.GONE
+                val intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+                Log.i("test","22222")
             }
         }
 
@@ -221,7 +292,6 @@ class DetailProductFragment(private val product: Product) : Fragment() {
 
         btnBuy!!.setOnClickListener {
             ShoppingCart.getInstance().addItem(product);
-
             Snackbar.make(it, "Đã thêm ${product.name} vào giỏ hàng", 1000).show();
         }
 

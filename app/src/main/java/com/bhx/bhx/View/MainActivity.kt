@@ -1,5 +1,6 @@
 package com.bhx.bhx.View
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Controller.ProductController
 import com.bhx.bhx.Controller.RetrofitInstance
 import com.bhx.bhx.Global.Search
+import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.Model.Product
 import com.bhx.bhx.R
 import com.bhx.bhx.View.AccountFragment.AccountFragment
@@ -20,6 +22,7 @@ import com.bhx.bhx.View.FavoriteProductFragment.FavoriteProductFragment
 import com.bhx.bhx.View.ProductOfSearchFragment.ProductOfSearchFragment
 import com.bhx.bhx.View.SaleFragment.SaleFragment
 import com.bhx.bhx.View.ShoppingCart.ShoppingCartFragment
+import com.google.firebase.auth.FirebaseAuth
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,6 +44,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val actionBar: ActionBar? = supportActionBar
         actionBar?.hide()
+
+        UserInfo.getInstance()
 
         Search.edtSearch = findViewById(R.id.edtSearch)
         btnMenu = findViewById(R.id.btnMenu)
@@ -77,10 +82,10 @@ class MainActivity : AppCompatActivity() {
             val strSearch = Search.edtSearch.text.toString()
 
             if(strSearch.length!=0) {
-                RetrofitInstance.getInstance().create(ProductController::class.java).getAllProductsOfSearch(strSearch).enqueue(object : Callback<List<Product>> {
-                    override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
+                RetrofitInstance.getInstance().create(ProductController::class.java).getAllProductsOfSearch(strSearch).enqueue(object : Callback<MutableList<Product>> {
+                    override fun onResponse(call: Call<MutableList<Product>>, response: Response<MutableList<Product>>) {
                         if (response.isSuccessful){
-                            val product: List<Product>? = response.body()
+                            val product: MutableList<Product>? = response.body()
 
                             supportFragmentManager.beginTransaction().replace(
                                 R.id.container,
@@ -90,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                         }else {
                         }
                     }
-                    override fun onFailure(call: Call<List<Product>>, t: Throwable) {
+                    override fun onFailure(call: Call<MutableList<Product>>, t: Throwable) {
                         Log.i("test","fail2")
                     }
 

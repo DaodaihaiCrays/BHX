@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.R
 import androidx.appcompat.app.AppCompatActivity
+import com.bhx.bhx.Model.Product
 import com.bhx.bhx.View.ProductOfCateFragment.ProductOfCateFragment
 
 class ProductAdapter(private val categories: MutableList<ReviewCategory>, private val context: Context) :
@@ -41,7 +42,7 @@ class ProductAdapter(private val categories: MutableList<ReviewCategory>, privat
                 ProductOfCateFragment(categories[position])
             ).addToBackStack(null).commit()
         }
-        var adapter = ListProductAdapter(categories[position].products, context)
+        var adapter = ListProductAdapter(categories[position].products as MutableList<Product>, context)
         holder.revListProduct.adapter = adapter
         holder.revListProduct.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
 
