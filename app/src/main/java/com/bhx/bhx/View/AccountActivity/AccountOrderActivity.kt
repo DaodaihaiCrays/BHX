@@ -1,7 +1,9 @@
 package com.bhx.bhx.View.AccountActivity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
@@ -12,6 +14,9 @@ import com.bhx.bhx.Controller.RetrofitInstance
 import com.bhx.bhx.Model.Order
 import com.bhx.bhx.R
 import com.bhx.bhx.View.Adapter.OrderRvAdapter
+import com.google.gson.Gson
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.encodeToString
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,7 +42,16 @@ class AccountOrderActivity : AppCompatActivity() {
                     Toast.makeText(baseContext,"ok", Toast.LENGTH_SHORT).show()
                     val data = response.body()
 
-                    var adapter = OrderRvAdapter(data?: listOf<Order>(), null)
+                    val adapter = OrderRvAdapter(data?: listOf<Order>(), object: OrderRvAdapter.OnClickListener{
+                        override fun onClick(position: Int, model: Order) {
+                            val intent = Intent(this@AccountOrderActivity, OrderDetail::class.java)
+                            val json = Gson()
+                            val orderStr = json.toJson(model)
+                            Log.i("test", orderStr)
+                            intent.putExtra("order", orderStr)
+                            startActivity(intent)
+                        }
+                    })
                     orderList?.layoutManager = LinearLayoutManager(baseContext, RecyclerView.VERTICAL, false)
                     orderList?.adapter= adapter
                 }else{
