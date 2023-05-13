@@ -10,28 +10,28 @@ data class User (
     val id: String,
 
     @SerializedName("email")
-    val email: String? = null,
+    var email: String? = null,
 
     @SerializedName("fullname")
-    val fullname: String? = null,
+    var fullname: String? = null,
 
     @SerializedName("phone_number")
-    val phoneNumber: String? = null,
+    var phoneNumber: String? = null,
 
     @SerializedName("province_id")
-    val provinceId: Int? = null,
+    var provinceId: Int? = null,
 
     @SerializedName("district_id")
-    val districtId: Int? = null,
+    var districtId: Int? = null,
 
     @SerializedName("ward_id")
-    val wardId: Int? = null,
+    var wardId: Int? = null,
 
     @SerializedName("address")
-    val address: String? = null,
+    var address: String? = null,
 
     @SerializedName("gender")
-    val gender: String? = null,
+    var gender: String? = null,
 
     @SerializedName("authority")
     val authority: String = "CUSTOMER",

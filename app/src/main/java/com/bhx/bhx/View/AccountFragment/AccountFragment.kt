@@ -11,8 +11,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.R
-import com.bhx.bhx.View.AccountInfoActivity
-import com.bhx.bhx.View.AccountOrderActivity
+import com.bhx.bhx.View.AccountActivity.AccountInfoActivity
+import com.bhx.bhx.View.AccountActivity.AccountOrderActivity
 import com.bhx.bhx.View.Authentication.LoginActivity
 import com.bhx.bhx.View.MainActivity
 import com.google.firebase.auth.FirebaseAuth

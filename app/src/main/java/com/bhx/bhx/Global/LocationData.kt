@@ -1,8 +1,10 @@
 package com.bhx.bhx.Global
 
-import com.bhx.bhx.Controller.ProvinceController
+import android.content.res.Resources
+import com.bhx.bhx.Controller.LocationController
 import com.bhx.bhx.Controller.RetrofitInstance
 import com.bhx.bhx.Model.Province.*
+import com.bhx.bhx.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -12,101 +14,95 @@ import retrofit2.Response
 
 class LocationData {
     private var provinceList: List<Province>? = null
-    private var provinceData: ExtendProvince? = null
-    private lateinit var wardList: List<Ward>
-    fun getProvinceList(): List<String>{
-        var result = arrayListOf<String>()
-        for (i in provinceList!!) result.add(i.name)
-        return result
+    private var districtList: List<District>? = null
+    private var wardList: List<Ward>? = null
+
+    private constructor(){
+        syncFromApi()
     }
 
-
-    fun getDistrictList(): List<String>{
-        var result = arrayListOf<String>()
-        for (i in provinceData!!.districts) result.add(i.name)
-        return result
-    }
-
-    fun getDistrictId(district_name: String): Int {
-        for (i in provinceData!!.districts)
-            if (i.name == district_name) return i.id
-        return -1;
-        
-    }
-
-    fun getWardList(district_name: String): List<String>{
-        var result = arrayListOf<String>()
-        for (i in provinceData!!.districts){
-            wardList = i.wards
-            if (i.name == district_name){
-                for (j in i.wards) result.add(j.name)
-            }
-            return result
-        }
-        return result
-    }
-
-    fun getWardId(ward_name: String): Int {
-        for (i in wardList){
-            if (i.name == ward_name) return i.id
-        }
-        return -1
-    }
-
-   fun updateProvinceList() = runBlocking {
-        launch(Dispatchers.Unconfined) {
-            syncFromApi()
+    fun getProvinceList() = provinceList?: listOf()
+    fun getDistrictList() = districtList?: listOf()
+    fun getWardList() = wardList?: listOf()
+    fun syncFromApi() = runBlocking {
+        launch {
+            getProvince()
+            getDistrict()
+            getWard()
         }
     }
-
-    fun updateProvinceData(name: String) = runBlocking {
-        for (i in provinceList!!){
-            if (i.name == name)
-            launch(Dispatchers.Unconfined) {
-                syncProvinceDataFromApi(i.id)
-            }
-            break
-        }
-
-    }
-
-
-    private suspend fun syncFromApi() {
-        val apiInstance = RetrofitInstance.getInstance().create(ProvinceController::class.java)
+    suspend fun getProvince() : List<Province> {
+        val apiInstance = RetrofitInstance.getInstance().create(LocationController::class.java)
+        var result: List<Province> = listOf()
         apiInstance.getProvinceList().enqueue(object : Callback<List<Province>> {
             override fun onResponse(
                 call: Call<List<Province>>,
                 response: Response<List<Province>>
-            ){
+            ) {
                 if (response.isSuccessful) {
                     provinceList = response.body()
+//                    provinceList = provinceList!! + listOf(Province(-1, "Tỉnh/Thành Phố"))
                 }
             }
 
             override fun onFailure(call: Call<List<Province>>, t: Throwable) {
-
+//                provinceList = listOf(Province(-1, "Tỉnh/Thành Phố"))
+                provinceList = listOf()
             }
         })
+
+
+        return result
     }
 
-    private suspend fun syncProvinceDataFromApi(id: Int) {
-        val apiInstance = RetrofitInstance.getInstance().create(ProvinceController::class.java)
-        apiInstance.getProvinceData(id).enqueue(object : Callback<ExtendProvince> {
+
+    suspend fun getDistrict() : List<District> {
+        val apiInstance = RetrofitInstance.getInstance().create(LocationController::class.java)
+        var result: List<District> = listOf()
+        apiInstance.getDistrictList().enqueue(object : Callback<List<District>> {
             override fun onResponse(
-                call: Call<ExtendProvince>,
-                response: Response<ExtendProvince>
-            ){
+                call: Call<List<District>>,
+                response: Response<List<District>>
+            ) {
                 if (response.isSuccessful) {
-                    provinceData = response.body()
+                    districtList = response.body()
+//                    districtList = districtList!! + listOf(District(-1, "Quận/Huyện", -1))
                 }
             }
 
-            override fun onFailure(call: Call<ExtendProvince>, t: Throwable) {
-
+            override fun onFailure(call: Call<List<District>>, t: Throwable) {
+//                districtList = listOf(District(-1, "Quận/Huyện", -1))
+                districtList = listOf()
             }
         })
+
+
+        return result
     }
 
+    suspend fun getWard() : List<Ward> {
+        val apiInstance = RetrofitInstance.getInstance().create(LocationController::class.java)
+        var result: List<Ward> = listOf()
+        apiInstance.getWardList().enqueue(object : Callback<List<Ward>> {
+            override fun onResponse(
+                call: Call<List<Ward>>,
+                response: Response<List<Ward>>
+            ) {
+                if (response.isSuccessful) {
+                    wardList = response.body()
+//                    wardList = wardList!! + listOf(Ward(-1, "Ấp/Xã", -1))
+                }
+            }
+
+            override fun onFailure(call: Call<List<Ward>>, t: Throwable) {
+//                wardList = listOf(Ward(-1, "Ấp/Xã", -1))
+                wardList = listOf()
+            }
+        })
+
+
+        return result
+    }
 
     companion object {
         @Volatile

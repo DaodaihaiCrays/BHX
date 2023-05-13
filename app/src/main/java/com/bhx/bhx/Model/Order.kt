@@ -42,13 +42,13 @@ data class Order (
     val gender: String,
 //=== replace by data class ===
     @SerializedName("province_id")
-    val province: String,
+    val province: Int,
 
     @SerializedName("district_id")
-    val district: String,
+    val district: Int,
 
     @SerializedName("ward_id")
-    val ward: String,
+    val ward: Int,
 //===
     @SerializedName("address")
     val address: String,
