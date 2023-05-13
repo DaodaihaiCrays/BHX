@@ -3,6 +3,7 @@ package com.bhx.bhx.View.DetailProduct
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -41,6 +43,7 @@ import org.json.JSONObject
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import okhttp3.MediaType.Companion.toMediaType
+import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -65,12 +68,14 @@ class DetailProductFragment(private val product: Product) : Fragment() {
     lateinit var btnBack: Button
     lateinit var tvNameProduct: TextView
     lateinit var tvPriceProduct: TextView
+    lateinit var tvOldPrice: TextView;
     lateinit var tvInfor: TextView
     lateinit var imgProduct:ImageView
     lateinit var btnBuy: Button;
     lateinit var btnSubmitCmt: Button
     lateinit var tiCmt: TextInputLayout
     lateinit var imgLike:ImageView
+    lateinit var promotionBanner:TextView;
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -83,12 +88,14 @@ class DetailProductFragment(private val product: Product) : Fragment() {
         btnBack = view.findViewById(R.id.btnBack)
         tvNameProduct = view.findViewById(R.id.tvNameProduct)
         tvPriceProduct = view.findViewById(R.id.tvPrice)
+        tvOldPrice = view.findViewById(R.id.tvOldPrice);
         tvInfor = view.findViewById(R.id.tvInfor)
         imgProduct = view.findViewById(R.id.imgProduct)
         revComments = view.findViewById(R.id.revCmt)
         btnSubmitCmt = view.findViewById(R.id.btnSubmitCmt)
         tiCmt = view.findViewById(R.id.tiCmt)
         imgLike = view.findViewById(R.id.imgLike)
+        promotionBanner = view.findViewById(R.id.promotionBanner);
 
 
         if(FirebaseAuth.getInstance().currentUser==null) {
@@ -164,7 +171,18 @@ class DetailProductFragment(private val product: Product) : Fragment() {
                         tvNameProduct.setText(product!!.name)
                         val formatter = NumberFormat.getCurrencyInstance(Locale("vi", "VN"));
                         formatter.currency = Currency.getInstance("VND");
-                        tvPriceProduct.setText(formatter.format((product!!.unit_price)))
+                        if(product.sale_percent != null) {
+                            tvOldPrice.text = formatter.format((product!!.unit_price));
+                            tvOldPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG;
+                            val newPrice = product.unit_price - product.unit_price * product.sale_percent!! / 100;
+                            tvPriceProduct.text = formatter.format(newPrice);
+                            promotionBanner.text = "-${product.sale_percent}%";
+                        }
+                        else {
+                            tvPriceProduct.text = formatter.format((product!!.unit_price));
+                            promotionBanner.isVisible = false;
+                        }
+
                         tvInfor.setText(product!!.general_description)
                         //attribute
                         adapter = PropertiesAdapter(product?.attribute_label, product?.attribute_value)
@@ -200,7 +218,17 @@ class DetailProductFragment(private val product: Product) : Fragment() {
                         tvNameProduct.setText(product!!.name)
                         val formatter = NumberFormat.getCurrencyInstance(Locale("vi", "VN"));
                         formatter.currency = Currency.getInstance("VND");
-                        tvPriceProduct.setText(formatter.format((product!!.unit_price)))
+                        if(product.sale_percent != null) {
+                            tvOldPrice.text = formatter.format((product!!.unit_price));
+                            tvOldPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG;
+                            val newPrice = product.unit_price - product.unit_price * product.sale_percent!! / 100;
+                            tvPriceProduct.text = formatter.format(newPrice);
+                            promotionBanner.text = "-${product.sale_percent}%";
+                        }
+                        else {
+                            tvPriceProduct.text = formatter.format((product!!.unit_price));
+                            promotionBanner.isVisible = false;
+                        }
                         tvInfor.setText(product!!.general_description)
                         //attribute
                         adapter = PropertiesAdapter(product?.attribute_label, product?.attribute_value)

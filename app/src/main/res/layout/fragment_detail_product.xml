@@ -44,15 +44,36 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-                <ImageView
-                    android:id="@+id/imgProduct"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent">
 
-                    android:adjustViewBounds="true"
-                    android:maxHeight="200dp"
-                    android:src="@drawable/kinh_lup"/>
+                    <TextView
+                        android:id="@+id/promotionBanner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_promotion_background"
+                        android:paddingStart="5dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="5dp"
+                        android:paddingBottom="5dp"
+                        android:text="Giảm"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imgProduct"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:adjustViewBounds="true"
+                        android:maxHeight="200dp"
+                        android:src="@drawable/kinh_lup"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:id="@+id/tvNameProduct"
@@ -79,6 +100,17 @@
                         android:textColor="@color/black"
                         android:textSize="20dp"
                         android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/tvOldPrice"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:textStyle="normal"
+                        />
 
                     <Button
                         android:id="@+id/btnBuy"
@@ -172,7 +204,6 @@
                     android:minHeight="200dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"/>
-
 
 
             </LinearLayout>
