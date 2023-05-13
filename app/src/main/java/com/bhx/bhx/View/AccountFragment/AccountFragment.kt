@@ -13,6 +13,9 @@ import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.R
 import com.bhx.bhx.View.AccountActivity.AccountInfoActivity
 import com.bhx.bhx.View.AccountActivity.AccountOrderActivity
+import com.bhx.bhx.View.Authentication.LoginActivity
+import com.bhx.bhx.View.MainActivity
+import com.google.firebase.auth.FirebaseAuth
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,6 +37,8 @@ class AccountFragment : Fragment() {
     private var userAuthority: TextView? = null
     private var userEmail: TextView? = null
 
+    private var btnLogout: Button? = null
+    private var btnLogin: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +51,31 @@ class AccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        btnLogout = getView()?.findViewById(R.id.Logout_btn)
+        if(FirebaseAuth.getInstance().currentUser!=null)
+            btnLogout?.setOnClickListener {
+                FirebaseAuth.getInstance().signOut()
+
+                if(FirebaseAuth.getInstance().currentUser==null) {
+                    val intent = Intent(context, MainActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+        else {
+            btnLogout?.visibility=View.GONE
+        }
+
+        btnLogin = getView()?.findViewById(R.id.Login_btn)
+        if(FirebaseAuth.getInstance().currentUser==null) {
+            btnLogin?.setOnClickListener {
+                val intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        else {
+            btnLogin?.visibility=View.GONE
+        }
+
         accInfoBtn = getView()?.findViewById(R.id.acc_info_btn)
         accInfoBtn?.setOnClickListener{
             var intent = Intent(context, AccountInfoActivity::class.java)

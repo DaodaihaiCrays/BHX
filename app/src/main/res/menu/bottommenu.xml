@@ -18,11 +18,11 @@
         android:icon="@drawable/ic_baseline_money_off_24"/>
   <item
         android:id="@+id/notification"
-        android:title="Thông báo"
+        android:title="Yêu thích"
         app:cnb_textColor="@color/primary_min"
         app:cnb_iconColor="@color/primary_min"
         app:cnb_backgroundColor="#fff"
-        android:icon="@drawable/ic_baseline_notifications_24"/>
+        android:icon="@drawable/heart_like"/>
 
     <item
         android:id="@+id/user"

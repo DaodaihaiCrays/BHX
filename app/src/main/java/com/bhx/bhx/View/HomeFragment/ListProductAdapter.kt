@@ -18,12 +18,16 @@ import com.google.android.material.snackbar.Snackbar
 import java.text.NumberFormat
 import java.util.*
 
-class ListProductAdapter(private var listProduct: List<Product>, private val context: Context) :
+class ListProductAdapter(private var listProduct: MutableList<Product>, private val context: Context) :
     RecyclerView.Adapter<ListProductAdapter.ListProductViewHolder>() {
 
-    fun setList(list: List<Product>) {
+    fun setList(list: MutableList<Product>) {
         this.listProduct = list
         notifyDataSetChanged()
+    }
+
+    fun getList():MutableList<Product> {
+        return  listProduct
     }
 
     class ListProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

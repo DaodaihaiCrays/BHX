@@ -57,22 +57,24 @@ class UserInfo{
 
 
     private suspend fun syncFromApi() {
-        val uid = FirebaseAuth.getInstance().uid!!;
-        val apiInstance = RetrofitInstance.getInstance().create(UserController::class.java)
-        apiInstance.getUserInfo(uid).enqueue(object : Callback<User> {
-            override fun onResponse(
-                call: Call<User>,
-                response: Response<User>
-            ){
-                if (response.isSuccessful) {
-                    _data = response.body()
+        if(FirebaseAuth.getInstance().currentUser!=null) {
+            val uid = FirebaseAuth.getInstance().uid!!;
+            val apiInstance = RetrofitInstance.getInstance().create(UserController::class.java)
+            apiInstance.getUserInfo(uid).enqueue(object : Callback<User> {
+                override fun onResponse(
+                    call: Call<User>,
+                    response: Response<User>
+                ){
+                    if (response.isSuccessful) {
+                        _data = response.body()
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<User>, t: Throwable) {
+                override fun onFailure(call: Call<User>, t: Throwable) {
 
-            }
-        })
+                }
+            })
+        }
     }
 
     private suspend fun syncToApi() : Boolean{
