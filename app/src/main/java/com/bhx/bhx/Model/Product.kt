@@ -57,6 +57,10 @@ data class Product(
     @Expose()
     val promotion_id: Int?,
 
+    @SerializedName("sale_percent")
+    @Expose()
+    val sale_percent: Int?,
+
     @SerializedName("note")
     @Expose()
     val note: String?,

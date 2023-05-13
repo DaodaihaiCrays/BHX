@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Global.ShoppingCart
 import com.bhx.bhx.Model.Product
@@ -36,6 +37,7 @@ class ListProductAdapter(private var listProduct: MutableList<Product>, private 
         val imageView: ImageView = itemView.findViewById(R.id.imageView)
         val tvPrice: TextView = itemView.findViewById(R.id.tvPrice)
         val tvBuy: TextView = itemView.findViewById(R.id.tvBuy)
+        val promotionBanner: TextView = itemView.findViewById(R.id.promotionBanner);
     }
 
     override fun onCreateViewHolder(
@@ -81,6 +83,12 @@ class ListProductAdapter(private var listProduct: MutableList<Product>, private 
             ShoppingCart.getInstance().addItem(listProduct[position]);
 
             Snackbar.make(it, "Đã thêm ${listProduct[position].name} vào giỏ hàng", 1000).show();
+        }
+
+        if(listProduct[position].sale_percent != null) {
+            holder.promotionBanner.text = "-${listProduct[position].sale_percent}%";
+        } else {
+            holder.promotionBanner.isVisible = false;
         }
     }
 

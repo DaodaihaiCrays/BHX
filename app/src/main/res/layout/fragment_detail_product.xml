@@ -122,8 +122,8 @@
                     android:id="@+id/revRelatedProduct"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:minHeight="200dp"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="10dp"
+                    android:minHeight="200dp" />
 
                 <TextView
                     android:id="@+id/tvCmt"
