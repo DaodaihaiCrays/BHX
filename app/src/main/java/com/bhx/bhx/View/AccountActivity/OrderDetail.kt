@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,7 +27,7 @@ class OrderDetail : AppCompatActivity() {
     lateinit var deliveryDate: TextView
     lateinit var deliveryLocation: TextView
     lateinit var recieverInfo: TextView
-    lateinit var deliverItem: RecyclerView
+    lateinit var deliverItem: TextView
     lateinit var price: TextView
 
     private lateinit var provinceList: List<Province>
@@ -38,6 +39,8 @@ class OrderDetail : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_detail)
+        val actionBar: ActionBar? = supportActionBar
+        actionBar?.hide()
 
         backBtn = findViewById(R.id.back_btn)
         backBtn.setOnClickListener{
@@ -77,22 +80,18 @@ class OrderDetail : AppCompatActivity() {
 
         recieverInfo.text= "Tên: ${order.fullname}\nEmail: ${order.email}\nGiới tính: ${order.gender}"
 
-        var priceStr = ""
+        var listStr = ""
 
         val proList = arrayListOf<Product>()
         for (i in order.list) {
             proList.add(i.product)
             val pricePerPro = i.product.unit_price * i.quantity
-            priceStr = priceStr + "+ ${i.product.name} x ${i.quantity}: ${pricePerPro}\n"
+            listStr = "$listStr+ ${i.product.name} x ${i.quantity}: ${pricePerPro} vnd\n"
         }
 
-        priceStr = priceStr + "Total: ${order.totalPrice}"
+        deliverItem.text = listStr
 
-        val adapter = ListProductAdapter(proList, this)
-        deliverItem.adapter = adapter
-        deliverItem.layoutManager = GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false)
-
-        price.text = priceStr
+        price.text = "Tổng cộng: ${order.totalPrice} vnd"
     }
 
     private fun findProvinceValue(): String {

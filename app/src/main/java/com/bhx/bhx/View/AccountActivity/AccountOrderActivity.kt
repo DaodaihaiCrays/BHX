@@ -14,6 +14,7 @@ import com.bhx.bhx.Controller.RetrofitInstance
 import com.bhx.bhx.Model.Order
 import com.bhx.bhx.R
 import com.bhx.bhx.View.Adapter.OrderRvAdapter
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
@@ -33,7 +34,8 @@ class AccountOrderActivity : AppCompatActivity() {
         orderList = findViewById(R.id.order_list)
 
         apiCategoryInstance = RetrofitInstance.getInstance().create(OrderController::class.java)
-        apiCategoryInstance.getOrderList("111").enqueue(object : Callback<List<Order>> {
+        val uid = FirebaseAuth.getInstance().uid!!
+        apiCategoryInstance.getOrderList(uid).enqueue(object : Callback<List<Order>> {
             override fun onResponse(
                 call: Call<List<Order>>,
                 response: Response<List<Order>>
