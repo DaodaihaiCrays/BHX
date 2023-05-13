@@ -6,11 +6,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class User (
-    @SerializedName("id")
-    val id: Int? = null,
-
     @SerializedName("firebase_uid")
-    val firebase_uid: String,
+    val id: String,
 
     @SerializedName("email")
     val email: String? = null,

@@ -71,7 +71,7 @@ class LoginMainFragment : Fragment() {
 
                     apiUserInstance.createUser(
                         User(
-                            firebase_uid = FirebaseAuth.getInstance().currentUser!!.uid,
+                            id = FirebaseAuth.getInstance().currentUser!!.uid,
                             fullname = data?.getStringExtra("name"),
                             phoneNumber = data?.getStringExtra("phone"),
                             email = data?.getStringExtra("email")
@@ -123,7 +123,7 @@ class LoginMainFragment : Fragment() {
                 apiUserInstance.getUserInfo(FirebaseAuth.getInstance().currentUser!!.uid).enqueue(object : Callback<User> {
                     override fun onResponse(call: Call<User>, response: Response<User>) {
                         val userInfo: User = response.body()!!;
-                        if (userInfo.firebase_uid == null) {
+                        if (userInfo.id == null) {
                             val intent: Intent =
                                 Intent(container?.context, InitializeInfoActivity::class.java);
 

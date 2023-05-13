@@ -97,7 +97,7 @@ class SignupUsernameFragment : Fragment() {
 
                     apiUserInstance.createUser(
                         User(
-                            firebase_uid = user!!.uid,
+                            id = user!!.uid,
                             fullname = data?.getStringExtra("name"),
                             phoneNumber = data?.getStringExtra("phone"),
                             email = data?.getStringExtra("email")
