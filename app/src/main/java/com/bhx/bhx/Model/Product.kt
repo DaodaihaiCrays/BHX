@@ -37,6 +37,10 @@ data class Product(
     @Expose()
     val category_id: Int,
 
+    @SerializedName("favorite")
+    @Expose()
+    var favorite: Boolean,
+
     @SerializedName("general_description")
     @Expose()
     val general_description: String,

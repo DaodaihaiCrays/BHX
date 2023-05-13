@@ -13,16 +13,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BHX"
-        tools:targetApi="31"
         android:usesCleartextTraffic="true"
-        >
+        tools:targetApi="31">
         <activity
-            android:name=".View.AccountOrderActivity"
+            android:name=".View.AccountActivity.OrderDetail"
             android:exported="false" />
         <activity
-            android:name=".View.AccountInfoActivity"
+            android:name=".View.AccountActivity.AccountOrderActivity"
             android:exported="false" />
-
+        <activity
+            android:name=".View.AccountActivity.AccountInfoActivity"
+            android:exported="false" />
         <activity
             android:name=".View.AdminActivity"
             android:exported="false" />
@@ -30,7 +31,7 @@
             android:name=".View.ShoppingCart.ShoppingCartActivity"
             android:exported="false" />
         <activity
-            android:name=".View.Authentication.LoginActivity"
+            android:name=".View.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,7 +52,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".View.MainActivity"
+            android:name=".View.Authentication.LoginActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"

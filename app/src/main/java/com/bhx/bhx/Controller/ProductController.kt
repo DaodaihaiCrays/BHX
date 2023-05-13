@@ -11,8 +11,20 @@ interface ProductController {
     @GET("products/{id}")
     fun getDetailProduct(@Path("id") id: Int) : Call<Product>
 
+    @GET("products/{id}")
+    fun getDetailProduct(@Path("id") id: Int, @Query("favorite") favoriteUserId: String): Call<Product>
+
     @GET("products")
-    fun getAllProductsOfSearch(@Query("keyword") keyword: String): Call<List<Product>>
+    fun getFavoriteProduct(@Query("favorite") user_id_favorite: String): Call<List<Product>>
+
+    @POST("products/{id}/favorite")
+    fun postProductFavorite(@Path("id") id: Int, @Body requestBody: RequestBody): Call<ResponseBody>
+
+    @DELETE("products/{id}/favorite")
+    fun removeProductFavorites(@Path("id") productId: Int, @Query("user_id") userId: String): Call<Void>
+
+    @GET("products")
+    fun getAllProductsOfSearch(@Query("keyword") keyword: String): Call<MutableList<Product>>
     @POST("products/{id}/comments")
     fun postComment(@Path("id") id: Int, @Body requestBody: RequestBody): Call<ResponseBody>
 
