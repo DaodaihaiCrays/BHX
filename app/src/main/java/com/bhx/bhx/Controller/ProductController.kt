@@ -2,6 +2,7 @@ package com.bhx.bhx.Controller
 
 import com.bhx.bhx.Model.Comments
 import com.bhx.bhx.Model.Product
+import com.bhx.bhx.Model.PromotionsWithProducts
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -31,6 +32,6 @@ interface ProductController {
     @POST("products/{id}/comments/{c_id}")
     fun postSubComment(@Path("id") id: Int, @Path("c_id") c_id: Int, @Body requestBody: RequestBody): Call<ResponseBody>
 
-//    @GET("products/{id}")
-//    fun getProductWithoutRelated(@Path("id") id: Int, @Query("noRelated") noRelated: Boolean = true): Call<Product>
+    @GET("products/promotion")
+    fun getAllProductInActivePromotion(): Call<List<PromotionsWithProducts>>
 }

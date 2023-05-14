@@ -35,7 +35,6 @@ class ProductAdapter(private val categories: MutableList<ReviewCategory>, privat
         holder.btnSeeMore.text = "Xem tất cả " + (categories[position].countProducts) + " sản phẩm"
 
         holder.btnSeeMore.setOnClickListener {
-            Log.i("test","Nhan see more")
             val fragmentManager = (context as AppCompatActivity).supportFragmentManager
             fragmentManager.beginTransaction().replace(
                 R.id.container,
