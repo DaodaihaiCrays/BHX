@@ -1,6 +1,8 @@
 package com.bhx.bhx.View
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -18,7 +20,8 @@ class AdminActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin)
-        imgAdmin= findViewById(R.id.imgAdmin)
+
+        supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#024F8C")))
 
     }
 
