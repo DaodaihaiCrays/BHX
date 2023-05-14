@@ -5,15 +5,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
+import android.widget.Toast
 import com.bhx.bhx.R
 import com.bhx.bhx.View.Admin.*
 import com.google.firebase.auth.FirebaseAuth
 
 class AdminActivity : AppCompatActivity() {
+
+    lateinit var imgAdmin: ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin)
-
+        imgAdmin= findViewById(R.id.imgAdmin)
 
     }
 
@@ -55,8 +60,14 @@ class AdminActivity : AppCompatActivity() {
 
                 return true
             }
+            R.id.backCus -> {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                return true
+            }
             R.id.signOut -> {
                 FirebaseAuth.getInstance().signOut()
+                Toast.makeText(this,"Đăng xuất",Toast.LENGTH_SHORT).show()
                 if(FirebaseAuth.getInstance().currentUser==null) {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)

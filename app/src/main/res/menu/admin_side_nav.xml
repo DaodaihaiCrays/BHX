@@ -41,6 +41,14 @@
         android:icon="@drawable/ic_baseline_person_24"/>
 
     <item
+        android:id="@+id/backCus"
+        android:title="Quay lại trang mua sắm"
+        app:cnb_textColor="@color/green"
+        app:cnb_iconColor="@color/green"
+        app:cnb_backgroundColor="#fff"
+        android:icon="@drawable/ic_baseline_person_24"/>
+
+    <item
         android:id="@+id/signOut"
         android:title="Đăng xuất"
         app:cnb_textColor="@color/green"
