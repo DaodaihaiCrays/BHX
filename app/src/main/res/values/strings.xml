@@ -34,4 +34,6 @@
     <string name="address_district_description">Quận/Huyện</string>
     <string name="address_ward_description">Ấp/Xã</string>
     <string name="address_description">Số nhà</string>
+    <string name="admin_category">Loại sản phẩm</string>
+    <string name="admin_promotion">Loại giảm giá</string>
 </resources>

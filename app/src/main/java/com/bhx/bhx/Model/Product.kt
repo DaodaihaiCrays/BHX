@@ -73,6 +73,10 @@ data class Product(
     @Expose()
     val banner: String,
 
+    @SerializedName("status")
+    @Expose()
+    val status: String,
+
     @SerializedName("related")
     @Expose()
     val related: List<Product>

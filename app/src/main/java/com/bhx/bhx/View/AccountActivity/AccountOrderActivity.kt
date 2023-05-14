@@ -1,5 +1,6 @@
-package com.bhx.bhx.View
+package com.bhx.bhx.View.AccountActivity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,14 +9,15 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bhx.bhx.Controller.CategoryController
 import com.bhx.bhx.Controller.OrderController
 import com.bhx.bhx.Controller.RetrofitInstance
 import com.bhx.bhx.Model.Order
-import com.bhx.bhx.Model.ReviewCategory
 import com.bhx.bhx.R
 import com.bhx.bhx.View.Adapter.OrderRvAdapter
-import com.bhx.bhx.View.HomeFragment.ProductAdapter
+import com.google.firebase.auth.FirebaseAuth
+import com.google.gson.Gson
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.encodeToString
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,7 +34,8 @@ class AccountOrderActivity : AppCompatActivity() {
         orderList = findViewById(R.id.order_list)
 
         apiCategoryInstance = RetrofitInstance.getInstance().create(OrderController::class.java)
-        apiCategoryInstance.getOrderList("111").enqueue(object : Callback<List<Order>> {
+        val uid = FirebaseAuth.getInstance().uid!!
+        apiCategoryInstance.getOrderList(uid).enqueue(object : Callback<List<Order>> {
             override fun onResponse(
                 call: Call<List<Order>>,
                 response: Response<List<Order>>
@@ -41,7 +44,16 @@ class AccountOrderActivity : AppCompatActivity() {
                     Toast.makeText(baseContext,"ok", Toast.LENGTH_SHORT).show()
                     val data = response.body()
 
-                    var adapter = OrderRvAdapter(data?: listOf<Order>(), null)
+                    val adapter = OrderRvAdapter(data?: listOf<Order>(), object: OrderRvAdapter.OnClickListener{
+                        override fun onClick(position: Int, model: Order) {
+                            val intent = Intent(this@AccountOrderActivity, OrderDetail::class.java)
+                            val json = Gson()
+                            val orderStr = json.toJson(model)
+                            Log.i("test", orderStr)
+                            intent.putExtra("order", orderStr)
+                            startActivity(intent)
+                        }
+                    })
                     orderList?.layoutManager = LinearLayoutManager(baseContext, RecyclerView.VERTICAL, false)
                     orderList?.adapter= adapter
                 }else{

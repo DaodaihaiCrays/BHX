@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/product"
+        android:title="Sản phẩm"
+        app:cnb_textColor="@color/green"
+        app:cnb_iconColor="@color/green"
+        app:cnb_backgroundColor="#fff"
+        android:icon="@drawable/ic_baseline_home_24"/>
+
+    <item
+        android:id="@+id/category"
+        android:title="Loại sản phẩm"
+        app:cnb_textColor="@color/green"
+        app:cnb_iconColor="@color/green"
+        app:cnb_backgroundColor="#fff"
+        android:icon="@drawable/ic_baseline_person_24"/>
+
+    <item
+        android:id="@+id/sale"
+        android:title="Khuyến mại"
+        app:cnb_textColor="@color/green"
+        app:cnb_iconColor="@color/green"
+        app:cnb_backgroundColor="#fff"
+        android:icon="@drawable/ic_baseline_money_off_24"/>
+    <item
+        android:id="@+id/order"
+        android:title="Đơn hàng"
+        app:cnb_textColor="@color/green"
+        app:cnb_iconColor="@color/green"
+        app:cnb_backgroundColor="#fff"
+        android:icon="@drawable/ic_baseline_notifications_24"/>
+
+    <item
+        android:id="@+id/user"
+        android:title="Người dùng"
+        app:cnb_textColor="@color/green"
+        app:cnb_iconColor="@color/green"
+        app:cnb_backgroundColor="#fff"
+        android:icon="@drawable/ic_baseline_person_24"/>
+
+    <item
+        android:id="@+id/backCus"
+        android:title="Quay lại trang mua sắm"
+        app:cnb_textColor="@color/green"
+        app:cnb_iconColor="@color/green"
+        app:cnb_backgroundColor="#fff"
+        android:icon="@drawable/ic_baseline_person_24"/>
+
+    <item
+        android:id="@+id/signOut"
+        android:title="Đăng xuất"
+        app:cnb_textColor="@color/green"
+        app:cnb_iconColor="@color/green"
+        app:cnb_backgroundColor="#fff"
+        android:icon="@drawable/ic_baseline_person_24"/>
+</menu>

@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Controller.CommentsController
@@ -208,7 +209,8 @@ class DetailProductFragment(private val product: Product) : Fragment() {
                         //related product
                         relatedProductAdapter = ListProductAdapter(product!!.related as MutableList<Product>, container!!.context)
                         revRelatedProduct.adapter = relatedProductAdapter
-                        revRelatedProduct.layoutManager = LinearLayoutManager(container.context, RecyclerView.HORIZONTAL, false)
+                        //revRelatedProduct.layoutManager = LinearLayoutManager(container.context, RecyclerView.HORIZONTAL, false)
+                        revRelatedProduct.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
                     }else {
                     }
                 }

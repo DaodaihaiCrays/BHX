@@ -9,20 +9,27 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Food online"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BHX"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
         <activity
             android:name=".View.Authentication.InitializeInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".View.AccountOrderActivity"
+            android:name=".View.AccountActivity.OrderDetail"
             android:exported="false" />
         <activity
-            android:name=".View.AccountInfoActivity"
+            android:name=".View.AccountActivity.AccountOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.AccountActivity.AccountInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.AdminActivity"
             android:exported="false" />
         <activity
             android:name=".View.ShoppingCart.ShoppingCartActivity"
@@ -40,6 +47,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".View.Authentication.SignupActivity"
             android:exported="true">

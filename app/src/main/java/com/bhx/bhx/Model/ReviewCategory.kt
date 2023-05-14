@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 
 data class ReviewCategory (
+
     @SerializedName("id")
     @Expose()
     val id: Int,

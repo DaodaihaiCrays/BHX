@@ -10,5 +10,7 @@ data class Ward (
         @Expose
         val id: Int,
         @SerializedName("name")
-        val name: String
+        val name: String,
+        @SerializedName("district_id")
+        val district_id: Int
 )
