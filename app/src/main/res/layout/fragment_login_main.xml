@@ -109,6 +109,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Đăng nhập"
+        android:textAllCaps="true"
         android:textColor="@color/primary_min"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -12,6 +12,5 @@ interface AccountController {
     @GET("accounts")
     fun getAccounts(): Call<List<Account>>
 
-    @POST("users")
-    fun createUser(@Body user: User): Call<User>
+
 }

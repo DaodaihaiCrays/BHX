@@ -8,11 +8,15 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Path
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.PUT
 
 interface UserController {
     @GET("users/{uid}")
     fun getUserInfo(@Path("uid") uid: String): Call<User>
+
+    @POST("users")
+    fun createUser(@Body user: User): Call<User>
 
     @PUT("users/{uid}")
     fun updateUserInfo(@Path("uid") uid: String, @Body requestBody: RequestBody) :Call<ResponseBody>
