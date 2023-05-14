@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -81,6 +82,8 @@ class FavoriteProductFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         var view: View = inflater.inflate(R.layout.fragment_favorite_product, container, false)
+
+
 
         if(FirebaseAuth.getInstance().currentUser!=null) {
             revProducts = view.findViewById(R.id.revListFavoriteProduct)

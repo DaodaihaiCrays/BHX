@@ -5,4 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/adminContainer"
-    tools:context=".View.AdminActivity" />
+    tools:context=".View.AdminActivity" >
+
+    <ImageView
+        android:id="@+id/imgAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/logo_login" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
