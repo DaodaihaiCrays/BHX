@@ -1,6 +1,5 @@
 package com.bhx.bhx.View
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -20,9 +19,8 @@ import com.bhx.bhx.View.HomeFragment.ProductAdapter
 import com.bhx.bhx.View.Menu.MenuFragment
 import com.bhx.bhx.View.FavoriteProductFragment.FavoriteProductFragment
 import com.bhx.bhx.View.ProductOfSearchFragment.ProductOfSearchFragment
-import com.bhx.bhx.View.SaleFragment.SaleFragment
+import com.bhx.bhx.View.Promotions.SaleFragment
 import com.bhx.bhx.View.ShoppingCart.ShoppingCartFragment
-import com.google.firebase.auth.FirebaseAuth
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import retrofit2.Call
 import retrofit2.Callback
