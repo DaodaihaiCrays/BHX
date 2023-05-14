@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Controller.ProductController
@@ -50,11 +51,17 @@ class SaleFragment : Fragment() {
         val view: View =  inflater.inflate(R.layout.fragment_sale, container, false);
         salePageItemRecyclerView = view.findViewById(R.id.salePageItemRecyclerView);
 
-        val dialog = ProgressDialog(context);
-        dialog.create();
-        dialog.setContentView(R.layout.custom_progress_dialog);
-        dialog.setCancelable(false);
-        dialog.show();
+        val dialog = ProgressDialog(context)
+        dialog.create()
+        dialog.setContentView(R.layout.custom_progress_dialog)
+        dialog.setCancelable(false) //outside touch doesn't dismiss you
+        dialog.show()
+        val displayMetrics = context?.resources?.displayMetrics
+        val screenWidth = displayMetrics?.widthPixels
+        val width = (screenWidth?.times(0.5))?.toInt()
+        if (width != null) {
+            dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
+        }
 
         RetrofitInstance.getInstance().create(ProductController::class.java).getAllProductInActivePromotion().enqueue(object :
             Callback<List<PromotionsWithProducts>> {
