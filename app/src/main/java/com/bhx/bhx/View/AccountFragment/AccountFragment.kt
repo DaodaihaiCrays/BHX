@@ -10,9 +10,11 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.bhx.bhx.Global.UserInfo
+import com.bhx.bhx.Model.User
 import com.bhx.bhx.R
-import com.bhx.bhx.View.AccountInfoActivity
-import com.bhx.bhx.View.AccountOrderActivity
+import com.bhx.bhx.View.AccountActivity.AccountInfoActivity
+import com.bhx.bhx.View.AccountActivity.AccountOrderActivity
+import com.bhx.bhx.View.AdminActivity
 import com.bhx.bhx.View.Authentication.LoginActivity
 import com.bhx.bhx.View.MainActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -39,6 +41,7 @@ class AccountFragment : Fragment() {
 
     private var btnLogout: Button? = null
     private var btnLogin: Button? = null
+    private var btnAdmin: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +54,22 @@ class AccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        btnAdmin = getView()?.findViewById(R.id.Admin_btn)
+        if(FirebaseAuth.getInstance().currentUser!=null && UserInfo.getInstance().getUser()?.authority=="ADMIN") {
+            btnAdmin?.setOnClickListener {
+
+                if(FirebaseAuth.getInstance().currentUser!=null) {
+                    val intent = Intent(context, AdminActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+        }
+        else {
+            btnAdmin?.visibility=View.GONE
+        }
+
+
         btnLogout = getView()?.findViewById(R.id.Logout_btn)
         if(FirebaseAuth.getInstance().currentUser!=null)
             btnLogout?.setOnClickListener {
@@ -91,7 +110,9 @@ class AccountFragment : Fragment() {
         accAvatar = getView()?.findViewById(R.id.acc_avatar)
         accAvatar?.setImageResource(R.drawable.logo_login)
 
-        val user = UserInfo.getInstance().getUser()
+        var user: User? =null
+        if(FirebaseAuth.getInstance().currentUser!=null)
+            user = UserInfo.getInstance().getUser()
 
         userName = getView()?.findViewById(R.id.acc_full_name)
         userEmail = getView()?.findViewById(R.id.acc_email)
