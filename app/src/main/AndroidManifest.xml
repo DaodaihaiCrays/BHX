@@ -15,6 +15,10 @@
         android:theme="@style/Theme.BHX"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <activity
+            android:name=".View.Authentication.InitializeInfoActivity"
+            android:exported="false" />
         <activity
             android:name=".View.AccountActivity.OrderDetail"
             android:exported="false" />
