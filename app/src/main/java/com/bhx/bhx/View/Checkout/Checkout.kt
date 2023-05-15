@@ -271,7 +271,7 @@ class Checkout : AppCompatActivity() {
 
         paymentType = findViewById(R.id.payment_type)
 
-        paymentType.adapter = SpinnerAdapter(this, R.layout.custom_spinner_item, listOf("Trả vào lúc giao"))
+        paymentType.adapter = SpinnerAdapter(this, R.layout.custom_spinner_item, listOf("Trả vào lúc giao", "Thanh toán online"))
         paymentType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -396,6 +396,9 @@ class Checkout : AppCompatActivity() {
         val timerange = timeRangelist[timeRangeAdapter.getPosition(timeRange.selectedItem.toString())].id
         val address = acc_address?.editText?.text.toString()
 
+        val paymentTypeStr = provinceSpinner?.selectedItem.toString()
+        val paymentId = if (paymentTypeStr == paymentTypeStr) 2 else 1
+
         val itemJson = Gson().toJson(items)
 
         val orderData = JSONObject().apply {
@@ -410,7 +413,7 @@ class Checkout : AppCompatActivity() {
             put("address", address)
             put("delivery_date", uDeliveryDate)
             put("delivery_timerange_id", timerange)
-            put("payment_method_id", 1)
+            put("payment_method_id", paymentId)
         }
 
         val requestBody = RequestBody.create(
