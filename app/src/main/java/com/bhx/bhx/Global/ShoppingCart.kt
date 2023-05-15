@@ -73,6 +73,10 @@ class ShoppingCart private constructor() {
         instance?.items!!.removeAt(index);
     }
 
+    fun clearItem() {
+        items.clear()
+    }
+
     fun sumPrice(): Int {
         return items.fold(0) { acc, cartItem -> acc + cartItem.product.unit_price * cartItem.quantity }
     }
