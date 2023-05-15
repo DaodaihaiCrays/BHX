@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.R
 import com.bhx.bhx.View.MainActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
@@ -25,6 +26,7 @@ class LoginEmailFragment: Fragment() {
     lateinit var accountEdittext: com.google.android.material.textfield.TextInputEditText;
     lateinit var passwordEdittext: com.google.android.material.textfield.TextInputEditText;
     lateinit var loginBtn: Button;
+    lateinit var backBtn: FloatingActionButton
     lateinit var auth: FirebaseAuth;
 
     override fun onCreateView(
@@ -39,6 +41,13 @@ class LoginEmailFragment: Fragment() {
         passwordEdittext = view.findViewById(R.id.passwordEdittext);
         loginBtn = view.findViewById(R.id.loginBtn);
         auth = FirebaseAuth.getInstance();
+
+        backBtn = view.findViewById(R.id.backBtn)
+        backBtn.setOnClickListener {
+            val intent: Intent =
+                Intent(requireActivity(), LoginActivity::class.java);
+            startActivity(intent);
+        }
 
         accountTextInputLayout.hint = "Email";
         accountTextInputLayout.startIconDrawable = ContextCompat.getDrawable(container?.context!!, R.drawable.ic_mail);

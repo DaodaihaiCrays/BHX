@@ -14,6 +14,7 @@ import com.bhx.bhx.Constant.AuthConstanst
 import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.R
 import com.bhx.bhx.View.MainActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
@@ -27,6 +28,7 @@ class LoginPhoneFragment: Fragment() {
     lateinit var accountEdittext: com.google.android.material.textfield.TextInputEditText;
     lateinit var passwordEdittext: com.google.android.material.textfield.TextInputEditText;
     lateinit var loginBtn: Button;
+    lateinit var backBtn: FloatingActionButton
     lateinit var auth: FirebaseAuth;
 
     override fun onCreateView(
@@ -42,6 +44,13 @@ class LoginPhoneFragment: Fragment() {
         passwordEdittext = view.findViewById(R.id.passwordEdittext);
         loginBtn = view.findViewById(R.id.loginBtn);
         auth = FirebaseAuth.getInstance();
+
+        backBtn = view.findViewById(R.id.backBtn)
+        backBtn.setOnClickListener {
+            val intent: Intent =
+                Intent(requireActivity(), LoginActivity::class.java);
+            startActivity(intent);
+        }
 
         accountTextInputLayout.hint = "Số điện thoại";
         accountEdittext.inputType = InputType.TYPE_CLASS_NUMBER;
