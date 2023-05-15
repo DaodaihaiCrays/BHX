@@ -33,11 +33,6 @@ class AccountOrderActivity : AppCompatActivity() {
         actionBar?.hide()
         orderList = findViewById(R.id.order_list)
 
-        var curUser = FirebaseAuth.getInstance().currentUser
-
-        if (curUser == null) {
-            Toast.makeText(this, "Bạn phải đăng nhập để sử dụng tính năng này", Toast.LENGTH_SHORT).show()
-        }
         apiCategoryInstance = RetrofitInstance.getInstance().create(OrderController::class.java)
         val uid = FirebaseAuth.getInstance().uid!!
         apiCategoryInstance.getOrderList(uid).enqueue(object : Callback<List<Order>> {

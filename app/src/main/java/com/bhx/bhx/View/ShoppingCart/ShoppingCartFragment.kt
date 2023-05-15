@@ -17,6 +17,7 @@ import com.bhx.bhx.Global.ShoppingCart
 import com.bhx.bhx.R
 import com.bhx.bhx.View.Checkout.Checkout
 import com.bhx.bhx.View.HomeFragment.HomeFragment
+import com.google.firebase.auth.FirebaseAuth
 import java.text.NumberFormat
 import java.util.*
 
@@ -68,6 +69,9 @@ class ShoppingCartFragment: Fragment() {
             val cartItem = cart.getItems()
             if (cartItem!!.isEmpty()) {
                 Toast.makeText(container.context, "Chưa có sản phẩm để thanh toán", Toast.LENGTH_SHORT).show()
+            }
+            else if(FirebaseAuth.getInstance().currentUser==null) {
+                Toast.makeText(context, "Bạn phải đăng nhập để sử dụng tính năng này", Toast.LENGTH_SHORT).show()
             }
             else {
                 val intent = Intent(context, Checkout::class.java)

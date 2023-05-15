@@ -51,12 +51,6 @@ class AccountInfoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_account_info)
         val actionBar: ActionBar? = supportActionBar
 
-        var curUser = FirebaseAuth.getInstance().currentUser
-
-        if (curUser == null) {
-            Toast.makeText(this, "Bạn phải đăng nhập để sử dụng tính năng này", Toast.LENGTH_SHORT).show()
-        }
-
         //data init
         user = UserInfo.getInstance().getUser()
 
