@@ -44,19 +44,19 @@ class ShoppingCart private constructor() {
 //                    if (response.isSuccessful) {
 //                        val currentProduct: Product? = response.body()
 
-                        for (item in instance?.items!!) {
-                            if (item.product.id == product.id) {
-                                if (item.quantity + 1 <= product.stock) {
-                                    item.quantity += 1;
-                                }
-                                return;
-                            }
-                        }
+        for (item in instance?.items!!) {
+            if (item.product.id == product.id) {
+                if (item.quantity + 1 <= product.stock) {
+                    item.quantity += 1;
+                }
+                return;
+            }
+        }
 
 //                        if (currentProduct?.stock!! < 1) return;
-                        val item = CartItem(product);
-                        instance?.items!!.add(item);
-                    }
+        val item = CartItem(product);
+        instance?.items!!.add(item);
+    }
 //                }
 //
 //                override fun onFailure(call: Call<Product>, t: Throwable) {
@@ -78,6 +78,12 @@ class ShoppingCart private constructor() {
     }
 
     fun sumPrice(): Int {
-        return items.fold(0) { acc, cartItem -> acc + cartItem.product.unit_price * cartItem.quantity }
+        return items.fold(0) { acc, cartItem ->
+            acc + if (cartItem.product.sale_percent != null) {
+                (cartItem.product.unit_price - cartItem.product.unit_price * cartItem.product.sale_percent!! / 100) * cartItem.quantity
+            } else {
+                cartItem.product.unit_price * cartItem.quantity
+            }
+        }
     }
 }

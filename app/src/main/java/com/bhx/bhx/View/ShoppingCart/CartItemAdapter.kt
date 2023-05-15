@@ -59,8 +59,15 @@ class CartItemAdapter(
         holder.itemNote.text = items[position].product.note?.toString();
         val formatter = NumberFormat.getCurrencyInstance(Locale("vi", "VN"));
         formatter.currency = Currency.getInstance("VND");
+
+        val unitPrice = if(items[position].product.sale_percent != null) {
+            items[position].product.unit_price - items[position].product.unit_price * items[position].product.sale_percent!! / 100;
+
+        } else {
+            items[position].product.unit_price
+        }
         holder.itemPrice.text = formatter.format(
-            (items[position].product.unit_price * items[position].quantity)
+            (unitPrice * items[position].quantity)
         );
         holder.itemQuantity.text = items[position].quantity.toString();
         Glide.with(context).load(items[position].product.banner).error(R.drawable.xoai)
