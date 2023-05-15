@@ -1,17 +1,17 @@
 package com.bhx.bhx.View.ShoppingCart
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.ImageButton
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Global.ShoppingCart
-import com.bhx.bhx.Model.CartItem
 import com.bhx.bhx.R
+import com.bhx.bhx.View.Checkout.Checkout
 import java.text.NumberFormat
 import java.util.*
 
@@ -21,6 +21,8 @@ class ShoppingCartActivity : AppCompatActivity() {
     lateinit var backBtn: AppCompatButton;
     lateinit var itemList: RecyclerView;
     lateinit var cartPrice: TextView;
+
+    lateinit var checkoutBtn: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
@@ -32,6 +34,12 @@ class ShoppingCartActivity : AppCompatActivity() {
         backBtn = findViewById(R.id.btnBack);
         itemList = findViewById(R.id.itemList);
         cartPrice = findViewById(R.id.cartPrice);
+
+        checkoutBtn = findViewById(R.id.checkoutBtn)
+        checkoutBtn.setOnClickListener{
+            val intent = Intent(this, Checkout::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onStart() {

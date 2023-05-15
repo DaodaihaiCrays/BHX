@@ -44,7 +44,7 @@ class AccountOrderActivity : AppCompatActivity() {
                     Toast.makeText(baseContext,"ok", Toast.LENGTH_SHORT).show()
                     val data = response.body()
 
-                    val adapter = OrderRvAdapter(data?: listOf<Order>(), object: OrderRvAdapter.OnClickListener{
+                    val adapter = OrderRvAdapter(this@AccountOrderActivity,data?: listOf<Order>(), object: OrderRvAdapter.OnClickListener{
                         override fun onClick(position: Int, model: Order) {
                             val intent = Intent(this@AccountOrderActivity, OrderDetail::class.java)
                             val json = Gson()

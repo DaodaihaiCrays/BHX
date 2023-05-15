@@ -208,10 +208,8 @@ class AccountInfoActivity : AppCompatActivity() {
         genderCheck.isChecked = true
 
         val province = findProvinceValue()
-        Log.i("Test", province)
         if (province != "") {
             val district = findDistrictValue()
-            Log.i("Test", district)
             provinceSpinner?.setSelection(provinceAdapter.getPosition(province))
             if (district != "") {
                 districtSpinner?.setSelection(districtAdapter.getPosition(district))

@@ -1,5 +1,6 @@
 package com.bhx.bhx.View.Adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bhx.bhx.Model.Order
 import com.bhx.bhx.R
+import com.bumptech.glide.Glide
+import java.text.NumberFormat
+import java.util.*
 
-class OrderRvAdapter(private val orderList: List<Order>,  private var onClickListener: OnClickListener?) :  RecyclerView.Adapter<OrderRvAdapter.ViewHolder>() {
+class OrderRvAdapter(private val context: Context, private val orderList: List<Order>,  private var onClickListener: OnClickListener?) :  RecyclerView.Adapter<OrderRvAdapter.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val icon: ImageView?
         val orderName: TextView?
@@ -30,7 +34,9 @@ class OrderRvAdapter(private val orderList: List<Order>,  private var onClickLis
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.icon?.setImageResource(R.drawable.xoai)
+
+        Glide.with(context).load(orderList[position].list[0].product.banner).error(R.drawable.xoai)
+            .into(holder.icon!!);
         var totalPrice: Double = 0.0
         var title: String = "${orderList[position].list.first().product.name} X${orderList[position].list.first().quantity}"
         if (orderList[position].list.size > 1){
@@ -38,9 +44,21 @@ class OrderRvAdapter(private val orderList: List<Order>,  private var onClickLis
         }
 
         holder.orderName?.text = title
-        holder.delveryTime?.text = orderList[position].deliveryDate.toString();
-        val totalPriceStr = "${orderList[position].totalPrice} vnd"
-        holder.totalPrice?.text = totalPriceStr
+        var deliverytime = orderList[position].deliveryDate.toString();
+
+        when (orderList[position].status) {
+            "PREPARING" -> deliverytime = "$deliverytime, Đang chuẩn bị hàng"
+            "DElIVERING" -> deliverytime = "$deliverytime, Đang giao"
+            "DELIVERED" -> deliverytime = "$deliverytime, Đã giao"
+            "CANCLED" -> deliverytime = "$deliverytime, Hủy"
+        }
+        holder.delveryTime?.text = deliverytime
+
+//        val totalPriceStr = "${orderList[position].totalPrice} vnd"
+
+        val formatter = NumberFormat.getCurrencyInstance(Locale("vi", "VN"));
+        formatter.currency = Currency.getInstance("VND");
+        holder.totalPrice?.text = formatter.format(orderList[position].totalPrice)
 
         holder.itemView.setOnClickListener{
             if (this.onClickListener != null) {

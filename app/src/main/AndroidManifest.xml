@@ -20,6 +20,9 @@
             android:name=".View.Authentication.InitializeInfoActivity"
             android:exported="false" />
         <activity
+            android:name=".View.Checkout.Checkout"
+            android:exported="false" />
+        <activity
             android:name=".View.AccountActivity.OrderDetail"
             android:exported="false" />
         <activity
