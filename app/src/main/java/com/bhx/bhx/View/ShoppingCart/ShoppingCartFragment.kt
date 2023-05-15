@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
@@ -64,8 +65,14 @@ class ShoppingCartFragment: Fragment() {
 
         checkoutBtn = view.findViewById(R.id.checkoutBtn)
         checkoutBtn.setOnClickListener{
-            val intent = Intent(context, Checkout::class.java)
-            startActivity(intent)
+            val cartItem = cart.getItems()
+            if (cartItem!!.isEmpty()) {
+                Toast.makeText(container.context, "Chưa có sản phẩm để thanh toán", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                val intent = Intent(context, Checkout::class.java)
+                startActivity(intent)
+            }
         }
 
         return view;

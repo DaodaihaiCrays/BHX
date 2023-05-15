@@ -79,6 +79,8 @@ class Checkout : AppCompatActivity() {
 
     lateinit var saveBtn: Button
 
+    lateinit var userInfo : User
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_checkout)
@@ -90,10 +92,17 @@ class Checkout : AppCompatActivity() {
             finish()
         }
 
+        userInfo = UserInfo.getInstance().getUser()
+
         fullname = findViewById(R.id.acc_full_name)
+        fullname.editText?.setText(userInfo.fullname)
         phone = findViewById(R.id.acc_phone_num)
+        phone.editText?.setText(userInfo.phoneNumber)
         email = findViewById(R.id.acc_email)
+        email.editText?.setText(userInfo.email)
         gender = findViewById(R.id.acc_gender)
+
+
 
 //=================================================================================
         val locationData  = LocationData.getInstance()
@@ -296,7 +305,7 @@ class Checkout : AppCompatActivity() {
         saveBtn.setOnClickListener{
             if (generateOrder()) finish()
             else {
-                Toast.makeText(this," Hệ thống đã gặp lỗi", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this," Hệ thống đã gặp lỗi hoặc chưa nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -316,10 +325,11 @@ class Checkout : AppCompatActivity() {
 
         var items = cart.getItems() as List<CartItem>
 
-        val uFullname = fullname.editText?.text.toString()
-        val uPhone = phone.editText?.text.toString()
-        val uEmail = email.editText?.text.toString()
+        var uFullname = fullname.editText?.text.toString()
+        var uPhone = phone.editText?.text.toString()
+        var uEmail = email.editText?.text.toString()
 
+        if (uFullname == "" || uPhone == "") return false;
         var uGender = "MALE"
         val genderCheck = gender.checkedRadioButtonId
         when (genderCheck) {
@@ -353,6 +363,8 @@ class Checkout : AppCompatActivity() {
             put("delivery_timerange_id", timerange)
             put("payment_method_id", 1)
         }
+
+        Log.i("test",  orderData.toString())
         val requestBody = RequestBody.create(
             "application/json".toMediaType(),
             orderData.toString()
