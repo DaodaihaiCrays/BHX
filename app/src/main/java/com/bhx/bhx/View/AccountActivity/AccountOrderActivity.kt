@@ -1,9 +1,11 @@
 package com.bhx.bhx.View.AccountActivity
 
+import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
@@ -33,6 +35,18 @@ class AccountOrderActivity : AppCompatActivity() {
         actionBar?.hide()
         orderList = findViewById(R.id.order_list)
 
+        val dialog = ProgressDialog(this)
+        dialog.create()
+        dialog.setContentView(R.layout.custom_progress_dialog)
+        dialog.setCancelable(false) //outside touch doesn't dismiss you
+        dialog.show()
+        val displayMetrics = resources?.displayMetrics
+        val screenWidth = displayMetrics?.widthPixels
+        val width = (screenWidth?.times(0.5))?.toInt()
+        if (width != null) {
+            dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
+        }
+
         apiCategoryInstance = RetrofitInstance.getInstance().create(OrderController::class.java)
         val uid = FirebaseAuth.getInstance().uid!!
         apiCategoryInstance.getOrderList(uid).enqueue(object : Callback<List<Order>> {
@@ -56,6 +70,8 @@ class AccountOrderActivity : AppCompatActivity() {
                     })
                     orderList?.layoutManager = LinearLayoutManager(baseContext, RecyclerView.VERTICAL, false)
                     orderList?.adapter= adapter
+
+                    dialog.dismiss()
                 }else{
                     Toast.makeText(baseContext, "fail", Toast.LENGTH_SHORT).show()
                 }

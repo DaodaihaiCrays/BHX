@@ -1,10 +1,12 @@
 package com.bhx.bhx.View.Checkout
 
 import android.app.DatePickerDialog
+import android.app.ProgressDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -229,6 +231,18 @@ class Checkout : AppCompatActivity() {
 
         val instance = RetrofitInstance.getInstance().create(OrderController::class.java)
 
+        val dialog = ProgressDialog(this)
+        dialog.create()
+        dialog.setContentView(R.layout.custom_progress_dialog)
+        dialog.setCancelable(false) //outside touch doesn't dismiss you
+        dialog.show()
+        val displayMetrics = resources?.displayMetrics
+        val screenWidth = displayMetrics?.widthPixels
+        val width = (screenWidth?.times(0.5))?.toInt()
+        if (width != null) {
+            dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
+        }
+
         instance.getTimeRange(user?:"").enqueue(object : Callback<List<Timerange>> {
             override fun onResponse(
                 call: Call<List<Timerange>>,
@@ -241,6 +255,7 @@ class Checkout : AppCompatActivity() {
                     timeRangeAdapter = ArrayAdapter<String>(this@Checkout, R.layout.custom_spinner_item, timeRangelist.map{"${it.startTime} - ${it.endTime}"})
                     timeRangeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     timeRange.adapter = timeRangeAdapter
+                    dialog.dismiss()
                 }
             }
 
@@ -423,6 +438,18 @@ class Checkout : AppCompatActivity() {
 
         if (uFullname == "" || uPhone == "" || address == "" || cart.getItems()!!.isEmpty()) return false;
 
+        val dialog = ProgressDialog(this)
+        dialog.create()
+        dialog.setContentView(R.layout.custom_progress_dialog)
+        dialog.setCancelable(false) //outside touch doesn't dismiss you
+        dialog.show()
+        val displayMetrics = resources?.displayMetrics
+        val screenWidth = displayMetrics?.widthPixels
+        val width = (screenWidth?.times(0.5))?.toInt()
+        if (width != null) {
+            dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
+        }
+
         val uid = FirebaseAuth.getInstance().currentUser?.uid
         if (uid != null)
             RetrofitInstance.getInstance().create(OrderController::class.java).newOrder(uid, requestBody).enqueue(object :
@@ -430,6 +457,7 @@ class Checkout : AppCompatActivity() {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     if (!response.isSuccessful){
                         result = false
+                        Toast.makeText(this@Checkout, "Hệ thống gặp vấn đề vui lòng thử lại ", Toast.LENGTH_SHORT).show()
                     }
                     else {
                         cart.clearItem()
@@ -439,6 +467,7 @@ class Checkout : AppCompatActivity() {
 
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     result = false
+                    Toast.makeText(this@Checkout, "Hệ thống gặp vấn đề vui lòng thử lại ", Toast.LENGTH_SHORT).show()
                 }
             })
 

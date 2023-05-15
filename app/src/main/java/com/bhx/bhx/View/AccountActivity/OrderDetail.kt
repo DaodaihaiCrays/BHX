@@ -1,8 +1,10 @@
 package com.bhx.bhx.View.AccountActivity
 
+import android.app.ProgressDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
@@ -88,6 +90,18 @@ class OrderDetail : AppCompatActivity() {
         orderName.text = title
         deliveryDate.text = order.deliveryDate.toString()
 
+        val dialog = ProgressDialog(this)
+        dialog.create()
+        dialog.setContentView(R.layout.custom_progress_dialog)
+        dialog.setCancelable(false) //outside touch doesn't dismiss you
+        dialog.show()
+        val displayMetrics = resources?.displayMetrics
+        val screenWidth = displayMetrics?.widthPixels
+        val width = (screenWidth?.times(0.5))?.toInt()
+        if (width != null) {
+            dialog.window?.setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
+        }
+
         instance.getTimeRange(user?:"").enqueue(object : Callback<List<Timerange>> {
             override fun onResponse(
                 call: Call<List<Timerange>>,
@@ -100,6 +114,8 @@ class OrderDetail : AppCompatActivity() {
                     val curTimerange =  timeRangelist.filter { it.id == order.deliveryTimerange}.first()
 
                     deliveryTime.text = "${curTimerange.startTime} - ${curTimerange.endTime}"
+
+                    dialog.dismiss()
                 }
             }
 
