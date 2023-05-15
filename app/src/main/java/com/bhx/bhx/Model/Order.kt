@@ -58,7 +58,7 @@ data class Order (
     val deliveryDate: Date,
 
     @SerializedName("delivery_timerange_id")
-    val deliveryTimerange: String,
+    val deliveryTimerange: Int,
 
     @SerializedName("payment_method_id")
     val paymentMethod: String,
