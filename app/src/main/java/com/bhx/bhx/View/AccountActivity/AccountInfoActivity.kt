@@ -18,6 +18,7 @@ import com.bhx.bhx.Model.User
 import com.bhx.bhx.R
 import com.bhx.bhx.View.Adapter.SpinnerAdapter
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -49,6 +50,13 @@ class AccountInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account_info)
         val actionBar: ActionBar? = supportActionBar
+
+        var curUser = FirebaseAuth.getInstance().currentUser
+
+        if (curUser == null) {
+            Toast.makeText(this, "Bạn phải đăng nhập để sử dụng tính năng này", Toast.LENGTH_SHORT).show()
+        }
+
         //data init
         user = UserInfo.getInstance().getUser()
 

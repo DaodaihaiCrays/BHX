@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.bhx.bhx.Global.UserInfo
 import com.bhx.bhx.Model.User
 import com.bhx.bhx.R
@@ -97,14 +98,25 @@ class AccountFragment : Fragment() {
 
         accInfoBtn = getView()?.findViewById(R.id.acc_info_btn)
         accInfoBtn?.setOnClickListener{
-            var intent = Intent(context, AccountInfoActivity::class.java)
-            startActivity(intent)
+            if(FirebaseAuth.getInstance().currentUser!=null) {
+                var intent = Intent(context, AccountInfoActivity::class.java)
+                startActivity(intent)
+            }
+            else {
+                Toast.makeText(context, "Bạn phải đăng nhập để sử dụng tính năng này", Toast.LENGTH_SHORT).show()
+            }
         }
 
         accOrdersBtn = getView()?.findViewById(R.id.acc_orders_btn)
         accOrdersBtn?.setOnClickListener{
-            var intent = Intent(context, AccountOrderActivity::class.java)
-            startActivity(intent)
+            if(FirebaseAuth.getInstance().currentUser!=null) {
+                var intent = Intent(context, AccountOrderActivity::class.java)
+                startActivity(intent)
+            }
+            else {
+                Toast.makeText(context, "Bạn phải đăng nhập để sử dụng tính năng này", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
         accAvatar = getView()?.findViewById(R.id.acc_avatar)
