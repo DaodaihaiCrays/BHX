@@ -95,7 +95,6 @@ class AdminEditProduct(var pProduct: AdminProduct) : Fragment() {
         var descriptionInput = view.findViewById<TextInputLayout>(R.id.createDescription)
         if (pProduct.general_description !== null) descriptionInput.editText?.setText(pProduct.general_description)
 
-        Log.i("testL", pProduct.banner!!)
         setDefaultImage(view, pProduct.banner)
 
         var apiCategoryAdminInstance: CategoryAdminController = RetrofitInstance.getInstance().create(

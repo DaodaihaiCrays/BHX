@@ -63,6 +63,15 @@ class AdminActivity : AppCompatActivity() {
 
                 return true
             }
+            R.id.order -> {
+                // Code xử lý khi người dùng chọn mục Order
+                val fragment = AdminOrdersList()
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.adminContainer, fragment)
+                    .commit()
+
+                return true
+            }
             R.id.backCus -> {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
