@@ -200,6 +200,8 @@ class Checkout : AppCompatActivity() {
 
         acc_address = findViewById(R.id.acc_address)
 
+        updateUserToUI()
+
 
 //=================================================================================
         dateBtn = findViewById(R.id.date_btn)
@@ -320,7 +322,54 @@ class Checkout : AppCompatActivity() {
         deliveryInfo.text = "Giao vào ngày: $deliveryDate\nVào lúc: ${currentTimerange?.startTime} - ${currentTimerange?.endTime}\nThanh toán: $currentPayment "
     }
 
-    fun generateOrder(): Boolean{
+    private fun findProvinceValue(): String {
+        provinceList.forEach{ value ->
+            if (value.id == userInfo.provinceId) return value.name
+        }
+        return ""
+    }
+
+    private fun findDistrictValue(): String {
+        districtList.forEach{ value ->
+            if (value.id == userInfo.districtId) return value.name
+        }
+        return ""
+    }
+
+    private fun findWardValue(): String {
+        wardList.forEach{ value ->
+            if (value.id == userInfo.wardId) return value.name
+        }
+        return ""
+    }
+
+    private fun updateUserToUI() {
+        fullname.editText?.setText(userInfo.fullname)
+        phone.editText?.setText(userInfo.phoneNumber)
+
+        var genderCheck = findViewById<RadioButton>(R.id.other_gender)
+        when(userInfo.gender){
+            "MALE" -> genderCheck = findViewById(R.id.male_gender)
+            "FEMALE" -> genderCheck = findViewById(R.id.female_gender)
+            else -> genderCheck = findViewById(R.id.other_gender)
+        }
+        genderCheck.isChecked = true
+
+        val province = findProvinceValue()
+        if (province != "") {
+            val district = findDistrictValue()
+            provinceSpinner?.setSelection(provinceAdapter.getPosition(province))
+            if (district != "") {
+                districtSpinner?.setSelection(districtAdapter.getPosition(district))
+                val ward = findWardValue()
+                Log.i("Test", ward)
+                if (ward != "") wardSpinner?.setSelection(wardAdapter.getPosition(ward))
+            }
+        }
+        acc_address?.editText?.setText(userInfo.address)
+    }
+
+    private fun generateOrder(): Boolean{
         var result = true
 
         var items = cart.getItems() as List<CartItem>
@@ -329,7 +378,7 @@ class Checkout : AppCompatActivity() {
         var uPhone = phone.editText?.text.toString()
         var uEmail = email.editText?.text.toString()
 
-        if (uFullname == "" || uPhone == "") return false;
+
         var uGender = "MALE"
         val genderCheck = gender.checkedRadioButtonId
         when (genderCheck) {
@@ -364,11 +413,12 @@ class Checkout : AppCompatActivity() {
             put("payment_method_id", 1)
         }
 
-        Log.i("test",  orderData.toString())
         val requestBody = RequestBody.create(
             "application/json".toMediaType(),
             orderData.toString()
         )
+
+        if (uFullname == "" || uPhone == "" || address == "" || cart.getItems()!!.isEmpty()) return false;
 
         val uid = FirebaseAuth.getInstance().currentUser?.uid
         if (uid != null)
@@ -380,6 +430,7 @@ class Checkout : AppCompatActivity() {
                     }
                     else {
                         cart.clearItem()
+                        Toast.makeText(this@Checkout, "Đơn hàng đăng ký thành công", Toast.LENGTH_SHORT).show()
                     }
                 }
 
